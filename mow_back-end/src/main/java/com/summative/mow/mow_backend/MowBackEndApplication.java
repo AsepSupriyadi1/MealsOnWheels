@@ -1,13 +1,13 @@
-package com.summative.mow.mealsonwheels;
+package com.summative.mow.mow_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MealsOnWheelsApplication {
+public class MowBackEndApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MealsOnWheelsApplication.class, args);
+		SpringApplication.run(MowBackEndApplication.class, args);
 	}
 
 }

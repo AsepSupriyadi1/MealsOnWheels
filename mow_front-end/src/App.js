@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import "./assets/css/bootstrap.min.css";
+import "./assets/css/font-awesome.css";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./pages/HomePage";
 
 function App() {

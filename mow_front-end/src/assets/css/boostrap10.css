@@ -1,0 +1,9 @@
+/* TAMBAH DUA CLASS INI UNTUK TENGAHIN COLUMN */
+
+.float-none {
+    float: none;
+}
+
+.mx-auto {
+    margin: 10px auto !important;
+}

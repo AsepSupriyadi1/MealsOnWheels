@@ -39,11 +39,6 @@ Last change:	06/13/14
 }
 
 
-
-
-
-
-
 .top-header .header-info-right ul,
 .top-header .header-info-left ul,
 .main-header .social-icon-top ul,
@@ -2153,7 +2148,7 @@ ul.post-gallery li:hover img {
 }
 
 .donate-form label {
-    width: 200px;
+    width: 20%;
     font-weight: 700;
     float: left;
 }
@@ -2183,8 +2178,9 @@ ul.post-gallery li:hover img {
     margin-bottom: 0;
 }
 
-.donate-form input {
-    width: 40%;
+.donate-form input,
+select {
+    width: 80%;
 }
 
 .donate-form input[type="checkbox"] {

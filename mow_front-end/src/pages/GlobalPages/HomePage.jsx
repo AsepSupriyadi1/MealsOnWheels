@@ -1,14 +1,17 @@
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Header from "../../components/UtilComponent/Header";
 import Footer from "../../components/UtilComponent/Footer";
 
 const HomePage = () => {
   return (
     <>
-      <Container>
-        <h1>HelloWorld</h1>
-      </Container>
-      <Footer />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-10 float-none mx-auto bg-danger">
+            <h1>HelloWorld</h1>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

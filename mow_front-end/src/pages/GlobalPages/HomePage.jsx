@@ -8,7 +8,7 @@ const HomePage = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-10 float-none mx-auto bg-danger">
-            <h1>HelloWorld</h1>
+            <h1>HelloWorlds</h1>
           </div>
         </div>
       </div>

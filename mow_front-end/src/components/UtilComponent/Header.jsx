@@ -77,22 +77,22 @@ function Header() {
                 <nav>
                   <ul className="sf-menu">
                     <li className="active">
-                      <a href="index.html">Home</a>
+                      <a href="/home">Home</a>
                     </li>
                     <li>
-                      <a href="#">About</a>
+                      <a href="/about">About</a>
                     </li>
                     <li>
-                      <a href="#">Contact Us</a>
+                      <a href="/contact">Contact Us</a>
                     </li>
                   </ul>
                 </nav>
               </div>
               <div className="col-md-3 button-holder">
-                <a href="donate.html" className="btn main-btn" style={{ marginRight: "10px" }}>
+                <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
                   Register
                 </a>
-                <a href="donate.html" className="btn main-btn">
+                <a href="/login" className="btn main-btn">
                   Login
                 </a>
               </div>

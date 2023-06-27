@@ -86,7 +86,7 @@ function Footer() {
                 <h4 class="footer-widget-title">Useful Links</h4>
                 <ul>
                   <li>
-                    <a href="staff-sidebar.html">Meet the Team</a>
+                    <a href="/terms">Terms and Conditions</a>
                   </li>
                   <li>
                     <a href="blog-grid.html">Read Our Blog</a>

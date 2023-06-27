@@ -1,5 +1,5 @@
 
-import { Contactus } from "../images/images.js";
+import { Contactus } from "../../assets/images/Images";
 const ContactPage = () => {
   return (
     <>
@@ -21,7 +21,8 @@ const ContactPage = () => {
 			<div class="row">
 				
 				<div class="col-md-8 contact-page">
-					<div class="contact-map" style="height: 380px;"></div>
+          <h1>Location</h1>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d262202.88671172387!2d107.29343528326255!3d-6.91518078792871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e616cf485735%3A0x3d9935966c87148!2sDamn*21%20I%20Love%20Indonesia!5e0!3m2!1sid!2sid!4v1687859433414!5m2!1sid!2sid" width="700" height="450"  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 					<div id="contact" class="contactForm clearfix">
                         <div id="result"></div>
                         <fieldset>

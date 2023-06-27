@@ -3,6 +3,7 @@ import thumb1 from "./placehold/gallery/thumb(1).jpg";
 import thumb2 from "./placehold/gallery/thumb(2).jpg";
 import thumb3 from "./placehold/gallery/thumb(3).jpg";
 import thumb4 from "./placehold/gallery/thumb(4).jpg";
+import testimonial from "./placehold/testimonials/giver.jpeg"
 
 export const resources = {
   logo1,
@@ -13,4 +14,8 @@ export const gallery = {
   thumb2,
   thumb3,
   thumb4,
+};
+
+export const Testimonial = {
+  testimonial,
 };

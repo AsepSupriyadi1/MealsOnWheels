@@ -1,13 +1,13 @@
-package com.summative.mow.mow_backend;
+package com.summative.mow;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MowBackEndApplication {
+public class MowApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MowBackEndApplication.class, args);
+		SpringApplication.run(MowApplication.class, args);
 	}
 
 }

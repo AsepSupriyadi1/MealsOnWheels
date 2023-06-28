@@ -1,10 +1,10 @@
-package com.summative.mow.mow_backend;
+package com.summative.mow;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MowBackEndApplicationTests {
+class MowApplicationTests {
 
 	@Test
 	void contextLoads() {

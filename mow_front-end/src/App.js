@@ -20,7 +20,7 @@ function App() {
   return (
     <>
       <Router>
-        <Header />
+        <Header activeLinks={"active"} />
         <Routes>
           {/* PUBLIC PAGE */}
           <Route path="/" element={<HomePage />} />

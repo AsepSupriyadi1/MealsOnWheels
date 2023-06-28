@@ -2,8 +2,13 @@ import { resources } from "../../assets/images/Images";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { useEffect } from "react";
 
-function Header() {
+function Header({ activeLinks = "null" }) {
+  useEffect(() => {
+    console.log(activeLinks);
+  });
+
   return (
     <header className="site-header">
       <div className="top-header">
@@ -76,13 +81,13 @@ function Header() {
               <div className="col-md-9 main-menu">
                 <nav>
                   <ul className="sf-menu">
-                    <li className="active">
+                    <li className={activeLinks}>
                       <a href="/home">Home</a>
                     </li>
-                    <li>
+                    <li className={activeLinks}>
                       <a href="/about">About</a>
                     </li>
-                    <li>
+                    <li className={activeLinks}>
                       <a href="/contact">Contact Us</a>
                     </li>
                   </ul>

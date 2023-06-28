@@ -12,13 +12,17 @@ import RegisterPage from "./pages/GlobalPages/RegisterPage";
 import TermsPage from "./pages/GlobalPages/TermsPage";
 import Header from "./components/UtilComponent/Header";
 import Footer from "./components/UtilComponent/Footer";
-
+import AdminDashboard from "./pages/GlobalPages/AdminDashboard";
+import DriverDashboard from "./pages/GlobalPages/DriverDashboard";
+import MemberDashboard from "./pages/GlobalPages/MemberDashboard";
+import PartnerDashboard from "./pages/GlobalPages/PartnerDashboard";
 function App() {
   return (
     <>
       <Router>
         <Header />
         <Routes>
+          {/* PUBLIC PAGE */}
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -26,6 +30,12 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/terms" element={<TermsPage />} />
+
+          {/* PRIVATE PATE - SEMENTARA PUBLIC DULU */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/driver" element={<DriverDashboard />} />
+          <Route path="/member" element={<MemberDashboard />} />
+          <Route path="/partner" element={<PartnerDashboard />} />
         </Routes>
         <Footer />
       </Router>

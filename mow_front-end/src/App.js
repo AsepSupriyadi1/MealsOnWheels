@@ -12,10 +12,10 @@ import RegisterPage from "./pages/GlobalPages/RegisterPage";
 import TermsPage from "./pages/GlobalPages/TermsPage";
 import Header from "./components/UtilComponent/Header";
 import Footer from "./components/UtilComponent/Footer";
-import AdminDashboard from "./pages/GlobalPages/AdminDashboard";
-import DriverDashboard from "./pages/GlobalPages/DriverDashboard";
-import MemberDashboard from "./pages/GlobalPages/MemberDashboard";
-import PartnerDashboard from "./pages/GlobalPages/PartnerDashboard";
+import AdminDashboard from "./pages/PrivatePages/Admin/AdminDashboard";
+import DriverDashboard from "./pages/PrivatePages/Driver/DriverDashboard";
+import MemberDashboard from "./pages/PrivatePages/Member/MemberDashboard";
+import PartnerDashboard from "./pages/PrivatePages/Partner/PartnerDashboard";
 function App() {
   return (
     <>

@@ -1,16 +1,18 @@
 package com.summative.mow.Controllers;
-
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.summative.mow.Dto.LoginRequest;
 
 
 @RestController
 public class WelcomeController {
     
 
-    @GetMapping(value="/test")
-    public String getMethodName() {
-        return "Hello Inka";
+    @PostMapping(value="/test")
+    public LoginRequest getMethodName(@RequestBody LoginRequest loginRequest) {
+        return loginRequest;
     }
     
 

@@ -1,5 +1,4 @@
 import React from "react";
-import SliderComponent from "../../components/DynamicComponent/SliderComponent";
 
 const HomePage = () => {
   return (

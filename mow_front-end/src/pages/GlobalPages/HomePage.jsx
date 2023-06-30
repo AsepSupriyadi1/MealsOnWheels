@@ -1,8 +1,10 @@
 import React from "react";
 
+
 const HomePage = () => {
   return (
     <>
+    <div class="container">
       <div className="services box-content" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
         <div className="row">
           <div className="col-md-offset-2 col-md-8 services-header mb-5">
@@ -41,6 +43,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      
 
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: "40px", paddingLeft: "60px", paddingRight: "60px" }}>
         <div style={{ width: "45%" }}>
@@ -58,6 +61,7 @@ const HomePage = () => {
             <a href="/donate" className="btn main-btn" style={{ display: "block", margin: "0 auto", textAlign: "center" }}>Donate Now</a>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

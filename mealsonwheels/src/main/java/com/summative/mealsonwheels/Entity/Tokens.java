@@ -1,7 +1,4 @@
 package com.summative.mealsonwheels.Entity;
-
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

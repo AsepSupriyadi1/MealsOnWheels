@@ -10,22 +10,12 @@ function Footer() {
       <footer class="site-footer">
         <div class="top-footer">
           <div class="container">
-            <div class="row">
-              <div class="col-md-3 col-sm-4 col-xs-12 contact-info footer-widget">
-                <h4 class="footer-widget-title">Contact Info</h4>
-                <p>Curabitur a orci et nulla gravida.</p>
-                <ul>
-                  <li>
-                    <span>Phone:</span>
-                    <a href="skype:+34234235322?action">(123) 2445 - 2443</a>
-                  </li>
-                  <li>
-                    <span>Email:</span>
-                    <a href="mailto:your@supportemail.com">your@supportemail.com</a>
-                  </li>
-                </ul>
+            <div class="row d-flex-between">
+              <div class="col-md-6 col-sm-12 col-xs-12 footer-widget">
+                <h4 class="footer-widget-title">More about US</h4>
+                <p>Curabitur a orci et nulla gravida laoreet. Pellentesque dictum ipsum nec placerat dignissim. Vivamus porta pellentesque libero, sit amet non.</p>
               </div>
-              <div class="col-md-5 col-sm-8 col-xs-12 footer-widget">
+              <div class="col-md-6 col-sm-8 col-xs-12 footer-widget">
                 <h4 class="footer-widget-title">Stay in touch with us</h4>
                 <ul class="footer-social">
                   <li>
@@ -48,10 +38,6 @@ function Footer() {
                   </li>
                 </ul>
               </div>
-              <div class="col-md-4 col-sm-12 col-xs-12 footer-widget">
-                <h4 class="footer-widget-title">More about US</h4>
-                <p>Curabitur a orci et nulla gravida laoreet. Pellentesque dictum ipsum nec placerat dignissim. Vivamus porta pellentesque libero, sit amet non.</p>
-              </div>
             </div>
           </div>
         </div>
@@ -59,47 +45,35 @@ function Footer() {
           <div class="container">
             <div class="row">
               <div class="col-md-3 col-sm-6 footer-widget">
-                <h4 class="footer-widget-title">Text Widget</h4>
-                <p>Curabitur a orci et nulla gravida laoreet. Pellentesque dictum ipsum nec placerat dignissim. Vivamus porta pellentesque libeadro, sit amet non.</p>
-              </div>
-              <div class="col-md-3 col-sm-6 footer-widget">
-                <h4 class="footer-widget-title">Popular Posts</h4>
-                <ul>
-                  <li>
-                    <a href="blog-single.html">The Importance of an MOU</a>
-                  </li>
-                  <li>
-                    <a href="blog-single.html">Detecting and learning from failure</a>
-                  </li>
-                  <li>
-                    <a href="blog-single.html">Limited Support on Memorial Day</a>
-                  </li>
-                  <li>
-                    <a href="blog-single.html">Fundraising Reading Round-Up</a>
-                  </li>
-                  <li>
-                    <a href="blog-single.html">Ugly Design or Beautiful Design?</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-2 col-sm-6 footer-widget">
                 <h4 class="footer-widget-title">Useful Links</h4>
                 <ul>
                   <li>
                     <a href="/terms">Terms and Conditions</a>
                   </li>
                   <li>
-                    <a href="blog-grid.html">Read Our Blog</a>
+                    <a href="blog-grid.html">About Us</a>
                   </li>
                   <li>
-                    <a href="#">Partnerships</a>
-                  </li>
-                  <li>
-                    <a href="#">Developer Tools</a>
+                    <a href="#">Contact Us</a>
                   </li>
                 </ul>
               </div>
-              <div class="col-md-4 col-sm-6 footer-widget">
+
+              <div class="col-md-3 col-sm-4 col-xs-12 contact-info footer-widget">
+                <h4 class="footer-widget-title">Contact Info</h4>
+                <p>Get in touch with us !</p>
+                <ul>
+                  <li>
+                    <span>Phone:</span>
+                    <a href="skype:+34234235322?action">(123) 2445 - 2443</a>
+                  </li>
+                  <li>
+                    <span>Email:</span>
+                    <a href="mailto:your@supportemail.com">mow@supportemail.com</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-6 col-sm-6 footer-widget">
                 <h4 class="footer-widget-title">Our Gallery</h4>
                 <div class="footer-gallery">
                   <div class="gallery-thumb">
@@ -125,15 +99,16 @@ function Footer() {
                 </div>
               </div>
             </div>
+
             <div class="copyright">
               <div class="row">
                 <div class="col-md-6 col-sm-6">
-                  <p class="small-text">Copyright 2014 &copy;. iCare Template.</p>
+                  <p class="small-text">Copyright 2023 &copy;. Meals On Wheels.</p>
                 </div>
                 <div class="col-md-6 col-sm-6">
                   <div class="credits">
                     <p class="small-text">
-                      Built with <i class="fa fa-heart"></i> by <a href="http://themeforest.net/user/Esmet">Esmet</a>
+                      Built with <i class="fa fa-heart"></i> by group 7
                     </p>
                   </div>
                 </div>

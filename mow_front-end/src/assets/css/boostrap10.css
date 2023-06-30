@@ -8,3 +8,50 @@
     margin: 10px auto !important;
 }
 
+
+
+/* LAYOUT STYLING STARTS */
+
+.d-flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LAYOUT STYLING ENDS */
+
+
+/* PADDING MARGIN STYLING STARTS */
+
+.p-0 {
+    padding: 0px;
+}
+
+/* PADDING MARGIN STYLING ENDS */
+
+
+
+/* BORDER STYLING STARTS */
+
+.rounded-sm {
+    border-radius: 10px;
+}
+
+
+
+/* BORDER STYLING ENDS */
+
+
+
+
+/* HOVER BOX START */
+
+.box-border-1 {
+    box-shadow: 5px 5px 4px 0px #709567cf;
+}
+
+.box-fade:hover {
+    background-color: rgb(236, 236, 236);
+}
+
+/* HOVER BOX END */

@@ -20,13 +20,13 @@ const DriverDashboard = () => {
 
 			<div className="container">
 				<div className="row">
-					<div class="col-md-4">
+					<div class="col-md-4" >
 						<div style={{ paddingTop: "30px" }}>
-							<img src={resources.logo1} height={200} style={{ width: "100%", backgroundColor: "#6b9262", padding: "30px" }} alt="images" />
+							<img src={resources.logo1} height={200} style={{ width: "100%", backgroundColor: "#6b9262", padding: "30px", boxShadow:"5px 5px 4px 0px #709567cf" }} alt="images" />
 						</div>
 					</div>
 					<div class="col-md-8">
-						<div class="event-list">
+						<div class="event-list" style={{boxShadow:"5px 5px 4px 0px #709567cf"}}>
 							<div class="event-thumb" style={{ padding: "20px" }}>
 								<img src={Testimonial.testi4} style={{ borderRadius: "100%" }} height={160} alt="driver photos" />
 							</div>
@@ -35,19 +35,19 @@ const DriverDashboard = () => {
 								<table>
 									<tr>
 										<td>Name</td>
-										<td>: Abdul Rahman Shalehudin</td>
+										<td> : Abdul Rahman Shalehudin</td>
 									</tr>
 									<tr>
 										<td>Email</td>
-										<td>: rahmansh@driver.com</td>
+										<td> : rahmansh@driver.com</td>
 									</tr>
 									<tr>
 										<td>Vehicle</td>
-										<td>: Honda Yaris</td>
+										<td> : Honda Yaris</td>
 									</tr>
 									<tr>
 										<td>Status</td>
-										<td>: Available</td>
+										<td> : Available</td>
 									</tr>
 								</table>
 							</div>
@@ -59,7 +59,7 @@ const DriverDashboard = () => {
 			<div className="container">
 				<div className="row">
 					<div className="col-md-12">
-						<div className="box-content">
+						<div className="box-content" style={{boxShadow:"5px 5px 4px 0px #709567cf"}}>
 							<h4 class="widget-title"><span>LIST DELIVERY</span></h4>
 							<table className="delivery-table">
 								<thead style={{ backgroundColor: "#333", color: "#faca3a" }}>

@@ -21,6 +21,7 @@ import DetailpakageMember from "./pages/PrivatePages/Member/detailspakage";
 import FeedbackMember from "./pages/PrivatePages/Member/feedback";
 import DonorDashboard from "./pages/PrivatePages/Donor/DonorDashboard";
 import DonorForm from "./pages/PrivatePages/Donor/DonorForm";
+import DonationDetails from "./pages/PrivatePages/Donor/DonationDetails";
 function App() {
   return (
     <>
@@ -51,6 +52,7 @@ function App() {
           {/* End member */}
           <Route path="/donor" element={<DonorDashboard />} />
           <Route path="/donate" element={<DonorForm />} />
+          <Route path="//donationStatus" element={<DonationDetails />} />
         </Routes>
         <Footer />
       </Router>

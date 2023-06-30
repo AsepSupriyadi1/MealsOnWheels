@@ -13,7 +13,7 @@ import thumb11 from "./placehold/events/thumb(1).jpg";
 import thumb22 from "./placehold/events/thumb(2).jpg";
 import thumb33 from "./placehold/events/thumb(3).jpg";
 
-import testimonial from "./placehold/testimonials/giver.jpeg"
+import testimonial from "./placehold/testimonials/giver.png"
 
 export const resources = {
   logo1,

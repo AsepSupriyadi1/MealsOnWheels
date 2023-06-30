@@ -103,9 +103,7 @@ public class AuthController {
 
     @GetMapping(value = "/test")
 	public String test() {
-
         return "String";
-		
 	}
 
 

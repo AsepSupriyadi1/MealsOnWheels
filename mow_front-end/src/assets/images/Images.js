@@ -12,8 +12,9 @@ import thumb10 from "./placehold/gallery/thumb(10).jpg";
 import thumb11 from "./placehold/events/thumb(1).jpg";
 import thumb22 from "./placehold/events/thumb(2).jpg";
 import thumb33 from "./placehold/events/thumb(3).jpg";
+import imgtesti from "./placehold/testimonials/giver.png"
 import membereat from "./placehold/gallery/memberfood.jpg"
-import testimonial from "./placehold/testimonials/giver.jpeg"
+
 
 export const resources = {
   logo1,
@@ -27,7 +28,7 @@ export const gallery = {
 };
 
 export const Testimonial = {
-  testimonial,
+  imgtesti,
 };
 
 export const Contactus = {

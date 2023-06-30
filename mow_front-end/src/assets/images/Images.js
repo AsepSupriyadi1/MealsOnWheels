@@ -17,10 +17,9 @@ import slide2 from "./placehold/slides/slide2.jpg";
 import slide3 from "./placehold/slides/slide3.jpg";
 import food1 from "./placehold/food/food1.jpg";
 import testi4 from "./placehold/testimonials/testi4.jpg";
-import driver from "./placehold/gallery/driver.jpg"
-import imgtesti from "./placehold/testimonials/giver.png"
-import membereat from "./placehold/gallery/memberfood.jpg"
-
+import driver from "./placehold/gallery/driver.jpg";
+import imgtesti from "./placehold/testimonials/giver.png";
+import membereat from "./placehold/gallery/memberfood.jpg";
 
 export const resources = {
   logo1,
@@ -35,23 +34,32 @@ export const gallery = {
 };
 
 export const Testimonial = {
-  testimonial, testi4,
+  testi4,
   imgtesti,
 };
 
 export const Contactus = {
-  thumb5,thumb6,thumb7,thumb8,thumb9,thumb10,thumb11,thumb22,thumb33,
+  thumb5,
+  thumb6,
+  thumb7,
+  thumb8,
+  thumb9,
+  thumb10,
+  thumb11,
+  thumb22,
+  thumb33,
 };
 
 export const slides = {
-  slide1, slide2, slide3,
-}
+  slide1,
+  slide2,
+  slide3,
+};
 
 export const food = {
   food1,
-}
+};
 
-export const Member ={
-  membereat
-}
-
+export const Member = {
+  membereat,
+};

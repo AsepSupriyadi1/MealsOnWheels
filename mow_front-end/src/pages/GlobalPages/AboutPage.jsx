@@ -1,4 +1,5 @@
 import { Testimonial } from "../../assets/images/Images";
+import { Contactus } from "../../assets/images/Images";
 import { gallery } from "../../assets/images/Images";
 const AboutPage = () => {
   return (
@@ -23,23 +24,15 @@ const AboutPage = () => {
           <div className="event-image">
           <img src={Testimonial.testimonial} alt="" />
           <div className="event-content">
-            <h3>Welcome to Meals on Wheels!</h3>
+            <h3 className="about-h3">MEALS ON WHEELS AMERICA </h3>
             <p>
-            We are a non-profit organization committed to providing quality food to those in need. At Meals on Wheels, we understand that food is a fundamental human right, and we are dedicated to ensuring that no one in our community has to go hungry.
-            </p>
-            <p>
-            Our mission is to fight hunger by providing healthy, nutritious and delicious food to people who cannot afford to feed themselves. We recognize that some vulnerable groups, such as the elderly, people with disabilities, and people with serious health conditions, may not have adequate access to daily food. That's why we are here.
-            </p>
-            <p>
-            Since its founding, Meals on Wheels has been a bridge between volunteers, donors and those in need. Every day, our passionate team and amazing volunteers work together to prepare, package, and deliver healthy, delicious food to the doorsteps of those who need it. We also strive to maintain a personal connection with each of our service recipients, so that we can provide them with the social support and warmth they need.
-            </p>
-            <p>
-            We are proud of our food program which is focused on nutrition and health. Our team of experts carefully plan each menu to meet individual nutritional needs. We strive to use as many fresh and local ingredients as possible, taking into account any dietary preferences or special needs. We believe that good food can affect a person's quality of life, and we want to provide a positive and satisfying experience through every meal we serve.
-            </p>
-            <p>
-            However, we couldn't do this without your help. Your donation means a lot to us. With your contribution, we can expand our reach, reach more people in need, and provide nutritious food to those who need it.
-            Join us at Meals on Wheels as we carry out our noble mission together. Let's work together to end hunger and ensure that everyone has access to good and dignified food.
-            </p>
+			Meals on Wheels America is the leadership organization supporting the more than 5,000 community-based programs across the country that are dedicated to addressing senior isolation and hunger. Powered by a dedicated volunteer workforce, this network delivers the nutritious meals, friendly visits and safety checks that enable America’s seniors to live nourished lives with independence and dignity. By providing funding, leadership, education, research and advocacy support, Meals on Wheels America empowers its local member programs to strengthen their communities, one senior at a time.
+		    </p>
+			<h3 className="about-h3">	OUR VISION</h3>
+An America in which all seniors live nourished lives with independence and dignity.
+
+<h3 className="about-h3">OUR MISSION</h3>
+To empower local community programs to improve the health and quality of life of the seniors they serve so that no one is left hungry or isolated.
           </div>
           </div>   
          </div>
@@ -82,7 +75,65 @@ const AboutPage = () => {
 							</div> 
 						</div> 
 					</div>
-
+					<div class="box-content">
+              <h4 class="widget-title">
+                <span>Our Team</span>
+              </h4>
+              <div class="events-sidebar">
+                <ul>
+                  <li class="event-item">
+                    <div class="event-thumb">
+                      <img src={Contactus.thumb11} alt="" />
+                    </div>
+                    <div class="event-content">
+                      <h5 class="event-title">
+                        <a href="event-detail.html">Abdul Rahman Solehudin</a>
+                      </h5>
+                    </div>
+                  </li>
+                  <li class="event-item">
+                    <div class="event-thumb">
+                      <img src={Contactus.thumb22} alt="" />
+                    </div>
+                    <div class="event-content">
+                      <h5 class="event-title">
+                        <a href="event-detail.html">Ajri Muhamad Siddik</a>
+                      </h5>
+                    </div>
+                  </li>
+                  <li class="event-item">
+                    <div class="event-thumb">
+                      <img src={Contactus.thumb33} alt="" />
+                    </div>
+                    <div class="event-content">
+                      <h5 class="event-title">
+                        <a href="event-detail.html">Asep Supriyadi</a>
+                      </h5>
+                    </div>
+                  </li>
+				  <li class="event-item">
+                    <div class="event-thumb">
+                      <img src={Contactus.thumb33} alt="" />
+                    </div>
+                    <div class="event-content">
+                      <h5 class="event-title">
+                        <a href="event-detail.html">Darren Farel andrian</a>
+                      </h5>
+                    </div>
+                  </li>
+				  <li class="event-item">
+                    <div class="event-thumb">
+                      <img src={Contactus.thumb33} alt="" />
+                    </div>
+                    <div class="event-content">
+                      <h5 class="event-title">
+                        <a href="event-detail.html">Syukur Sidiq Nur Alam</a>
+                      </h5>
+                    </div>
+                  </li>
+                </ul>
+                </div>
+            </div>
           </div>
          
           

@@ -18,3 +18,90 @@
     padding: 8px;
     border-bottom: 1px solid #ddd;
   }
+
+/* partner */
+.partner-div {
+    text-align: center;
+
+
+}
+
+.table-wrapper {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.partner-container {
+    padding: 100px;
+}
+
+
+.partner-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* partner end */
+
+
+
+/* LAYOUT STYLING STARTS */
+
+.d-flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LAYOUT STYLING ENDS */
+
+
+/* PADDING MARGIN STYLING STARTS */
+
+.p-0 {
+    padding: 0px;
+}
+
+/* PADDING MARGIN STYLING ENDS */
+
+
+
+/* BORDER STYLING STARTS */
+
+.rounded-sm {
+    border-radius: 10px;
+}
+
+
+
+/* BORDER STYLING ENDS */
+
+
+
+
+/* HOVER BOX START */
+
+.box-border-1 {
+    box-shadow: 5px 5px 4px 0px #709567cf;
+}
+
+.box-fade:hover {
+    background-color: rgb(236, 236, 236);
+}
+
+/* HOVER BOX END */

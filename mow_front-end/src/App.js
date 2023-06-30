@@ -17,6 +17,10 @@ import DriverDashboard from "./pages/PrivatePages/Driver/DriverDashboard";
 import MemberDashboard from "./pages/PrivatePages/Member/MemberDashboard";
 import PartnerDashboard from "./pages/PrivatePages/Partner/PartnerDashboard";
 import DetailsDelivery from "./pages/PrivatePages/Driver/DetailsDelivery";
+import DetailpakageMember from "./pages/PrivatePages/Member/detailspakage";
+import FeedbackMember from "./pages/PrivatePages/Member/feedback";
+import DonorDashboard from "./pages/PrivatePages/Donor/DonorDashboard";
+import DonorForm from "./pages/PrivatePages/Donor/DonorForm";
 function App() {
   return (
     <>
@@ -38,6 +42,15 @@ function App() {
           <Route path="/details" element={<DetailsDelivery />} />
           <Route path="/member" element={<MemberDashboard />} />
           <Route path="/partner" element={<PartnerDashboard />} />
+
+          {/* member */}
+          <Route path="/member" element={<MemberDashboard />} />
+          <Route path="/detailpakage" element={<DetailpakageMember />} />
+          <Route path="/feedback" element={<FeedbackMember />} />
+
+          {/* End member */}
+          <Route path="/donor" element={<DonorDashboard />} />
+          <Route path="/donate" element={<DonorForm />} />
         </Routes>
         <Footer />
       </Router>

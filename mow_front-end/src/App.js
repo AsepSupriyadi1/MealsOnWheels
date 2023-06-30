@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/PrivatePages/Admin/AdminDashboard";
 import DriverDashboard from "./pages/PrivatePages/Driver/DriverDashboard";
 import MemberDashboard from "./pages/PrivatePages/Member/MemberDashboard";
 import PartnerDashboard from "./pages/PrivatePages/Partner/PartnerDashboard";
+import DetailsDelivery from "./pages/PrivatePages/Driver/DetailsDelivery";
 function App() {
   return (
     <>
@@ -34,6 +35,7 @@ function App() {
           {/* PRIVATE PATE - SEMENTARA PUBLIC DULU */}
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/driver" element={<DriverDashboard />} />
+          <Route path="/details" element={<DetailsDelivery />} />
           <Route path="/member" element={<MemberDashboard />} />
           <Route path="/partner" element={<PartnerDashboard />} />
         </Routes>

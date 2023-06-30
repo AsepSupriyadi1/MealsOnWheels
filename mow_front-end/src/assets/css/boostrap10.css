@@ -7,3 +7,14 @@
 .mx-auto {
     margin: 10px auto !important;
 }
+
+.delivery-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .deliv-rows {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }

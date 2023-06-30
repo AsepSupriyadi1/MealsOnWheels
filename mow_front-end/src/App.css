@@ -1676,8 +1676,8 @@ a.flex-prev {
 }
 
 .member-thumb {
+    height: 100%;
     position: relative;
-    overflow: hidden;
 }
 
 .member-thumb img {

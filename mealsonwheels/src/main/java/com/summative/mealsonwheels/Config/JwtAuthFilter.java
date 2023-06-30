@@ -1,6 +1,8 @@
 package com.summative.mealsonwheels.Config;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.summative.mealsonwheels.Entity.Tokens;
+import com.summative.mealsonwheels.Repositories.TokensRepository;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,6 +28,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final TokensRepository tokensRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -50,8 +56,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     // ambil user details dari database
                     UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail); 
 
+
+                    // check apakah tokennya valid di database atau ngk / di blacklist atau tidak
+                    // mencari token dengan token dan filter token nya yang tidak expired dan tidak revoked 
+                    // jika tidak ada akan return false
+                    boolean isTokenValid = tokensRepository.findByToken(jwt).map(t -> 
+                        !t.isExpired() && !t.isRevoked())
+                        .orElse(false);
+
+
                     // check if user didalam token is valid or not 
-                    if(jwtService.isTokenValid(jwt, userDetails)){
+                    if(jwtService.isTokenValid(jwt, userDetails) && isTokenValid){
 
 
                         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userEmail, userDetails,userDetails.getAuthorities());

@@ -10,6 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -51,6 +52,8 @@ public class UserApp implements UserDetails {
     @Column(name = "user_role")
     private UserRole userRole;
 
+    @OneToMany(mappedBy = "user")
+    private List<Tokens> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

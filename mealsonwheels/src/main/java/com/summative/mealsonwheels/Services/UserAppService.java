@@ -61,6 +61,13 @@ public class UserAppService implements UserDetailsService {
 		return userAppRepo.findAll();
 	}
 
+
+
+    public UserApp findUserByEmail(String email) throws UsernameNotFoundException {
+        UserApp user = userAppRepo.findByEmail(email).get();
+		return user;
+    }
+
 }
 
 

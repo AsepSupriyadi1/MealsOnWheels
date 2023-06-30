@@ -17,7 +17,11 @@ import com.summative.mealsonwheels.Config.JwtService;
 import com.summative.mealsonwheels.Dto.AuthenticationRequest;
 import com.summative.mealsonwheels.Dto.AuthenticationResponse;
 import com.summative.mealsonwheels.Dto.ResponseData;
+import com.summative.mealsonwheels.Entity.TokenType;
+import com.summative.mealsonwheels.Entity.Tokens;
 import com.summative.mealsonwheels.Entity.UserApp;
+import com.summative.mealsonwheels.Repositories.TokensRepository;
+import com.summative.mealsonwheels.Services.TokensService;
 import com.summative.mealsonwheels.Services.UserAppService;
 
 @RestController
@@ -31,6 +35,12 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private TokensRepository tokensRepository;
+
+    @Autowired
+    private TokensService tokensService;
+
     @Autowired 
     private JwtService jwtService;
 
@@ -43,8 +53,21 @@ public class AuthController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-            UserDetails user = userAppService.loadUserByUsername(loginRequest.getEmail());
-            String token = jwtService.generateToken(user);
+            UserDetails principals = userAppService.loadUserByUsername(loginRequest.getEmail());
+            UserApp users = userAppService.findUserByEmail(principals.getUsername());
+            
+            String token = jwtService.generateToken(principals);
+          
+            Tokens jwtToken = Tokens.builder()
+                .user(users)
+                .token(token)
+                .tokenType(TokenType.BEARER)
+                .revoked(false)
+                .expired(false)
+                .build();
+
+            tokensService.revokeAllUserTokens(users);
+            tokensRepository.save(jwtToken);
             authenticationResponse.setToken(token);
             return ResponseEntity.ok(authenticationResponse);
 

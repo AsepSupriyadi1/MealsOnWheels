@@ -30,17 +30,14 @@ padding: 100px;
     border-collapse: collapse;
   }
   
-  th, td {
+  .partner-th, .partner-td {
     text-align: center;
     padding: 8px;
     border-bottom: 1px solid #ddd;
   }
   
-  th {
-    background-color: #f2f2f2;
-  }
   
-  tr:hover {
+  .partner-tr:hover {
     background-color: #f5f5f5;
   }
 

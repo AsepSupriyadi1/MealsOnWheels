@@ -16,6 +16,8 @@ import AdminDashboard from "./pages/PrivatePages/Admin/AdminDashboard";
 import DriverDashboard from "./pages/PrivatePages/Driver/DriverDashboard";
 import MemberDashboard from "./pages/PrivatePages/Member/MemberDashboard";
 import PartnerDashboard from "./pages/PrivatePages/Partner/PartnerDashboard";
+import DonorDashboard from "./pages/PrivatePages/Donor/DonorDashboard";
+import DonorForm from "./pages/PrivatePages/Donor/DonorForm";
 function App() {
   return (
     <>
@@ -36,6 +38,8 @@ function App() {
           <Route path="/driver" element={<DriverDashboard />} />
           <Route path="/member" element={<MemberDashboard />} />
           <Route path="/partner" element={<PartnerDashboard />} />
+          <Route path="/donor" element={<DonorDashboard />} />
+          <Route path="/donate" element={<DonorForm />} />
         </Routes>
         <Footer />
       </Router>

@@ -1,11 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { gallery } from "../../../assets/images/Images";
-import { faCar, faDollar, faHamburger, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faArrowAltCircleRight, faBuilding, faCar, faCartPlus, faDollar, faDriversLicense, faHamburger, faPiggyBank, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
+
+import "./admin.css";
 
 const AdminDashboard = () => {
   return (
     <>
       <div className="container">
+        {/* -=-=-=-=-= PAGE HEADER START -=-=-=-=-= */}
         <div class="page-header">
           <div class="row">
             <div class="col-md-6 col-sm-6">
@@ -16,112 +19,139 @@ const AdminDashboard = () => {
             </div>
           </div>
         </div>
+        {/* -=-=-=-=-= PAGE HEADER START -=-=-=-=-= */}
+
+        {/* -=-=-=-=-= CARD STATUS START -=-=-=-=-= */}
         <div class="row">
           <div class="col-md-3 col-sm-6 ">
-            <div class="box-content d-flex-between box-border-1 rounded-sm">
-              <div>
-                <h1>85</h1>
-                <h3>Meals</h3>
+            <div class="rounded admin__status_card shadow">
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <h3 className="fs-6">Meals Menu</h3>
+                  <h2 className="fs-1 fw-bold">85</h2>
+                </div>
+
+                <FontAwesomeIcon icon={faHamburger} className="admin__status_icon" />
               </div>
-              <FontAwesomeIcon icon={faHamburger} style={{ fontSize: "5em", color: "#BBBBBB" }} />
+
+              <div className="admin__status_links bg-light rounded">
+                <a href="">
+                  View details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
+                </a>
+              </div>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="box-content d-flex-between box-border-1 rounded-sm">
-              <div>
-                <h1>85</h1>
-                <h3>Partner</h3>
+          <div class="col-md-3 col-sm-6 ">
+            <div class="rounded admin__status_card shadow">
+              <div className="d-flex justify-content-between align-items-center ">
+                <div>
+                  <h3 className="fs-6">Orders</h3>
+                  <h2 className="fs-1 fw-bold">85</h2>
+                </div>
+
+                <FontAwesomeIcon icon={faCartPlus} className="admin__status_icon" />
               </div>
-              <FontAwesomeIcon icon={faUsers} style={{ fontSize: "5em", color: "#BBBBBB" }} />
+
+              <div className="admin__status_links bg-light rounded">
+                <a href="">
+                  View details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
+                </a>
+              </div>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="box-content d-flex-between box-border-1 rounded-sm">
-              <div>
-                <h1>85</h1>
-                <h3>Driver</h3>
+          <div class="col-md-3 col-sm-6 ">
+            <div class="rounded admin__status_card shadow">
+              <div className="d-flex justify-content-between align-items-center ">
+                <div>
+                  <h3 className="fs-6">Partners</h3>
+                  <h2 className="fs-1 fw-bold">85</h2>
+                </div>
+
+                <FontAwesomeIcon icon={faBuilding} className="admin__status_icon" />
               </div>
-              <FontAwesomeIcon icon={faCar} style={{ fontSize: "5em", color: "#BBBBBB" }} />
+
+              <div className="admin__status_links bg-light rounded">
+                <a href="">
+                  View Details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
+                </a>
+              </div>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="box-content box-fade d-flex-between box-border-1 rounded-sm">
-              <div>
-                <h1>85</h1>
-                <h3>Donors</h3>
+          <div class="col-md-3 col-sm-6 ">
+            <div class="rounded admin__status_card shadow">
+              <div className="d-flex justify-content-between align-items-center ">
+                <div>
+                  <h3 className="fs-6">Drivers</h3>
+                  <h2 className="fs-1 fw-bold">85</h2>
+                </div>
+
+                <FontAwesomeIcon icon={faCar} className="admin__status_icon" />
               </div>
-              <FontAwesomeIcon icon={faDollar} style={{ fontSize: "5em", color: "#BBBBBB" }} />
+
+              <div className="admin__status_links bg-light rounded">
+                <a href="">
+                  View Details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
+        {/* -=-=-=-=-= CARD STATUS END -=-=-=-=-= */}
 
+        {/* -=-=-=-=-= TABLE START -=-=-=-=-= */}
         <div className="row">
-          <div className="col-md-12">
+          <div className="col-md-8">
             <div className="box-content">
               <h4 class="widget-title">
-                <span>Orders</span>
+                <span>Top Donations</span>
               </h4>
-              <table className="delivery-table">
-                <thead style={{ backgroundColor: "#333", color: "#faca3a" }}>
-                  <tr>
-                    <th className="deliv-rows">No</th>
-                    <th className="deliv-rows">Meals Orders</th>
-                    <th className="deliv-rows">Address</th>
-                    <th className="deliv-rows">Status</th>
-                    <th className="deliv-rows">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="deliv-rows">1</td>
-                    <td className="deliv-rows">Meals Package B</td>
-                    <td className="deliv-rows">Kp. Legok Midar 001/021, Ciparay, Bandung</td>
-                    <td className="deliv-rows">PENDING</td>
-                    <td className="deliv-rows">
-                      <a href="#" class="btn light-btn">
-                        Details
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="deliv-rows">2</td>
-                    <td className="deliv-rows">Meals Package A</td>
-                    <td className="deliv-rows">Kp. Legok Midar 001/021, Ciparay, Bandung</td>
-                    <td className="deliv-rows">PROCESS</td>
-                    <td className="deliv-rows">
-                      <a href="#" class="btn light-btn">
-                        Details
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="deliv-rows">3</td>
-                    <td className="deliv-rows">Meals Package C</td>
-                    <td className="deliv-rows">Kp. Legok Midar 001/021, Ciparay, Bandung</td>
-                    <td className="deliv-rows">ON DELIVER</td>
-                    <td className="deliv-rows">
-                      <a href="#" class="btn light-btn">
-                        DETAILS
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="deliv-rows">3</td>
-                    <td className="deliv-rows">Meals Package C</td>
-                    <td className="deliv-rows">Kp. Legok Midar 001/021, Ciparay, Bandung</td>
-                    <td className="deliv-rows">COMPLETE</td>
-                    <td className="deliv-rows">
-                      <a href="#" class="btn light-btn">
-                        Details
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div className="tb_reponsive">
+                <table className="table table-striped">
+                  <thead className="table-dark">
+                    <tr>
+                      <th>No</th>
+                      <th>Donors</th>
+                      <th>Amount</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Kencan Total</td>
+                      <td>$ 250,000</td>
+                      <td>12/June/2023</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Mencium Ketek</td>
+                      <td>$ 250,000</td>
+                      <td>12/June/2023</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>Tai Kejora</td>
+                      <td>$ 250,000</td>
+                      <td>12/June/2023</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div className="col-md">
+            <div className="box-content admin__donors_container">
+              <FontAwesomeIcon icon={faPiggyBank} className="admin__donors_icon" />
+              <h1 className="text-light fw-bold">$ 234,000</h1>
+              <h2 className="text-light fs-5">Current Donation Amount</h2>
+              <a className="btn btn-light rounded mt-3" href="">
+                View Donation History
+              </a>
             </div>
           </div>
         </div>
-      </div>{" "}
+        {/* -=-=-=-=-= TABLE END -=-=-=-=-= */}
+      </div>
       {/* END CONTAINER */}
     </>
   );

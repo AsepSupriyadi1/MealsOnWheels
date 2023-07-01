@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import "./assets/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/font-awesome.css";
 import "./App.css";
 import "./assets/css/boostrap10.css";
@@ -16,12 +16,17 @@ import AdminDashboard from "./pages/PrivatePages/Admin/AdminDashboard";
 import DriverDashboard from "./pages/PrivatePages/Driver/DriverDashboard";
 import MemberDashboard from "./pages/PrivatePages/Member/MemberDashboard";
 import PartnerDashboard from "./pages/PrivatePages/Partner/PartnerDashboard";
-import DetailsDelivery from "./pages/PrivatePages/Driver/DetailsDelivery";
+import DetailsDelivery from "./pages/PrivatePages/Admin/DetailsDelivery";
 import DetailpakageMember from "./pages/PrivatePages/Member/detailspakage";
 import FeedbackMember from "./pages/PrivatePages/Member/feedback";
 import DonorDashboard from "./pages/PrivatePages/Donor/DonorDashboard";
 import DonorForm from "./pages/PrivatePages/Donor/DonorForm";
 import DonationDetails from "./pages/PrivatePages/Donor/DonationDetails";
+import ManageDriver from "./pages/PrivatePages/Admin/ManageDriver";
+import ManageMeals from "./pages/PrivatePages/Admin/ManageMeals";
+import ManagePartner from "./pages/PrivatePages/Admin/ManagePartner";
+import ManageOrders from "./pages/PrivatePages/Admin/ManageOrders";
+
 function App() {
   return (
     <>
@@ -38,9 +43,8 @@ function App() {
           <Route path="/terms" element={<TermsPage />} />
 
           {/* PRIVATE PATE - SEMENTARA PUBLIC DULU */}
-          <Route path="/admin" element={<AdminDashboard />} />
+
           <Route path="/driver" element={<DriverDashboard />} />
-          <Route path="/details" element={<DetailsDelivery />} />
           <Route path="/member" element={<MemberDashboard />} />
           <Route path="/partner" element={<PartnerDashboard />} />
 
@@ -53,6 +57,14 @@ function App() {
           <Route path="/donor" element={<DonorDashboard />} />
           <Route path="/donate" element={<DonorForm />} />
           <Route path="//donationStatus" element={<DonationDetails />} />
+
+          {/* Admin */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/all-drivers" element={<ManageDriver />} />
+          <Route path="/all-partners" element={<ManagePartner />} />
+          <Route path="/all-meals" element={<ManageMeals />} />
+          <Route path="/orders" element={<ManageOrders />} />
+          <Route path="/order-details" element={<DetailsDelivery />} />
         </Routes>
         <Footer />
       </Router>

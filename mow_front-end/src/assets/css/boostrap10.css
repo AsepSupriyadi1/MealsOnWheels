@@ -1,4 +1,50 @@
+p {
+    font-size: 1rem !important;
+    line-height: 1.5;
+}
+
+
+th {
+    font-size: 1rem !important;
+}
+
+td {
+    font-size: 1rem !important;
+}
+
+li {
+    font-size: 1rem !important;
+}
+
+
+.btn {
+    text-transform: capitalize !important;
+}
+
+
+.thead_green {
+    background-color: #292B28 !important;
+}
+
+a {
+    font-size: 1rem;
+}
+
+
+
 /* TAMBAH DUA CLASS INI UNTUK TENGAHIN COLUMN */
+
+
+
+.bg-danger {
+    background-color: red;
+}
+
+
+.bg-warning {
+    background-color: yellow;
+}
+
 
 .float-none {
     float: none;
@@ -8,8 +54,17 @@
     margin: 10px auto !important;
 }
 
+
+.tb_reponsive {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 .delivery-table {
     width: 100%;
+    height: 200px;
+    overflow-y: auto;
     border-collapse: collapse;
 }
 
@@ -46,10 +101,10 @@
     text-align: center;
     padding: 8px;
     border-bottom: 1px solid #ddd;
-  }
-  
-  
-  .partner-tr:hover {
+}
+
+
+.partner-tr:hover {
     background-color: #f5f5f5;
 }
 
@@ -71,8 +126,12 @@
 
 /* PADDING MARGIN STYLING STARTS */
 
+.m-0 {
+    margin: 0 !important;
+}
+
 .p-0 {
-    padding: 0px;
+    padding: 0 !important;
 }
 
 /* PADDING MARGIN STYLING ENDS */
@@ -103,3 +162,269 @@
 }
 
 /* HOVER BOX END */
+
+
+
+/* -=-=-=-=-= DASHBOARD PAGE HEADER START -=-=-=-=-= */
+
+
+.head_container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.head_child {
+    width: 100%;
+}
+
+
+
+.head_img {
+    width: 100%;
+    height: auto;
+}
+
+.head_desc {
+    padding: 20px;
+}
+
+.head_desc h4 {
+    font-weight: 700 !important;
+    font-size: 1.2em !important;
+}
+
+.head_desc p {
+    margin: 8px 0;
+}
+
+.head_status_card {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: #ededed;
+    border: 1px dashed rgb(108, 108, 108);
+}
+
+
+
+.head_status_icon {
+    font-size: 3em;
+    color: #aeaeae;
+}
+
+.head_status_card h2 {
+    font-weight: 600;
+}
+
+
+
+/* -=-=-=-=-= DASHBOARD PAGE HEADER END -=-=-=-=-= */
+
+
+
+
+
+/* -=-=-=-=-= DASHBOARD PAGE ROLE CARD START -=-=-=-=-= */
+
+.role_vector {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+
+
+.role_desc table {
+    width: 80%;
+    margin: 10px auto;
+}
+
+/* -=-=-=-=-= DASHBOARD PAGE ROLE CARD END -=-=-=-=-= */
+
+
+
+
+/* -=-=-=-=-= DELIVERY DETAILS -=-=-=-=-= */
+
+.line-container {
+    margin-top: 30vh;
+    display: flex;
+    width: 100%;
+}
+
+.line-container .progress-line {
+    position: relative;
+    margin: 0 auto;
+    border-radius: 10px;
+    width: 90%;
+    background: grey;
+    height: 5px;
+    z-index: -1;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+/* dsafdsaf */
+
+.step-wizard-list {
+    background: #fff;
+    color: #333;
+    list-style-type: none;
+    border-radius: 10px;
+    display: flex;
+    padding: 20px 10px;
+    position: relative;
+    z-index: 10;
+}
+
+.step-wizard-item {
+    padding: 0 20px;
+    flex-basis: 0;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    min-width: 170px;
+    position: relative;
+}
+
+.step-wizard-item+.step-wizard-item:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 19px;
+    background: #709567;
+    width: 100%;
+    height: 2px;
+    transform: translateX(-50%);
+    z-index: -10;
+}
+
+.progress-count {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 600;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    color: transparent;
+}
+
+.progress-count:after {
+    content: "";
+    height: 40px;
+    width: 40px;
+    background: #709567;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: -10;
+}
+
+.progress-count:before {
+    content: "";
+    height: 10px;
+    width: 20px;
+    border-left: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -60%) rotate(-45deg);
+    transform-origin: center center;
+}
+
+.progress-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.current-item .progress-count:before,
+.current-item~.step-wizard-item .progress-count:before {
+    display: none;
+}
+
+.current-item~.step-wizard-item .progress-count:after {
+    height: 10px;
+    width: 10px;
+}
+
+.current-item~.step-wizard-item .progress-label {
+    opacity: 0.5;
+}
+
+.current-item .progress-count:after {
+    background: #fff;
+    border: 2px solid #709567;
+}
+
+.current-item .progress-count {
+    color: #709567;
+}
+
+/* Responsive Styles */
+
+@media (max-width: 767px) {
+    .step-wizard-list {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .step-wizard-item {
+        flex-basis: auto;
+        margin-bottom: 10px;
+        min-width: auto;
+    }
+
+    .step-wizard-item+.step-wizard-item:after {
+        display: none;
+    }
+}
+
+@media (max-width: 991px) {
+    .progress-count {
+        height: 30px;
+        width: 30px;
+        font-size: 14px;
+    }
+
+    .progress-count:after {
+        height: 30px;
+        width: 30px;
+    }
+
+    .progress-count:before {
+        height: 8px;
+        width: 16px;
+    }
+
+    .progress-label {
+        font-size: 12px;
+    }
+}
+
+
+
+/* MEALS MENU */
+
+.meals_menu_container {
+    height: 200px;
+    overflow-y: auto;
+}

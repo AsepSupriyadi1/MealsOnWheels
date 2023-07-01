@@ -20,6 +20,7 @@ import testi4 from "./placehold/testimonials/testi4.jpg";
 import driver from "./placehold/gallery/driver.jpg";
 import imgtesti from "./placehold/testimonials/giver.png";
 import membereat from "./placehold/gallery/memberfood.jpg";
+import headDriver from "./dashead/driver.jpg";
 
 export const resources = {
   logo1,
@@ -62,4 +63,8 @@ export const food = {
 
 export const Member = {
   membereat,
+};
+
+export const DashHeader = {
+  headDriver,
 };

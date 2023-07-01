@@ -1,0 +1,76 @@
+.bjr {
+    color: aliceblue;
+    background-color: blue;
+}
+
+.admin__status_card {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 180px;
+}
+
+
+
+.admin__status_icon {
+    display: block;
+    width: 45px;
+    height: 45px;
+    font-size: 1.8em;
+    background-color: #709567;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.admin__status_links {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 8px 25px;
+}
+
+
+.admin__status_links a {
+    font-size: 1rem;
+}
+
+
+.admin__donors_container {
+    background: url(../../../assets/images/map.png);
+    background-size: cover;
+    background-color: #709567ec;
+
+    background-blend-mode: color-burn;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.admin__donors_icon {
+    display: block;
+    width: 80px;
+    height: 80px;
+    margin: 10px auto;
+    background-color: #86b17c;
+    color: white;
+    padding: 25px;
+    border-radius: 50%;
+}
+
+
+.admin__dots_warning {
+    font-size: 1rem;
+    color: rgb(255, 157, 0);
+    padding-right: 10px;
+}
+
+.admin__dots_success {
+    font-size: 1rem;
+    color: rgb(38, 255, 0);
+    padding-right: 10px;
+}

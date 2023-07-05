@@ -11,7 +11,7 @@ const ContactPage = () => {
               <h2 class="page-title">Contact Page</h2>
             </div>
             <div class="col-md-6 col-sm-6 hidden-xs back-home">
-              <a href="index.html">&larr; Go back Home</a>
+              <a href="/home">&larr; Go back Home</a>
             </div>
           </div>
         </div>

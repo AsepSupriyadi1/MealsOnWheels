@@ -45,7 +45,7 @@ export const Testimonial = {
   kentang,
   givers,
   grand,
-  grandma
+  grandma,
   david,
 };
 

@@ -52,7 +52,7 @@ const ContactPage = () => {
                 <textarea name="message" id="message" rows="6"></textarea>
               </fieldset>
               <fieldset>
-                <button id="submit_btn" class="btn main-btn" type="submit" name="">
+                <button id="submit_btn" class="btn btn-warning" type="submit" name="">
                   Send Message
                 </button>
               </fieldset>

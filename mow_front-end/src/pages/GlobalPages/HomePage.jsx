@@ -2,11 +2,11 @@ import axios from "axios";
 import React, { useEffect } from "react";
 
 const HomePage = () => {
-  useEffect(() => {
-    axios.get("http://localhost:8080/api/v1/meal/testMeals").then((response) => {
-      console.log(response);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("http://localhost:8080/api/v1/meal/testMeals").then((response) => {
+  //     console.log(response);
+  //   });
+  // }, []);
 
   return (
     <>

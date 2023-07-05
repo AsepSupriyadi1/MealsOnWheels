@@ -26,7 +26,8 @@ import ManageDriver from "./pages/PrivatePages/Admin/ManageDriver";
 import ManageMeals from "./pages/PrivatePages/Admin/ManageMeals";
 import ManagePartner from "./pages/PrivatePages/Admin/ManagePartner";
 import ManageOrders from "./pages/PrivatePages/Admin/ManageOrders";
-
+import BankAddress from "./pages/PrivatePages/Donor/BankAddress";
+import "./pages/PrivatePages/Member/member.css"
 function App() {
   return (
     <>
@@ -53,10 +54,11 @@ function App() {
           <Route path="/detailpakage" element={<DetailpakageMember />} />
           <Route path="/feedback" element={<FeedbackMember />} />
 
-          {/* End member */}
+          {/* donor */}
           <Route path="/donor" element={<DonorDashboard />} />
           <Route path="/donate" element={<DonorForm />} />
-          <Route path="//donationStatus" element={<DonationDetails />} />
+          <Route path="/donationStatus" element={<DonationDetails />} />
+          <Route path="/thanks" element={<BankAddress />} />
 
           {/* Admin */}
           <Route path="/admin" element={<AdminDashboard />} />

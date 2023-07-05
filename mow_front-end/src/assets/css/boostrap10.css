@@ -8,12 +8,13 @@ p {
 
 
 input {
-    font-size: 1rem !important;
+    font-size: 12px !important;
 }
 
 label {
-    font-size: 1rem !important;
+    font-size: 0.9rem !important;
 }
+
 
 th {
     font-size: 1rem !important;

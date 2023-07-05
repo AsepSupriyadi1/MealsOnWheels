@@ -1,21 +1,21 @@
 const TermsPage = () => {
   return (
     <div className="container">
-      <div class="page-header">
-        <div class="row">
-          <div class="col-md-6 col-sm-6">
-            <h2 class="page-title">Terms and Conditions</h2>
+      <div className="page-header">
+        <div className="row">
+          <div className="col-md-6 col-sm-6">
+            <h2 className="page-title">Terms and Conditions</h2>
           </div>
-          <div class="col-md-6 col-sm-6 hidden-xs back-home">
+          <div className="col-md-6 col-sm-6 hidden-xs back-home">
             <a href="/home">&larr; Go back Home</a>
           </div>
         </div>
       </div>
       <div className="row" style={{ display: "flex", justifyContent: "center" }}>
-        <div class="col-md-9">
-          <div class="box-content">
-            <h4 class="widget-title">
-              <span className="text-secondary">Meals on Wheels</span>
+        <div className="col-md-9">
+          <div className="box-content shadow">
+            <h4 className="widget-title">
+              <span className=" text-success">Meals on Wheels</span>
             </h4>
             <h4>Terms and Conditions</h4><br />
             <p>

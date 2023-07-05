@@ -16,16 +16,16 @@ const ContactPage = () => {
 
         <div class="row">
           <div class="col-md-8 contact-page">
-          
+
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d262202.88671172387!2d107.29343528326255!3d-6.91518078792871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e616cf485735%3A0x3d9935966c87148!2sDamn*21%20I%20Love%20Indonesia!5e0!3m2!1sid!2sid!4v1687859433414!5m2!1sid!2sid"
               height="450"
               allowfullscreen=""
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
-              style={{ width: "100%" }}
+              style={{ width: "100%" }} className="shadow"
             ></iframe>
-            <div id="contact" class="contactForm clearfix">
+            <div id="contact" class="contactForm clearfix shadow">
               <div id="result"></div>
               <fieldset>
                 <label for="name-id">
@@ -52,7 +52,7 @@ const ContactPage = () => {
                 <textarea name="message" id="message" rows="6"></textarea>
               </fieldset>
               <fieldset>
-                <button id="submit_btn" class="btn btn-warning" type="submit" name="">
+                <button id="submit_btn" class="btn btn-warning rounded-0" type="submit" name="">
                   Send Message
                 </button>
               </fieldset>
@@ -60,9 +60,9 @@ const ContactPage = () => {
           </div>
 
           <div class="col-md-4">
-            <div class="box-content">
+            <div class="box-content shadow">
               <h4 class="widget-title">
-                <span>Our Gallery</span>
+                <span className="text-success">Our Gallery</span>
               </h4>
               <div class="gallery-wrapper">
                 <div class="gallery-thumb">
@@ -97,9 +97,10 @@ const ContactPage = () => {
                 </div>
               </div>
             </div>
-            <div class="box-content">
+
+            <div class="box-content shadow">
               <h4 class="widget-title">
-                <span>Our Team</span>
+                <span className="text-success">Our Teams</span>
               </h4>
               <div class="events-sidebar">
                 <ul>
@@ -108,9 +109,10 @@ const ContactPage = () => {
                       <img src={Contactus.thumb11} alt="" />
                     </div>
                     <div class="event-content">
-                      <h5 class="event-title">
-                        <a href="event-detail.html">Abdul Rahman Solehudin</a>
+                      <h5 class="event-title ">
+                        <a href="event-detail.html" className="text-success">Abdul Rahman Solehudin</a>
                       </h5>
+                      <h6 class="event-subtitle text-secondary">Functional and UI Analysis</h6>
                     </div>
                   </li>
                   <li class="event-item">
@@ -119,8 +121,9 @@ const ContactPage = () => {
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">
-                        <a href="event-detail.html">Ajri Muhamad Siddik</a>
+                        <a href="event-detail.html" className="text-success">Ajri Muhamad Siddik</a>
                       </h5>
+                      <h6 class="event-subtitle text-secondary">Functional and Data Analysis</h6>
                     </div>
                   </li>
                   <li class="event-item">
@@ -129,33 +132,37 @@ const ContactPage = () => {
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">
-                        <a href="event-detail.html">Asep Supriyadi</a>
+                        <a href="event-detail.html" className="text-success">Asep Supriyadi</a>
                       </h5>
+                      <h6 class="event-subtitle text-secondary">Back End Security Analysis</h6>
                     </div>
                   </li>
-				  <li class="event-item">
+                  <li class="event-item">
                     <div class="event-thumb">
                       <img src={Contactus.thumb33} alt="" />
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">
-                        <a href="event-detail.html">Darren Farel andrian</a>
+                        <a href="event-detail.html" className="text-success">Darren Farel Andrian</a>
                       </h5>
+                      <h6 class="event-subtitle text-secondary">Scenario Analysis and Planning </h6>
                     </div>
                   </li>
-				  <li class="event-item">
+                  <li class="event-item">
                     <div class="event-thumb">
                       <img src={Contactus.thumb33} alt="" />
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">
-                        <a href="event-detail.html">Syukur Sidiq Nur Alam</a>
+                        <a href="event-detail.html"className="text-success">Syukur Sidiq Nur Alam</a>
                       </h5>
+                      <h6 class="event-subtitle text-secondary">Front End Designer and Develper</h6>
                     </div>
                   </li>
                 </ul>
-                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </div>

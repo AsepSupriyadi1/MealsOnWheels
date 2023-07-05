@@ -1,5 +1,6 @@
 package com.summative.mealsonwheels.Entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,8 +19,14 @@ public class Meals {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_meals;
+
+    @Column(nullable = false)
     private String meals_name;
+
+    @Column(nullable = false)
     private String meals_desc;
+
+    @Column(nullable = false)
     private String amount;
 
 }

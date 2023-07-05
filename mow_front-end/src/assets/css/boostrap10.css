@@ -1,8 +1,19 @@
+/* -=-=-=-= FONT SIZE START -=-=-=-=-= */
+
 p {
     font-size: 1rem !important;
     line-height: 1.5;
 }
 
+
+
+input {
+    font-size: 1rem !important;
+}
+
+label {
+    font-size: 1rem !important;
+}
 
 th {
     font-size: 1rem !important;
@@ -16,6 +27,7 @@ li {
     font-size: 1rem !important;
 }
 
+/* -=-=-=-= FONT SIZE END -=-=-=-=-= */
 
 .btn {
     text-transform: capitalize !important;

@@ -1,6 +1,8 @@
 package com.summative.mealsonwheels.Config;
 
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,8 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import com.summative.mealsonwheels.Repositories.UserAppRepository;
 
@@ -23,8 +25,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApplicationConfig {
     
-
-
     private final UserAppRepository repository;
 
     @Bean
@@ -57,16 +57,19 @@ public class ApplicationConfig {
 
     // Used by Spring Security if CORS is enabled.
     @Bean
-    CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source =
-            new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // Menentukan daftar origin yang diizinkan
+		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE")); // Menentukan metode yang diizinkan
+																					
+		configuration.setAllowedHeaders(Arrays.asList("*"));  // Menentukan header yang diizinkan
+		configuration.setAllowCredentials(true);    // Mengizinkan kredensial otentikasi
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration); // Mengaplikasikan konfigurasi ke semua URL
+
+		return source;
+	}
+
     
 }

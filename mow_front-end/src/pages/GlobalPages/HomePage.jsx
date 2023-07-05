@@ -9,10 +9,10 @@ const HomePage = () => {
       <div class="container">
         {/* slide show */}
         <div className="services box-content shadow" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-          <div className="shadow" id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="10000">
-                <img src={Testimonial.imgtesti} height="500px" width="100%" alt="..." />
+          <div className="shadow" id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel ">
+            <div class="carousel-inner" >
+              <div class="carousel-item active" data-bs-interval="10000" >
+                <img src={Testimonial.imgtesti} className="d-block w-100"   alt="..." />
                 <div class="d-none d-md-block  text-center">
                   <div className="bg-dark py-4" style={{ position: "absolute", bottom: "0", width: "100%", opacity: "0.8" }}>
                     <h5 className="text-white ">Welcome to Meals On Wheels</h5>
@@ -100,21 +100,29 @@ const HomePage = () => {
                 <div className="border  border-bottom border-secondary width-small"></div>
               </div>
               <div className="pt-4 px-4">
-                <p className="px-5">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem impedit a omnis placeat quod. Provident rerum nihil non modi praesentium iste voluptas possimus quaerat, similique eaque nulla magni quam impedit!</p>
+                <p className="md-px-5 ms-px-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem impedit a omnis placeat quod. Provident rerum nihil non modi praesentium iste voluptas possimus quaerat, similique eaque nulla magni quam impedit!</p>
 
               </div>
 
             </div>
+            
+            <div class="row justify-content-center text-center mt-5">
+  <div class="col-md-6 col-sm-12 text-md-end mb-3 mb-md-0">
+    <a href="/register" class="bg-warning text-dark text-center p-3 rounded-pill shadow " style={{ width: "100%" }} >
+      SIGN UP NOW
+    </a>
+  </div>
+  <div class="col-md-6 col-sm-12 text-md-start mt-4 mt-md-0">
+    <a href="/donate" class="bg-warning text-dark text-center p-3 rounded-pill shadow" style={{ width: "100%" }} >
+      DONATE NOW
+    </a>
+  </div>
+</div>
 
-            <div className="d-flex justify-content-center text-center mt-5">
-              <a href="/register" className="bg-warning text-dark text- p-3 rounded-pill me-4 shadow" style={{ width: "20%" }} >
-                SIGN UP NOW
-              </a>
-              <a href="/register" className="bg-warning text-dark p-3 rounded-pill shadow" style={{ width: "20%" }} >
-                DONATE NOW
-              </a>
+              
+              
             </div>
-          </div>
+          
           {/* end participate */}
           <div className="container py-5">
 
@@ -123,7 +131,7 @@ const HomePage = () => {
               <div className="border border-bottom border-secondary width-small"></div>
             </div>
             <div className="row py-5">
-              <div className="col-md-6 px-5">
+              <div className="col-md-6 mb-4 px-md-5 ">
                 <img className="shadow" src={Testimonial.grand} width="100%" alt="" />
               </div>
               <div className="col-md-6">
@@ -137,8 +145,8 @@ const HomePage = () => {
                 <h4 className="text-success">HISTORIC WHITE HOUSE CONFERENCE ON HUNGER, NUTRITION AND HEALTH</h4>
               <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quis cumque repellat dolores voluptate. Ratione, ad. Veritatis reiciendis, quos fuga labore, debitis officia ullam tempora unde quaerat, exercitationem autem officiis.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quis cumque repellat dolores voluptate. Ratione, ad. Veritatis reiciendis, quos fuga labore, debitis officia ullam tempora unde quaerat, exercitationem autem officiis.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quis cumque repellat dolores voluptate. Ratione, ad. Veritatis reiciendis, quos fuga labore, debitis officia ullam tempora unde quaerat, exercitationem autem officiis.</p>  
               </div>
-              <div className="col-md-6 px-5">
-              <img className="shadow" src={Testimonial.grandma} width="100%" alt="" />
+              <div className="col-md-6 px-md-5 ">
+              <img className="shadow " src={Testimonial.grandma} width="100%" alt="" />
               
               </div>
             </div>

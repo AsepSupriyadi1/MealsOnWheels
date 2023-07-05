@@ -4,14 +4,16 @@ import OurTeam from "../../components/UtilComponent/OurTeam";
 const ContactPage = () => {
   return (
     <>
+   
+
       <div class="container">
         <div class="page-header">
           <div class="row">
-            <div class="col-md-6 col-sm-6">
+            <div class="col-sm-6 ">
               <h2 class="page-title">Contact Page</h2>
             </div>
             <div class="col-md-6 col-sm-6 hidden-xs back-home">
-              <a href="/home">&larr; Go back Home</a>
+              <a href="index.html">&larr; Go back Home</a>
             </div>
           </div>
         </div>

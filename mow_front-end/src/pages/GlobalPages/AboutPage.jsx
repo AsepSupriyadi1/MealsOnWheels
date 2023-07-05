@@ -22,7 +22,7 @@ const AboutPage = () => {
         <div className="col-md-8">
          <div className="event-single">
           <div className="event-image">
-          <img src={Testimonial.testimonial} alt="" />
+          <img src={Testimonial.imgtesti} alt="" />
           <div className="event-content">
             <h3 className="about-h3">MEALS ON WHEELS AMERICA </h3>
             <p>
@@ -37,6 +37,8 @@ To empower local community programs to improve the health and quality of life of
           </div>   
          </div>
         </div>
+
+        
         <div className="col-md-4">
 
         
@@ -75,6 +77,8 @@ To empower local community programs to improve the health and quality of life of
 							</div> 
 						</div> 
 					</div>
+
+          
 					<div class="box-content">
               <h4 class="widget-title">
                 <span>Our Team</span>

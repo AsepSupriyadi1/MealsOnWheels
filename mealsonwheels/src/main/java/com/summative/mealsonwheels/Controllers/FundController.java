@@ -26,17 +26,18 @@ public class FundController {
     @PostMapping("/save")
     public Funds saveFunds(@RequestBody FundRequest fundsRequest){
 
-        UserApp user = userAppService.findUserById(fundsRequest.getUser());
+        // UserApp user = userAppService.findUserById(fundsRequest.getUser());
         Funds funds = new Funds();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");    
         
         // DONOR DETAILS
-        funds.setUser(user);
-        funds.setFirstName(funds.getFirstName());
-        funds.setLastName(funds.getLastName());
-        funds.setPhoneNumber(funds.getPhoneNumber());
-        funds.setEmail(funds.getEmail());
+        // funds.setUser(user);
+        funds.setFirstName(fundsRequest.getFirstName());
+        funds.setLastName(fundsRequest.getLastName());
+        funds.setPhoneNumber(fundsRequest.getPhoneNumber());
+        funds.setEmail(fundsRequest.getEmail());
         funds.setAddress(fundsRequest.getAddress());
+        funds.setStatus(fundsRequest.getStatus());
         
         // DONOR INFORMATION
         funds.setDonorAmount(Double.parseDouble(fundsRequest.getDonorAmount()));

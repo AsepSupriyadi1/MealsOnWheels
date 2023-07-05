@@ -1,4 +1,27 @@
+import { useContext, useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { loginAPI } from "../../api/auth";
+import { AuthContext } from "../../context/auth-context";
+
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const userCtx = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    const credentials = {
+      email,
+      password,
+    };
+
+    loginAPI(credentials, userCtx.login, navigate);
+  };
+
   return (
     <>
       <div class="container">
@@ -15,31 +38,26 @@ const LoginPage = () => {
 
         <div class="row">
           <div class="col-md-12">
-            <div class="box-content donate-form">
+            <div class="box-content">
               <h4 class="widget-title">
                 <span>Enter Login Information</span>
               </h4>
-              <form>
-                <fieldset>
-                  <label for="address">
-                    Email : <span>Enter Email Address</span>
-                  </label>
-                  <input type="text" id="address" name="address" class="form-input" />
-                </fieldset>
-                <fieldset>
-                  <label for="address2">
-                    Password : <span>Enter Password</span>
-                  </label>
-                  <input type="text" id="address2" name="address2" class="form-input" />
-                </fieldset>
-              </form>
-            </div>
-            <div class="big-button">
-              <fieldset>
-                <button type="submit" id="submit-button" class="big-white">
-                  Sign In
-                </button>
-              </fieldset>
+
+              <Form onSubmit={handleLogin}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email :</Form.Label>
+                  <Form.Control className="bg-light" type="email" placeholder="Enter your email address......" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>Password :</Form.Label>
+                  <Form.Control type="password" placeholder="Enter your password......" name="email" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </Form.Group>
+
+                <Button type="submit" className="w-100" variant="secondary">
+                  SUBMIT
+                </Button>
+              </Form>
             </div>
           </div>
         </div>

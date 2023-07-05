@@ -8,11 +8,13 @@ import java.util.function.Function;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class JwtService {
@@ -29,6 +31,15 @@ public class JwtService {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
+
+
+    public String extractTokenFromRequest(HttpServletRequest request) {
+	        String bearerToken = request.getHeader("Authorization");
+	        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+	            return bearerToken.substring(7);
+	        }
+	        return null;
+	}
 
 
     public String generateToken(UserDetails userDetails){

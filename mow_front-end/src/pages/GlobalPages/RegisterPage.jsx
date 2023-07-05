@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
+import { registerAPI } from "../../api/auth";
+import axios from "axios";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -10,16 +12,15 @@ const RegisterPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("fullname", fullname);
-    formData.append("address", address);
-    formData.append("userRole", userRole);
+    const formData = {
+      email,
+      password,
+      fullname,
+      address,
+      userRole,
+    };
 
-    const values = [...formData.entries()];
-
-    console.log(values);
+    registerAPI(formData);
   };
 
   return (
@@ -58,12 +59,12 @@ const RegisterPage = () => {
                   <Form.Label className="m-0">Join as :</Form.Label>
                   <Form.Select value={userRole} onChange={(e) => setUserRole(e.target.value)}>
                     <option disabled>Choose a role</option>
-                    <option defaultValue={true} value="ROLE_MEMBER">
+                    <option defaultValue={true} value="MEMBER">
                       Member
                     </option>
-                    <option value="ROLE_RIDER">Rider</option>
-                    <option value="ROLE_CAREGIVER">Caregiver</option>
-                    <option value="ROLE_VOLUNTEER">Volunteer</option>
+                    <option value="DRIVER">Rider</option>
+                    <option value="PARTNER">Partner</option>
+                    <option value="VOLUNTEER">Volunteer</option>
                   </Form.Select>
                 </Form.Group>
 

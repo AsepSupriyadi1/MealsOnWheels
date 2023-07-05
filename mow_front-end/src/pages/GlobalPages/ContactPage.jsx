@@ -110,7 +110,7 @@ const ContactPage = () => {
                     </div>
                     <div class="event-content">
                       <h5 class="event-title ">
-                        <a href="event-detail.html" className="text-success">Abdul Rahman Solehudin</a>
+                        <a href="event-detail.html" className="text-success">Abdul Rahman Shalehudin</a>
                       </h5>
                       <h6 class="event-subtitle text-secondary">Functional and UI Analysis</h6>
                     </div>
@@ -121,7 +121,7 @@ const ContactPage = () => {
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">
-                        <a href="event-detail.html" className="text-success">Ajri Muhamad Siddik</a>
+                        <a href="event-detail.html" className="text-success">Ajri Muhamad Sidik</a>
                       </h5>
                       <h6 class="event-subtitle text-secondary">Functional and Data Analysis</h6>
                     </div>
@@ -143,7 +143,7 @@ const ContactPage = () => {
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">
-                        <a href="event-detail.html" className="text-success">Darren Farel Andrian</a>
+                        <a href="event-detail.html" className="text-success">Darren Farrel Andrian</a>
                       </h5>
                       <h6 class="event-subtitle text-secondary">Scenario Analysis and Planning </h6>
                     </div>

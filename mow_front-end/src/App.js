@@ -32,6 +32,7 @@ import ThemeProvider from "./context/theme";
 import ErrorPage from "./pages/GlobalPages/ErrorPage";
 import { AuthContext } from "./context/auth-context";
 
+import "./pages/PrivatePages/Member/member.css";
 function App() {
   const { isLoggedIn, currentUser } = useContext(AuthContext);
 

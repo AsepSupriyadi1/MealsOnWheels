@@ -2907,10 +2907,17 @@ only screen and (min-device-pixel-ratio: 1.5) {
 }
 
 .desc p {
-    width: 350px;
+    width: 400px;
     padding: 2px;
-    font-size: 15px;
+
 }
 
 /* end css ajri */
 /* end css global */
+
+
+/* image our team */
+
+.team-image {
+    max-width: 100%;
+  }

@@ -1,23 +1,23 @@
 const TermsPage = () => {
   return (
     <div className="container">
-      <div class="page-header">
-        <div class="row">
-          <div class="col-md-6 col-sm-6">
-            <h2 class="page-title">Terms and Conditions</h2>
+      <div className="page-header">
+        <div className="row">
+          <div className="col-md-6 col-sm-6">
+            <h2 className="page-title">Terms and Conditions</h2>
           </div>
-          <div class="col-md-6 col-sm-6 hidden-xs back-home">
+          <div className="col-md-6 col-sm-6 hidden-xs back-home">
             <a href="/home">&larr; Go back Home</a>
           </div>
         </div>
       </div>
       <div className="row" style={{ display: "flex", justifyContent: "center" }}>
-        <div class="col-md-9">
-          <div class="box-content">
-            <h4 class="widget-title">
-              <span>Meals on Wheels</span>
+        <div className="col-md-9">
+          <div className="box-content shadow">
+            <h4 className="widget-title">
+              <span className=" text-success">Meals on Wheels</span>
             </h4>
-            <h5>Terms and Conditions</h5>
+            <h4>Terms and Conditions</h4><br />
             <p>
               At Meals on Wheels, accessible from http://mealsonwheels/, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Meals on Wheels
               and how we use it.
@@ -37,15 +37,14 @@ const TermsPage = () => {
             </p>
             <p>
               For more general information on cookies, please read <a href="https://www.privacypolicyonline.com/what-are-cookies/">the "Cookies" article from the Privacy Policy Generator</a>.
-            </p>{" "}
-            parent of e1b9ab7 ([brands] Updated credits link)<br/>
+            </p><br/>
             <h5>Terms and Conditions</h5>
             <p>You may consult this list to find the Privacy Policy for each of the advertising partners of Meals on Wheels.</p>
             <p>
               Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on Meals on Wheels, which are sent directly to users'
               browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on
               websites that you visit.
-            </p>
+            </p >
             <p>Note that Meals on Wheels has no access to or control over these cookies that are used by third-party advertisers.</p><br />
             <h5>Third Party Privacy Policies</h5>
             <p>
@@ -56,7 +55,7 @@ const TermsPage = () => {
               You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites. What Are
               Cookies?
             </p><br />
-            <h5>Children's Information</h5>
+            <h5> Children's Information</h5>
             <p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.</p>
             <p>
               Meals on Wheels does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to

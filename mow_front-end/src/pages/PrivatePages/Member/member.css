@@ -1,0 +1,50 @@
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+  }
+  
+  .carousel-control-prev,
+  .carousel-control-next {
+    margin: 0 10px;
+  }
+
+  .border-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .border-bottom {
+    height: 1px;
+  }
+
+  .width-small {
+    width: 80px;
+  }
+  .carousel-controls .carousel-control-prev,
+  .carousel-controls .carousel-control-next {
+    background-color: #ffffff59; /* Ubah warna latar belakang sesuai kebutuhan */
+    opacity: 1; /* Atur opasitas awal */
+    transition: background-color 0.3s ease, opacity 0.3s ease; /* Efek transisi */
+    
+  }
+  .pull-button {
+    border-radius: 20px;
+  }
+  .carousel-controls .carousel-control-prev:hover,
+  .carousel-controls .carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Ubah warna latar belakang transparan sesuai kebutuhan */
+    opacity: 0.5; /* Atur opasitas saat hover */
+  }
+
+  .carousel-item img {
+    max-width: 100%;
+    max-height: 400px; /* Ubah nilai sesuai kebutuhan Anda */
+    object-fit: cover; /* Atur tipe pengisian objek sesuai preferensi */
+  }
+
+  

@@ -20,7 +20,17 @@ import testi4 from "./placehold/testimonials/testi4.jpg";
 import driver from "./placehold/gallery/driver.jpg";
 import imgtesti from "./placehold/testimonials/giver.png";
 import membereat from "./placehold/gallery/memberfood.jpg";
+import david from "./placehold/staff/mr_david.jpg";
+import darren from "./placehold/staff/darren.jpg";
+import ajri from "./placehold/staff/ajri.jpg";
+import rahman from "./placehold/staff/rahman.jpg";
+import syukur from "./placehold/staff/syukur.jpg";
+import asep from "./placehold/staff/asep.jpg";
 import headDriver from "./dashead/driver.jpg";
+import givers  from "./placehold/testimonials/meals.png"
+import kentang from "./placehold/testimonials/kentang.jpg"
+import grand from "./placehold/testimonials/grand.jpg"
+import grandma from "./placehold/testimonials/grandma.jpg"
 
 export const resources = {
   logo1,
@@ -37,7 +47,21 @@ export const gallery = {
 export const Testimonial = {
   testi4,
   imgtesti,
+  kentang,
+  givers,
+  grand,
+  grandma,
+  david,
+
 };
+
+export const anjay = {
+ajri,
+darren,
+rahman,
+syukur,
+asep,
+}
 
 export const Contactus = {
   thumb5,

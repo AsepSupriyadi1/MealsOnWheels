@@ -2,6 +2,7 @@ package com.summative.mealsonwheels.Controllers;
 
 import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,13 @@ public class FundController {
         funds.setDateTime(dtf.toString());
 
         return fundServices.saveFunds(funds);   
+    }
+
+    @GetMapping("/test")
+    public String testFunds(){
+
+        return "Funds Test";
+      
     }
 
 

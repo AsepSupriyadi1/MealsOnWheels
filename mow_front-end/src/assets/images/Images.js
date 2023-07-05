@@ -20,6 +20,7 @@ import testi4 from "./placehold/testimonials/testi4.jpg";
 import driver from "./placehold/gallery/driver.jpg";
 import imgtesti from "./placehold/testimonials/giver.png";
 import membereat from "./placehold/gallery/memberfood.jpg";
+import david from "./placehold/staff/mr_david.jpg";
 import headDriver from "./dashead/driver.jpg";
 import givers  from "./placehold/testimonials/meals.png"
 import kentang from "./placehold/testimonials/kentang.jpg"
@@ -45,6 +46,7 @@ export const Testimonial = {
   givers,
   grand,
   grandma
+  david,
 };
 
 export const Contactus = {

@@ -1,4 +1,6 @@
-import { Contactus } from "../../assets/images/Images";
+
+import OurGallery from "../../components/UtilComponent/OurGallery";
+import OurTeam from "../../components/UtilComponent/OurTeam";
 const ContactPage = () => {
   return (
     <>
@@ -60,108 +62,10 @@ const ContactPage = () => {
           </div>
 
           <div class="col-md-4">
-            <div class="box-content shadow">
-              <h4 class="widget-title">
-                <span className="text-success">Our Gallery</span>
-              </h4>
-              <div class="gallery-wrapper">
-                <div class="gallery-thumb">
-                  <a href={Contactus.thumb5} class="fancybox" data-fancybox-group="group3">
-                    <img src={Contactus.thumb5} alt="" />
-                  </a>
-                </div>
-                <div class="gallery-thumb">
-                  <a href={Contactus.thumb6} class="fancybox" data-fancybox-group="group3">
-                    <img src={Contactus.thumb6} alt="" />
-                  </a>
-                </div>
-                <div class="gallery-thumb">
-                  <a href={Contactus.thumb7} class="fancybox" data-fancybox-group="group3">
-                    <img src={Contactus.thumb7} alt="" />
-                  </a>
-                </div>
-                <div class="gallery-thumb">
-                  <a href={Contactus.thumb8} class="fancybox" data-fancybox-group="group3">
-                    <img src={Contactus.thumb8} alt="" />
-                  </a>
-                </div>
-                <div class="gallery-thumb">
-                  <a href={Contactus.thumb9} class="fancybox" data-fancybox-group="group3">
-                    <img src={Contactus.thumb9} alt="" />
-                  </a>
-                </div>
-                <div class="gallery-thumb">
-                  <a href={Contactus.thumb10} class="fancybox" data-fancybox-group="group3">
-                    <img src={Contactus.thumb10} alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
+            <OurGallery/>
+            <OurTeam/>
 
-            <div class="box-content shadow">
-              <h4 class="widget-title">
-                <span className="text-success">Our Teams</span>
-              </h4>
-              <div class="events-sidebar">
-                <ul>
-                  <li class="event-item">
-                    <div class="event-thumb">
-                      <img src={Contactus.thumb11} alt="" />
-                    </div>
-                    <div class="event-content">
-                      <h5 class="event-title ">
-                        <a href="event-detail.html" className="text-success">Abdul Rahman Shalehudin</a>
-                      </h5>
-                      <h6 class="event-subtitle text-secondary">Functional and UI Analysis</h6>
-                    </div>
-                  </li>
-                  <li class="event-item">
-                    <div class="event-thumb">
-                      <img src={Contactus.thumb22} alt="" />
-                    </div>
-                    <div class="event-content">
-                      <h5 class="event-title">
-                        <a href="event-detail.html" className="text-success">Ajri Muhamad Sidik</a>
-                      </h5>
-                      <h6 class="event-subtitle text-secondary">Functional and Data Analysis</h6>
-                    </div>
-                  </li>
-                  <li class="event-item">
-                    <div class="event-thumb">
-                      <img src={Contactus.thumb33} alt="" />
-                    </div>
-                    <div class="event-content">
-                      <h5 class="event-title">
-                        <a href="event-detail.html" className="text-success">Asep Supriyadi</a>
-                      </h5>
-                      <h6 class="event-subtitle text-secondary">Back End Security Analysis</h6>
-                    </div>
-                  </li>
-                  <li class="event-item">
-                    <div class="event-thumb">
-                      <img src={Contactus.thumb33} alt="" />
-                    </div>
-                    <div class="event-content">
-                      <h5 class="event-title">
-                        <a href="event-detail.html" className="text-success">Darren Farrel Andrian</a>
-                      </h5>
-                      <h6 class="event-subtitle text-secondary">Scenario Analysis and Planning </h6>
-                    </div>
-                  </li>
-                  <li class="event-item">
-                    <div class="event-thumb">
-                      <img src={Contactus.thumb33} alt="" />
-                    </div>
-                    <div class="event-content">
-                      <h5 class="event-title">
-                        <a href="event-detail.html"className="text-success">Syukur Sidiq Nur Alam</a>
-                      </h5>
-                      <h6 class="event-subtitle text-secondary">Front End Designer and Develper</h6>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            
 
           </div>
         </div>

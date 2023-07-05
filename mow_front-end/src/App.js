@@ -26,7 +26,7 @@ import ManageDriver from "./pages/PrivatePages/Admin/ManageDriver";
 import ManageMeals from "./pages/PrivatePages/Admin/ManageMeals";
 import ManagePartner from "./pages/PrivatePages/Admin/ManagePartner";
 import ManageOrders from "./pages/PrivatePages/Admin/ManageOrders";
-
+import "./pages/PrivatePages/Member/member.css"
 function App() {
   return (
     <>

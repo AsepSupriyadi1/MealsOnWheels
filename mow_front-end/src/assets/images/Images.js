@@ -21,6 +21,10 @@ import driver from "./placehold/gallery/driver.jpg";
 import imgtesti from "./placehold/testimonials/giver.png";
 import membereat from "./placehold/gallery/memberfood.jpg";
 import headDriver from "./dashead/driver.jpg";
+import givers  from "./placehold/testimonials/meals.png"
+import kentang from "./placehold/testimonials/kentang.jpg"
+import grand from "./placehold/testimonials/grand.jpg"
+import grandma from "./placehold/testimonials/grandma.jpg"
 
 export const resources = {
   logo1,
@@ -37,6 +41,10 @@ export const gallery = {
 export const Testimonial = {
   testi4,
   imgtesti,
+  kentang,
+  givers,
+  grand,
+  grandma
 };
 
 export const Contactus = {

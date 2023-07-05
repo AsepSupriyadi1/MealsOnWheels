@@ -9,9 +9,9 @@ const HomePage = () => {
       <div class="container">
         {/* slide show */}
         <div className="services box-content shadow" style={{ paddingLeft: "20px", paddingRight: "20px" }}>
-          <div className="shadow" id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="10000">
+          <div className="shadow" id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel ">
+            <div class="carousel-inner" >
+              <div class="carousel-item active" data-bs-interval="10000" >
                 <img src={Testimonial.imgtesti} className="d-block w-100"   alt="..." />
                 <div class="d-none d-md-block  text-center">
                   <div className="bg-dark py-4" style={{ position: "absolute", bottom: "0", width: "100%", opacity: "0.8" }}>

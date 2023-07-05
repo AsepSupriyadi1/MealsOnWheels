@@ -1,6 +1,7 @@
 import { Testimonial } from "../../assets/images/Images";
-import { Contactus } from "../../assets/images/Images";
-import { gallery } from "../../assets/images/Images";
+import { anjay } from "../../assets/images/Images";
+// import { Contactus } from "../../assets/images/Images";
+// import { gallery } from "../../assets/images/Images";
 import OurGallery from "../../components/UtilComponent/OurGallery";
 import OurTeam from "../../components/UtilComponent/OurTeam";
 const AboutPage = () => {

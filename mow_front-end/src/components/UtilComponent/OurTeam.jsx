@@ -1,6 +1,7 @@
-import { Contactus } from "../../assets/images/Images";
-
+import { anjay } from "../../assets/images/Images";
 function OurTeam () {
+
+  
     return (
         <div class="box-content shadow">
               <h4 class="widget-title">
@@ -10,7 +11,7 @@ function OurTeam () {
                 <ul>
                   <li class="event-item">
                     <div class="event-thumb">
-                      <img src={Contactus.thumb11} alt="" />
+                      <img src={anjay.rahman} alt=""  className="team-image"  />
                     </div>
                     <div class="event-content">
                       <h5 class="event-title ">
@@ -21,7 +22,8 @@ function OurTeam () {
                   </li>
                   <li class="event-item">
                     <div class="event-thumb">
-                      <img src={Contactus.thumb22} alt="" />
+                      <div></div>
+                      <img src={anjay.ajri}  alt=""  className="team-image" />
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">
@@ -32,7 +34,7 @@ function OurTeam () {
                   </li>
                   <li class="event-item">
                     <div class="event-thumb">
-                      <img src={Contactus.thumb33} alt="" />
+                      <img src={anjay.asep} alt=""  className="team-image" />
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">
@@ -43,7 +45,7 @@ function OurTeam () {
                   </li>
                   <li class="event-item">
                     <div class="event-thumb">
-                      <img src={Contactus.thumb33} alt="" />
+                      <img src={anjay.darren} alt=""  className="team-image" />
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">
@@ -54,7 +56,7 @@ function OurTeam () {
                   </li>
                   <li class="event-item">
                     <div class="event-thumb">
-                      <img src={Contactus.thumb33} alt="" />
+                      <img src={anjay.syukur} alt=""  className="team-image" />
                     </div>
                     <div class="event-content">
                       <h5 class="event-title">

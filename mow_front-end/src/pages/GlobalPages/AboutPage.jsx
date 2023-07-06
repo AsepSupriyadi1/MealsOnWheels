@@ -37,11 +37,11 @@ const AboutPage = () => {
                   To empower local community programs to improve the health and quality of life of the seniors they serve so that no one is left hungry or isolated.
                 </div>
                 <br />
-                <div className="event-content shadow ">
+                <div className="event-content shadow">
                   <div className="owner">
                     <div className="row ">
-                      <div className="col-md-6">
-                        <img src={Testimonial.david} className="shadow" alt="" />
+                      <div className="col-md-6 mb-sm-4">
+                        <img src={Testimonial.david} className="shadow mb-4 mb-md-0 " alt="" />
 
                       </div>
                       <div className="col-md-6 ">
@@ -69,12 +69,6 @@ const AboutPage = () => {
             <OurGallery/>
             <OurTeam/>
           </div>
-
-
-
-
-
-
         </div>
       </div>
 

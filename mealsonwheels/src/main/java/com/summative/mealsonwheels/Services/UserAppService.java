@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Entity.UserRole;
+import com.summative.mealsonwheels.Exception.UserNotActiveException;
 import com.summative.mealsonwheels.Repositories.UserAppRepository;
 
 @Service
@@ -28,6 +29,8 @@ public class UserAppService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserApp user = userAppRepo.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + email));
+
+		if(!user.isActive()) throw new UserNotActiveException(user.getUserRole().name());
 
 		return new User(user.getUsername(), user.getPassword(),
 				user.getAuthorities());
@@ -48,6 +51,12 @@ public class UserAppService implements UserDetailsService {
 
 		user.setUserRole(UserRole.MEMBER);
 		return userAppRepo.save(user);
+	}
+
+	public UserApp update(UserApp user) {
+
+		return userAppRepo.save(user);
+		
 	}
 
 

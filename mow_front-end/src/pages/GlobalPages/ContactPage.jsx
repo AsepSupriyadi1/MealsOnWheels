@@ -12,7 +12,7 @@ const ContactPage = () => {
             <div class="col-sm-6 ">
               <h2 class="page-title">Contact Page</h2>
             </div>
-            <div class="col-sm-6  hidden-xs back-home">
+            <div class="col-md-6 col-sm-6 hidden-xs back-home">
               <a href="index.html">&larr; Go back Home</a>
             </div>
           </div>

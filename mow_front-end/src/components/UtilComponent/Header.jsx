@@ -69,6 +69,16 @@ function Header() {
                   <img src={resources.logo1} classNameName="my-logo" alt="" style={{ height: "80px" }} />
                 </a>
               </div>
+              <div className="col-md col-sm-7">
+              <div className="me-auto  text-lg-end text-start d-lg-block d-sm-none ">
+                      <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
+                        Register
+                      </a>
+                      <a href="/login" className="btn main-btn">
+                        Login
+                      </a>
+                    </div>
+              </div>
             </div>
           </div>
         </div>
@@ -106,7 +116,7 @@ function Header() {
                   )
                 ) : (
                   <>
-                    <div className="col-md-3 me-auto text-lg-end text-start ">
+                    <div className="col-md-3 d-sm-block d-lg-none me-auto text-lg-end text-start ">
                       <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
                         Register
                       </a>

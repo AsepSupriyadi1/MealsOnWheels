@@ -47,7 +47,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/profile" element={<Profile/>}/>
+      
 
         {!isLoggedIn && (
           <>
@@ -82,6 +82,7 @@ function App() {
                 <Route path="/member" element={<MemberDashboard />} />
                 <Route path="/detailpakage" element={<DetailpakageMember />} />
                 <Route path="/feedback" element={<FeedbackMember />} />
+                <Route path="/profile" element={<Profile/>}/>
                 
               </>
             )}

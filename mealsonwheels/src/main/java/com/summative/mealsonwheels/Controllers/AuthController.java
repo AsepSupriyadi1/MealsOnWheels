@@ -2,10 +2,12 @@ package com.summative.mealsonwheels.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,12 +18,15 @@ import com.summative.mealsonwheels.Config.JwtService;
 import com.summative.mealsonwheels.Dto.AuthenticationRequest;
 import com.summative.mealsonwheels.Dto.AuthenticationResponse;
 import com.summative.mealsonwheels.Dto.ResponseData;
+import com.summative.mealsonwheels.Dto.UserResponse;
 import com.summative.mealsonwheels.Entity.TokenType;
 import com.summative.mealsonwheels.Entity.Tokens;
 import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Repositories.TokensRepository;
 import com.summative.mealsonwheels.Services.TokensService;
 import com.summative.mealsonwheels.Services.UserAppService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -68,6 +73,7 @@ public class AuthController {
             tokensService.revokeAllUserTokens(users);
             tokensRepository.save(jwtToken);
             authenticationResponse.setToken(token);
+            authenticationResponse.setRole(users.getUserRole().name());
             return ResponseEntity.ok(authenticationResponse);
 
         } catch(Exception e) {
@@ -89,21 +95,43 @@ public class AuthController {
 			responseData.setPayload(userAppService.save(user));
 		} catch (Exception e) {
 			responseData.setStatus(false);
-			responseData.setMessages("Errors Occured");
+			responseData.setMessages("Username Already Exist !");
 			responseData.setPayload(null);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
 		}
-
+        
+        responseData.setMessages("User Registered Successfully !");
 		responseData.setStatus(true);
 		return ResponseEntity.ok(responseData);
 
 	}
 
 
-    @GetMapping(value = "/test")
-	public String test() {
-        return "String";
-	}
+    @GetMapping(value = "/user")
+    public ResponseEntity<?> getUserLogin(HttpServletRequest request) {
+
+        UserResponse userResponse = new UserResponse();
+      
+        String token = jwtService.extractTokenFromRequest(request);
+       
+        boolean isTokenValid = tokensRepository.findByToken(token).map(t -> 
+                        !t.isExpired() && !t.isRevoked())
+                        .orElse(false);
+
+        if(isTokenValid){
+            String username = jwtService.extractUsername(token);
+            UserApp user =  userAppService.findUserByEmail(username);
+            userResponse.setUserId(user.getUserId());
+            userResponse.setFullname(user.getFullname());
+            userResponse.setEmail(user.getEmail());
+            userResponse.setAddress(user.getAddress());
+            userResponse.setUserRole(user.getUserRole().name());
+
+            return ResponseEntity.ok(userResponse);
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    } 
 
 
 }

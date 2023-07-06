@@ -28,11 +28,14 @@ const AboutPage = () => {
                 <img src={Testimonial.imgtesti} alt="" />
                 <div className="event-content shadow">
                   <h4 className="about-h3 m-0 text-success">MEALS ON WHEELS </h4>
-
-                  <p> Meals on Wheels is a leadership organization that supports more than 5,000 community-based programs across the country dedicated to addressing senior isolation and hunger. Supported by a dedicated volunteer workforce, the network provides nutritious meals, friendly visits, and safety checks that enable seniors to lead nourishing lives with independence and dignity. By providing funding, leadership, education, research, and advocacy support, Meals on Wheels empowers its local member programs to strengthen their communities, one senior at a time.</p>
-                  <h3 className="about-h3 m-0 text-success">	OUR VISION</h3>
+                  <p>
+                    {" "}
+                    Meals on Wheels is a leadership organization that supports more than 5,000 community-based programs across the country dedicated to addressing senior isolation and hunger. Supported by a dedicated volunteer workforce,
+                    the network provides nutritious meals, friendly visits, and safety checks that enable seniors to lead nourishing lives with independence and dignity. By providing funding, leadership, education, research, and advocacy
+                    support, Meals on Wheels empowers its local member programs to strengthen their communities, one senior at a time.
+                  </p>
+                  <h3 className="about-h3 m-0 text-success"> OUR VISION</h3>
                   <p>where all seniors live a nourishing life with independence and dignity.</p>
-
                   <h3 className="about-h3 m-0 text-success">OUR MISSION</h3>
                   To empower local community programs to improve the health and quality of life of the seniors they serve so that no one is left hungry or isolated.
                 </div>
@@ -42,37 +45,26 @@ const AboutPage = () => {
                     <div className="row ">
                       <div className="col-md-6 mb-sm-4">
                         <img src={Testimonial.david} className="shadow mb-4 mb-md-0 " alt="" />
-
                       </div>
                       <div className="col-md-6 ">
-
                         <h4 class="event-title text-success">Mr.David</h4>
                         <h6 className="text-black-50">Owner</h6>
 
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae necessitatibus blanditiis a. Quaerat hic consectetur quam. Animi corporis beatae enim.</p>
-
                       </div>
-
                     </div>
-
                   </div>
-
-
-
                 </div>
               </div>
             </div>
           </div>
 
-
           <div className="col-md-4">
-            <OurGallery/>
-            <OurTeam/>
+            <OurGallery />
+            <OurTeam />
           </div>
         </div>
       </div>
-
-
     </>
   );
 };

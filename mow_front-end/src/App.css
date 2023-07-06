@@ -154,7 +154,7 @@ select:focus {
     outline: none;
 }
 
-button,
+/* button,
 input[type="button"],
 input[type="submit"],
 .main-button {
@@ -167,7 +167,7 @@ input[type="submit"],
     line-height: 36px;
     background-color: #faca3a;
     border: none;
-}
+} */
 
 button:hover,
 input[type="button"]:hover,

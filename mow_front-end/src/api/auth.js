@@ -4,6 +4,7 @@ import { errorAlert, successConfAlert } from "../alert/sweetAlert";
 
 // REGISTER
 export const registerAPI = async (user) => {
+  // mengembalikan alert success / alert gagal untuk prosess registrasi
   axios
     .post(`${BASE_URL}/auth/register`, user)
     .then((response) => {
@@ -15,14 +16,17 @@ export const registerAPI = async (user) => {
 };
 
 // REGISTER
-export const loginAPI = async (user, userCtx, navigate) => {
+export const loginAPI = async (user, userCtx, navigate, setError, setModalShow) => {
+  // CALL LOGIN API
   await axios
     .post(`${BASE_URL}/auth/authenticate`, user)
     .then((response) => {
+      // IF SUCCESS, TAKE THE TOKEN
       let token = response.data.token;
       let redirectUrl;
       userCtx(token);
 
+      // REDIRECT TO SPECIFIC PAGES
       switch (response.data.role) {
         case "MEMBER":
           redirectUrl = "/member";
@@ -41,16 +45,33 @@ export const loginAPI = async (user, userCtx, navigate) => {
           navigate("/");
           break;
       }
+
+      // SHOW SUCCESS ALERT
       successConfAlert("Success", "Login Successfull", navigate(redirectUrl));
-      console.log(token);
     })
     .catch((err) => {
-      errorAlert("Error Occured", "User not found");
+      // Return Error Status
+      let errorType = err.response.data.errorType;
+      let errorMessage = err.response.data.errorMessage;
+
+      if (errorType === "NOT_FOUND") {
+        setError({
+          status: true,
+          message: errorMessage,
+        });
+      } else if (errorType === "NOT_ACTIVE") {
+        setModalShow({
+          status: true,
+          message: errorMessage,
+        });
+      }
     });
 };
 
 // GET USER FROM TOKEN
 export const getUserLoginAPI = async (token) => {
+  // Mengembalikan hasil user hasil extract dari token
+  // CALL GET USER FROM TOKEN API
   return await axios.get(`${BASE_URL}/auth/user`, {
     headers: { Authorization: `Bearer ${token}` },
   });

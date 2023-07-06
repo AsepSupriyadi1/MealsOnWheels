@@ -1,15 +1,28 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form, Modal } from "react-bootstrap";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { loginAPI } from "../../api/auth";
 import { AuthContext } from "../../context/auth-context";
+import LoginModals from "../../components/ChartComponent/LoginModals";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const userCtx = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // -=-=-= ALERT -=-=-=-=
+  const [error, setError] = useState({
+    status: false,
+    message: null,
+  });
+
+  // -=-=-= MODALS -=-=-=-=
+  const [modalShow, setModalShow] = useState({
+    status: false,
+    message: null,
+  });
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -19,7 +32,7 @@ const LoginPage = () => {
       password,
     };
 
-    loginAPI(credentials, userCtx.login, navigate);
+    loginAPI(credentials, userCtx.login, navigate, setError, setModalShow);
   };
 
   return (
@@ -43,6 +56,12 @@ const LoginPage = () => {
                 <span>Enter Login Information</span>
               </h4>
 
+              {error.status && (
+                <Alert variant="danger">
+                  <b>{error.message}</b>
+                </Alert>
+              )}
+
               <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-3">
                   <Form.Label>Email :</Form.Label>
@@ -62,6 +81,8 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
+
+      <LoginModals show={modalShow.status} onHide={() => setModalShow({ status: false, message: null })} />
     </>
   );
 };

@@ -2,12 +2,11 @@ package com.summative.mealsonwheels.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +21,7 @@ import com.summative.mealsonwheels.Dto.UserResponse;
 import com.summative.mealsonwheels.Entity.TokenType;
 import com.summative.mealsonwheels.Entity.Tokens;
 import com.summative.mealsonwheels.Entity.UserApp;
+import com.summative.mealsonwheels.Exception.UserNotActiveException;
 import com.summative.mealsonwheels.Repositories.TokensRepository;
 import com.summative.mealsonwheels.Services.TokensService;
 import com.summative.mealsonwheels.Services.UserAppService;
@@ -76,8 +76,13 @@ public class AuthController {
             authenticationResponse.setRole(users.getUserRole().name());
             return ResponseEntity.ok(authenticationResponse);
 
-        } catch(Exception e) {
-            authenticationResponse.setToken(e.getMessage());
+        } catch(BadCredentialsException e) {
+            authenticationResponse.setErrorType("NOT_FOUND");
+            authenticationResponse.setErrorMessage("Invalid username or password !");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticationResponse);
+        } catch (UserNotActiveException e){
+            authenticationResponse.setErrorType("NOT_ACTIVE");
+            authenticationResponse.setErrorMessage("Your account still awaiting for admin approval");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticationResponse);
         }
 

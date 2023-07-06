@@ -27,10 +27,11 @@ import rahman from "./placehold/staff/rahman.jpg";
 import syukur from "./placehold/staff/syukur.jpg";
 import asep from "./placehold/staff/asep.jpg";
 import headDriver from "./dashead/driver.jpg";
-import givers  from "./placehold/testimonials/meals.png"
-import kentang from "./placehold/testimonials/kentang.jpg"
-import grand from "./placehold/testimonials/grand.jpg"
-import grandma from "./placehold/testimonials/grandma.jpg"
+import givers from "./placehold/testimonials/meals.png";
+import kentang from "./placehold/testimonials/kentang.jpg";
+import grand from "./placehold/testimonials/grand.jpg";
+import grandma from "./placehold/testimonials/grandma.jpg";
+import sorry from "./modals/sorry.png";
 
 export const resources = {
   logo1,
@@ -52,16 +53,15 @@ export const Testimonial = {
   grand,
   grandma,
   david,
-
 };
 
 export const anjay = {
-ajri,
-darren,
-rahman,
-syukur,
-asep,
-}
+  ajri,
+  darren,
+  rahman,
+  syukur,
+  asep,
+};
 
 export const Contactus = {
   thumb5,
@@ -91,4 +91,8 @@ export const Member = {
 
 export const DashHeader = {
   headDriver,
+};
+
+export const ImgModal = {
+  sorry,
 };

@@ -51,10 +51,10 @@ function Footer() {
                     <a href="/terms">Terms and Conditions</a>
                   </li>
                   <li>
-                    <a href="blog-grid.html">About Us</a>
+                    <a href="/about">About Us</a>
                   </li>
                   <li>
-                    <a href="#">Contact Us</a>
+                    <a href="/contact">Contact Us</a>
                   </li>
                 </ul>
               </div>

@@ -49,7 +49,6 @@ public class UserAppService implements UserDetailsService {
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 
-		user.setUserRole(UserRole.MEMBER);
 		return userAppRepo.save(user);
 	}
 

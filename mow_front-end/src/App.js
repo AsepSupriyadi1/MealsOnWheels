@@ -27,8 +27,7 @@ import ManageMeals from "./pages/PrivatePages/Admin/ManageMeals";
 import ManagePartner from "./pages/PrivatePages/Admin/ManagePartner";
 import ManageOrders from "./pages/PrivatePages/Admin/ManageOrders";
 import BankAddress from "./pages/PrivatePages/Donor/BankAddress";
-import { createContext, useContext } from "react";
-import ThemeProvider from "./context/theme";
+import { useContext } from "react";
 import ErrorPage from "./pages/GlobalPages/ErrorPage";
 import { AuthContext } from "./context/auth-context";
 

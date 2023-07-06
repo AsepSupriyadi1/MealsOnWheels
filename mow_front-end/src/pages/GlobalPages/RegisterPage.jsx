@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { registerAPI } from "../../api/auth";
 import axios from "axios";
+import { foto } from "../../assets/images/Images";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -10,18 +11,37 @@ const RegisterPage = () => {
   const [address, setAddress] = useState("");
   const [userRole, setUserRole] = useState("");
 
+  const [partnerForm, setPartnerForm] = useState(false);
+  const [driverForm, setDriverForm] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = {
-      email,
-      password,
-      fullname,
-      address,
-      userRole,
+      email: email,
+      password: password,
+      fullname: fullname,
+      address: address,
+      userRole: userRole,
     };
 
     registerAPI(formData);
+
+    console.log(email, password, fullname, address, userRole);
   };
+
+  useEffect(() => {
+    if (userRole === "PARTNER") {
+      setPartnerForm(true);
+      setDriverForm(false);
+    } else if (userRole === "DRIVER") {
+      setPartnerForm(false);
+      setDriverForm(true);
+    } else {
+      setPartnerForm(false);
+      setDriverForm(false);
+    }
+    console.log("bjrrrr");
+  }, [userRole]);
 
   return (
     <>
@@ -39,49 +59,82 @@ const RegisterPage = () => {
 
         <div class="row">
           <div class="col-md-12">
-            <div class="box-content">
-              <h4 class="widget-title">
-                <span>Register Information</span>
-              </h4>
+            <div class="box-content rounded shadow">
+              <div className="row d-flex align-items-center">
+                <div className="col-md">
+                  <h4 class="widget-title">
+                    <span className="fs-6">General Information</span>
+                  </h4>
 
-              <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3">
-                  <Form.Label className="mb-2">Full Name :</Form.Label>
-                  <Form.Control type="text" placeholder="Enter full name......" name="fullname" value={fullname} onChange={(e) => setFullname(e.target.value)} />
-                </Form.Group>
+                  <Form onSubmit={handleSubmit}>
+                    <div className="row my-3">
+                      <div className="col-md-6">
+                        <Form.Group>
+                          <Form.Label>Full Name :</Form.Label>
+                          <Form.Control type="text" placeholder="Enter full name......" name="fullname" value={fullname} onChange={(e) => setFullname(e.target.value)} required />
+                        </Form.Group>
+                      </div>
 
-                <Form.Group className="mb-3">
-                  <Form.Label className="m-0">Email :</Form.Label>
-                  <Form.Control type="email" placeholder="Enter your email address......" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </Form.Group>
+                      <div className="col-md-6">
+                        <Form.Group>
+                          <Form.Label>Email :</Form.Label>
+                          <Form.Control type="email" placeholder="Enter your email address......" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        </Form.Group>
+                      </div>
+                    </div>
 
-                <Form.Group className="mb-3">
-                  <Form.Label className="m-0">Join as :</Form.Label>
-                  <Form.Select value={userRole} onChange={(e) => setUserRole(e.target.value)}>
-                    <option disabled>Choose a role</option>
-                    <option defaultValue={true} value="MEMBER">
-                      Member
-                    </option>
-                    <option value="DRIVER">Rider</option>
-                    <option value="PARTNER">Partner</option>
-                    <option value="VOLUNTEER">Volunteer</option>
-                  </Form.Select>
-                </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label className="m-0">Join as :</Form.Label>
+                      <Form.Select value={userRole} onChange={(e) => setUserRole(e.target.value)} required>
+                        <option disabled>Choose a role</option>
+                        <option defaultValue={true} value="MEMBER">
+                          Member
+                        </option>
+                        <option value="DRIVER">Rider</option>
+                        <option value="PARTNER">Partner</option>
+                        <option value="VOLUNTEER">Volunteer</option>
+                      </Form.Select>
+                    </Form.Group>
 
-                <Form.Group className="mb-3">
-                  <Form.Label className="m-0">Address :</Form.Label>
-                  <Form.Control type="text" placeholder="Enter address......" value={address} onChange={(e) => setAddress(e.target.value)} />
-                </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label className="m-0">Address :</Form.Label>
+                      <Form.Control type="text" placeholder="Enter address......" value={address} onChange={(e) => setAddress(e.target.value)} required />
+                    </Form.Group>
 
-                <Form.Group className="mb-3">
-                  <Form.Label className="m-0">Password :</Form.Label>
-                  <Form.Control type="text" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </Form.Group>
+                    <Form.Group className="mb-3">
+                      <Form.Label className="m-0">Password :</Form.Label>
+                      <Form.Control type="text" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </Form.Group>
 
-                <Button type="submit" className="w-100" variant="secondary">
-                  SUBMIT
-                </Button>
-              </Form>
+                    {partnerForm && (
+                      <>
+                        <Form.Group className="mb-3">
+                          <Form.Label className="m-0">Company Name :</Form.Label>
+                          <Form.Control type="text" placeholder="Enter address......" value={address} onChange={(e) => setAddress(e.target.value)} />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                          <Form.Label className="m-0">Company address :</Form.Label>
+                          <Form.Control type="text" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        </Form.Group>
+                      </>
+                    )}
+
+                    {driverForm && (
+                      <>
+                        <Form.Group className="mb-3">
+                          <Form.Label className="m-0">Driver License :</Form.Label>
+                          <Form.Control type="text" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        </Form.Group>
+                      </>
+                    )}
+
+                    <Button type="submit" className="w-100" variant="secondary">
+                      SUBMIT & NEXT
+                    </Button>
+                  </Form>
+                </div>
+              </div>
             </div>
           </div>
         </div>

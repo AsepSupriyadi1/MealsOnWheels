@@ -69,17 +69,6 @@ function Header() {
                   <img src={resources.logo1} classNameName="my-logo" alt="" style={{ height: "80px" }} />
                 </a>
               </div>
-              <div className="col-md col-sm-7 main-header-right">
-                <div className="social-search text-end">
-                  <div className="search-form d-none d-lg-block">
-                    <form method="get" name="SearchForm">
-                      <fieldset>
-                        <input type="text" name="s" id="s" placeholder="Search Here..." />
-                      </fieldset>
-                    </form>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -101,7 +90,7 @@ function Header() {
                 <div className="col-md">
                   <Nav className="navbar-nav">
                     <Nav.Item>
-                      <Nav.Link className="fs-6" href="/home">Home</Nav.Link>
+                      <Nav.Link className="fs-6 border-start-secondary" href="/home">Home</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                       <Nav.Link className="fs-6" href="/about">About</Nav.Link>

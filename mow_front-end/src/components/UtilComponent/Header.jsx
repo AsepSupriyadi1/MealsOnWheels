@@ -79,6 +79,13 @@ function Header() {
             <Navbar expand="md" variant="light" className="px-5">
               <Navbar.Toggle aria-controls="navbarCollaps" className="mb-4 bg-light mt-3"  />
               <Navbar.Collapse id="navbarCollapse">
+                <div className="search-form d-sm-block d-lg-none">
+                  <form method="get" name="SearchForm" className="mb-2">
+                    <fieldset>
+                      <input type="text" name="s" id="s" placeholder="Search Here..." className="w-100" />
+                    </fieldset>
+                  </form>
+                </div>
 
                 <div className="col-md">
                   <Nav className="navbar-nav">

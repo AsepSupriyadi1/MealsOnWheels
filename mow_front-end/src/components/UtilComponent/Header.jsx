@@ -64,7 +64,7 @@ function Header() {
           <div className="main-header">
             <div className="row d-flex-between-center">
               <div className="col-md col-sm-5 ">
-                <a href="index.html">
+                <a href="/home">
                   <img src={resources.logo1} classNameName="my-logo" alt="" style={{ height: "80px" }} />
                 </a>
               </div>

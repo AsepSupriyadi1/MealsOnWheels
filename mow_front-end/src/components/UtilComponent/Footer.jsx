@@ -13,7 +13,7 @@ function Footer() {
             <div class="row d-flex-between">
               <div class="col-md-6 col-sm-12 col-xs-12 footer-widget">
                 <h4 class="footer-widget-title">More about US</h4>
-                <p>Curabitur a orci et nulla gravida laoreet. Pellentesque dictum ipsum nec placerat dignissim. Vivamus porta pellentesque libero, sit amet non.</p>
+                <p>Meals on Wheels is a nationwide organization that supports community-based programs addressing senior isolation and hunger. Through volunteers, they provide meals, companionship, and safety checks for independent living. Their vision is for seniors to have nourishing lives with dignity, and their mission is to empower local programs to eliminate hunger and isolation among seniors.</p>
               </div>
               <div class="col-md-6 col-sm-8 col-xs-12 footer-widget">
                 <h4 class="footer-widget-title">Stay in touch with us</h4>

@@ -29,7 +29,7 @@ const RegisterPage = () => {
         <div class="page-header">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <h2 class="page-title">Registration</h2>
+              <h2 class="page-title d-none d-lg-block">Registration</h2>
             </div>
             <div class="col-md-6 col-sm-6 hidden-xs back-home">
               <a href="/">&larr; Go back Home</a>

@@ -4,7 +4,7 @@ const TermsPage = () => {
       <div className="page-header">
         <div className="row">
           <div className="col-md-6 col-sm-6">
-            <h2 className="page-title">Terms and Conditions</h2>
+            <h2 className="page-title d-none d-lg-block">Terms and Conditions</h2>
           </div>
           <div className="col-md-6 col-sm-6 hidden-xs back-home">
             <a href="/home">&larr; Go back Home</a>

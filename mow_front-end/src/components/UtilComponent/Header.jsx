@@ -6,6 +6,7 @@ import { useContext, useEffect } from "react";
 import { ThemeContext, useTheme } from "../../context/theme";
 import { AuthContext } from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
+import { Button, Nav, Navbar } from 'react-bootstrap';
 
 function Header() {
   const { currentUser, logout } = useContext(AuthContext);

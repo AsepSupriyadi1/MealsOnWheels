@@ -5,11 +5,19 @@ import axios from "axios";
 import { foto } from "../../assets/images/Images";
 
 const RegisterPage = () => {
+  // GENERAL USER INFORMATION
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullname, setFullname] = useState("");
   const [address, setAddress] = useState("");
-  const [userRole, setUserRole] = useState("");
+  const [userRole, setUserRole] = useState("MEMBER");
+
+  // PARTNER INFORMATION
+  const [companyName, setCompanyName] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+
+  // DRIVER INFORMATION
+  const [carName, setCarName] = useState("");
 
   const [partnerForm, setPartnerForm] = useState(false);
   const [driverForm, setDriverForm] = useState(false);
@@ -17,16 +25,23 @@ const RegisterPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = {
-      email: email,
-      password: password,
-      fullname: fullname,
-      address: address,
-      userRole: userRole,
+      userApp: {
+        email: email,
+        password: password,
+        fullname: fullname,
+        address: address,
+        userRole: userRole,
+      },
+      partner: {
+        companyName: companyName,
+        companyAddress: companyAddress,
+      },
+      driver: {
+        carName: carName,
+      },
     };
 
     registerAPI(formData);
-
-    console.log(email, password, fullname, address, userRole);
   };
 
   useEffect(() => {
@@ -40,7 +55,6 @@ const RegisterPage = () => {
       setPartnerForm(false);
       setDriverForm(false);
     }
-    console.log("bjrrrr");
   }, [userRole]);
 
   return (
@@ -86,10 +100,7 @@ const RegisterPage = () => {
                     <Form.Group className="mb-3">
                       <Form.Label className="m-0">Join as :</Form.Label>
                       <Form.Select value={userRole} onChange={(e) => setUserRole(e.target.value)} required>
-                        <option disabled>Choose a role</option>
-                        <option defaultValue={true} value="MEMBER">
-                          Member
-                        </option>
+                        <option value="MEMBER">Member</option>
                         <option value="DRIVER">Rider</option>
                         <option value="PARTNER">Partner</option>
                         <option value="VOLUNTEER">Volunteer</option>
@@ -103,19 +114,19 @@ const RegisterPage = () => {
 
                     <Form.Group className="mb-3">
                       <Form.Label className="m-0">Password :</Form.Label>
-                      <Form.Control type="text" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                      <Form.Control type="password" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </Form.Group>
 
                     {partnerForm && (
                       <>
                         <Form.Group className="mb-3">
                           <Form.Label className="m-0">Company Name :</Form.Label>
-                          <Form.Control type="text" placeholder="Enter address......" value={address} onChange={(e) => setAddress(e.target.value)} />
+                          <Form.Control type="text" placeholder="Enter company name......" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
                         </Form.Group>
 
                         <Form.Group className="mb-3">
                           <Form.Label className="m-0">Company address :</Form.Label>
-                          <Form.Control type="text" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} />
+                          <Form.Control type="text" placeholder="Enter company address......" value={companyAddress} onChange={(e) => setCompanyAddress(e.target.value)} />
                         </Form.Group>
                       </>
                     )}
@@ -123,8 +134,8 @@ const RegisterPage = () => {
                     {driverForm && (
                       <>
                         <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Driver License :</Form.Label>
-                          <Form.Control type="text" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} />
+                          <Form.Label className="m-0">Car Name :</Form.Label>
+                          <Form.Control type="text" placeholder="Enter your car name......" value={carName} onChange={(e) => setCarName(e.target.value)} />
                         </Form.Group>
                       </>
                     )}

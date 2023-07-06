@@ -6,6 +6,7 @@ import { useContext, useEffect } from "react";
 import { ThemeContext, useTheme } from "../../context/theme";
 import { AuthContext } from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
+import { Button, Nav, Navbar } from 'react-bootstrap';
 
 function Header() {
   const { currentUser, logout } = useContext(AuthContext);
@@ -82,80 +83,64 @@ function Header() {
             </div>
           </div>
         </div>
-        <div id="navbar" class="menu-wrapper visible-md visible-lg ">
-          <div class="container">
+        <div id="navbar" className="menu-wrapper visible-md visible-lg">
+      <div className="container">
+        <div className="inner-menu">
+          <div className="row">
+            <Navbar expand="md" variant="light" className="px-5">
+              <Navbar.Toggle aria-controls="navbarCollaps" className="mb-4 bg-light mt-3"  />
+              <Navbar.Collapse id="navbarCollapse">
+                <div className="search-form d-sm-block d-lg-none">
+                  <form method="get" name="SearchForm" className="mb-2">
+                    <fieldset>
+                      <input type="text" name="s" id="s" placeholder="Search Here..." className="w-100" />
+                    </fieldset>
+                  </form>
+                </div>
 
+                <div className="col-md">
+                  <Nav className="navbar-nav">
+                    <Nav.Item>
+                      <Nav.Link className="fs-6" href="/home">Home</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link className="fs-6" href="/about">About</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link className="fs-6" href="/contact">Contact Us</Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </div>
 
-        
-
-            <div class="inner-menu">
-
-
-
-
-              <div class="row">
-            
-
-                  <nav class="navbar navbar-expand-md navbar-light">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                      <div class="search-form d-sm-block d-lg-none">
-                        <form method="get" name="SearchForm">
-                          <fieldset>
-                            <input type="text" name="s" id="s" placeholder="Search Here..." />
-                          </fieldset>
-                        </form>
+                {currentUser.name ? (
+                  currentUser.name && (
+                    <>
+                      <div className="col-md-3 button-holder">
+                        <span className="fs-5">{currentUser.name}</span> |
+                        <Button onClick={handleLogout} variant="danger">
+                          Logout
+                        </Button>
                       </div>
-
-
-                      <div className="col-md">
-                      <ul class="navbar-nav">
-                        <li class="nav-item border border-1 border-light" >
-                          <a class="nav-link" href="/home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="/about">About</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="/contact">Contact Us</a>
-                        </li>
-                      </ul>
-                      </div>
-                     
-              
-                      {currentUser.name ? (
-                        currentUser.name && (
-                          <>
-
-                            <div class="col-md-3 button-holder">
-                              <span class="fs-5">{currentUser.name}</span> |
-                              <button onClick={handleLogout} class="btn btn-danger">
-                                Logout
-                              </button>
-                            </div>
-                          </>
-                        )
-                      ) : (
-                        <>
-                          <div class="col-md-3 me-auto bg-light text-end">
-                            <a href="/register" class="btn main-btn" style={{ marginRight: " 10px" }}>
-                              Register
-                            </a>
-                            <a href="/login" class="btn main-btn">
-                              Login
-                            </a>
-                          </div>
-                        </>
-                      )}
+                    </>
+                  )
+                ) : (
+                  <>
+                    <div className="col-md-3 me-auto text-lg-end text-start ">
+                      <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
+                        Register
+                      </a>
+                      <a href="/login" className="btn main-btn">
+                        Login
+                      </a>
                     </div>
-                  </nav>
-             
-              </div>
-            </div>
+                  </>
+                )}
+              </Navbar.Collapse>
+            </Navbar>
           </div>
         </div>
+      </div>
+    </div>
 
 
       </header>

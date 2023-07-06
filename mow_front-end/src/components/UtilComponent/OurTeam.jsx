@@ -62,7 +62,7 @@ function OurTeam () {
                       <h5 class="event-title">
                         <a href="event-detail.html"className="text-success">Syukur Sidiq Nur Alam</a>
                       </h5>
-                      <h6 class="event-subtitle text-secondary">Front End Designer and Develper</h6>
+                      <h6 class="event-subtitle text-secondary">Front End Designer and Devloper</h6>
                     </div>
                   </li>
                 </ul>

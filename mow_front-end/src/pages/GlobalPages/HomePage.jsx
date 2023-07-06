@@ -12,7 +12,7 @@ const HomePage = () => {
           <div className="shadow" id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel ">
             <div class="carousel-inner" >
               <div class="carousel-item active" data-bs-interval="10000" >
-                <img src={Testimonial.imgtesti} className="d-block w-100"   alt="..." />
+                <img src={Testimonial.imgtesti} className="d-block w-100" alt="..." />
                 <div class="d-none d-md-block  text-center">
                   <div className="bg-dark py-4" style={{ position: "absolute", bottom: "0", width: "100%", opacity: "0.8" }}>
                     <h5 className="text-white ">Welcome to Meals On Wheels</h5>
@@ -54,41 +54,45 @@ const HomePage = () => {
 
           {/* service */}
           <div className="row mt-4">
-            <div className="col-md-4 service-item">
-              <div className="service-icon">
-                <i className="fa fa-globe"></i>
+            <div className="col-md-4 service-item  mb-5 bg-body rounded">
+              <div className="shadow p-2">
+                <div className="service-icon">
+                  <i className="fa fa-globe"></i>
+                </div>
+                <div className="service-content">
+                  <h4 className="service-title ">Vision</h4>
+                  <p>
+                    Promoting health, we provide hot noon meals to eligible adults unable to cook due to age, disease, or disability.     </p>
+                </div>
               </div>
-              <div className="service-content">
-                <h4 className="service-title">Vision</h4>
-                <p>
-                  To ensure that every qualified adult living at home, who is unable to cook for themselves or maintain their nutritional status due to age, disease, or disability, has access to a hot and nutritious noon meal, promoting
-                  their health and well-being.{" "}
-                </p>
-              </div>
+
             </div>
-            <div className="col-md-4 service-item">
-              <div className="service-icon">
-                <i className="fa fa-umbrella"></i>
+            <div className="col-md-4 service-item  mb-5 bg-body rounded">
+              <div className="shadow p-2">
+                <div className="service-icon">
+                  <i className="fa fa-umbrella"></i>
+                </div>
+                <div className="service-content">
+                  <h4 className="service-title">Help & Support</h4>
+                  <p>
+                    Receive support from MerryMeal's caring team. Overcome challenges with our help, resources, and guidance. Contact us for assistance.     </p>
+                </div>
               </div>
-              <div className="service-content">
-                <h4 className="service-title">Help & Support</h4>
-                <p>
-                  Receive assistance and support from MerryMeal's dedicated team. Our compassionate staff is here to help you navigate challenges, answer your questions, and provide the necessary resources for your well-being. Contact us to
-                  access the help and support you need.
-                </p>
-              </div>
+
             </div>
-            <div className="col-md-4 service-item">
-              <div className="service-icon">
-                <i className="fa fa-group"></i>
+            <div className="col-md-4 service-item  mb-5 bg-body rounded">
+              <div className="shadow p-2">
+                <div className="service-icon">
+                  <i className="fa fa-group"></i>
+                </div>
+                <div className="service-content">
+                  <h4 className="service-title">Volunteering</h4>
+                  <p>
+                    Make a difference by joining MerryMeal's volunteer program. Prepare, deliver meals, engage, and create impact. Sign up now!
+                  </p>
+                </div>
               </div>
-              <div className="service-content">
-                <h4 className="service-title">Volunteering</h4>
-                <p>
-                  Join MerryMeal's volunteer program and make a difference in the lives of those in need. As a volunteer, you will have the opportunity to contribute your time and skills to prepare and deliver meals, engage with recipients,
-                  and create a positive impact on their lives. Sign up now to become a valued part of our volunteering team.
-                </p>
-              </div>
+
             </div>
           </div>
           {/* end service */}
@@ -100,29 +104,28 @@ const HomePage = () => {
                 <div className="border  border-bottom border-secondary width-small"></div>
               </div>
               <div className="pt-4 px-4">
-                <p className="md-px-5 ms-px-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem impedit a omnis placeat quod. Provident rerum nihil non modi praesentium iste voluptas possimus quaerat, similique eaque nulla magni quam impedit!</p>
-
+                <p className="md-px-5 ms-px-0">Protect vital services provided by Meals on Wheels. Ensure continuous delivery of nutritious meals to those in need. Join us in making a significant impact and safeguarding access to nourishment for those who need it most.</p>
               </div>
 
             </div>
-            
-            <div class="row justify-content-center text-center mt-5">
-  <div class="col-md-6 col-sm-12 text-md-end mb-3 mb-md-0">
-    <a href="/register" class="bg-warning text-dark text-center p-3 rounded-pill shadow " style={{ width: "100%" }} >
-      SIGN UP NOW
-    </a>
-  </div>
-  <div class="col-md-6 col-sm-12 text-md-start mt-4 mt-md-0">
-    <a href="/donate" class="bg-warning text-dark text-center p-3 rounded-pill shadow" style={{ width: "100%" }} >
-      DONATE NOW
-    </a>
-  </div>
-</div>
 
-              
-              
+            <div class="row justify-content-center text-center mt-5">
+              <div class="col-md-6 col-sm-12 text-md-end mb-3 mb-md-0">
+                <a href="/register" class="bg-warning text-dark text-center p-3 rounded-pill shadow " style={{ width: "100%" }} >
+                  SIGN UP NOW
+                </a>
+              </div>
+              <div class="col-md-6 col-sm-12 text-md-start mt-4 mt-md-0">
+                <a href="/login" class="bg-warning text-dark text-center p-3 rounded-pill shadow" style={{ width: "100%" }} >
+                  DONATE NOW
+                </a>
+              </div>
             </div>
-          
+
+
+
+          </div>
+
           {/* end participate */}
           <div className="container py-5">
 
@@ -136,18 +139,38 @@ const HomePage = () => {
               </div>
               <div className="col-md-6">
                 <h3 className="text-success">PROTECT MEALS ON WHEELS BEFORE IT'S TOO LATE</h3>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quis cumque repellat dolores voluptate. Ratione, ad. Veritatis reiciendis, quos fuga labore, debitis officia ullam tempora unde quaerat, exercitationem autem officiis.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quis cumque repellat dolores voluptate. Ratione, ad. Veritatis reiciendis, quos fuga labore, debitis officia ullam tempora unde quaerat, exercitationem autem officiis.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quis cumque repellat dolores voluptate. Ratione, ad. Veritatis reiciendis, quos fuga labore, debitis officia ullam tempora unde quaerat, exercitationem autem officiis.</p>
+                <p>Safeguard Meals on Wheels before it's too late
+                  Protect the Delivery of Meals on Wheels before it's too late
+                  Preserve Meals on Wheels before it's too late
+                  Secure Meals on Wheels before it's too late
+                  Ensure the Safety of Meals on Wheels before it's too late
+                  Defend Meals on Wheels before it's too late
+                  Shield Meals on Wheels before it's too late
+                  Prioritize the Protection of Meals on Wheels before it's too late
+                  Guard Meals on Wheels before it's too late
+                  Prevent the Loss of Meals on Wheels before it's too late</p>
                 <p></p>
               </div>
             </div>
             <div className="row pb-5">
               <div className="col-md-6 ">
                 <h4 className="text-success">HISTORIC WHITE HOUSE CONFERENCE ON HUNGER, NUTRITION AND HEALTH</h4>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quis cumque repellat dolores voluptate. Ratione, ad. Veritatis reiciendis, quos fuga labore, debitis officia ullam tempora unde quaerat, exercitationem autem officiis.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quis cumque repellat dolores voluptate. Ratione, ad. Veritatis reiciendis, quos fuga labore, debitis officia ullam tempora unde quaerat, exercitationem autem officiis.Lorem ipsum, dolor sit amet consectetur adipisicing elit. Expedita quis cumque repellat dolores voluptate. Ratione, ad. Veritatis reiciendis, quos fuga labore, debitis officia ullam tempora unde quaerat, exercitationem autem officiis.</p>  
+                <p>
+                  Meals on Wheels Protection: Act Now, Don't Wait!
+                  Preserving Meals on Wheels: Time is Running Out!
+                  Urgent Action Needed: Safeguarding Meals on Wheels
+                  Securing Meals on Wheels: Don't Delay!
+                  Prioritize the Safety of Meals on Wheels Today
+                  Defend Meals on Wheels: Prevent It from Vanishing
+                  Taking a Stand: Protecting Meals on Wheels from Threats
+                  Ensuring the Future of Meals on Wheels: Act Before It's Too Late
+                  Shielding Meals on Wheels: Safeguarding Access to Nourishment
+                  Bolstering Meals on Wheels: Guarding against Impending Crisis
+                </p>
               </div>
               <div className="col-md-6 px-md-5 ">
-              <img className="shadow " src={Testimonial.grandma} width="100%" alt="" />
-              
+                <img className="shadow " src={Testimonial.grandma} width="100%" alt="" />
+
               </div>
             </div>
           </div>

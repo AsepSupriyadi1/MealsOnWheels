@@ -104,8 +104,7 @@ const HomePage = () => {
                 <div className="border  border-bottom border-secondary width-small"></div>
               </div>
               <div className="pt-4 px-4">
-                <p className="md-px-5 ms-px-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem impedit a omnis placeat quod. Provident rerum nihil non modi praesentium iste voluptas possimus quaerat, similique eaque nulla magni quam impedit!</p>
-
+                <p className="md-px-5 ms-px-0">Protect vital services provided by Meals on Wheels. Ensure continuous delivery of nutritious meals to those in need. Join us in making a significant impact and safeguarding access to nourishment for those who need it most.</p>
               </div>
 
             </div>

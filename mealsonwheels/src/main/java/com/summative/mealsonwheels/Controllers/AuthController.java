@@ -24,6 +24,7 @@ import com.summative.mealsonwheels.Entity.Tokens;
 import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Exception.UserNotActiveException;
 import com.summative.mealsonwheels.Repositories.TokensRepository;
+import com.summative.mealsonwheels.Services.DriverServices;
 import com.summative.mealsonwheels.Services.PartnerService;
 import com.summative.mealsonwheels.Services.TokensService;
 import com.summative.mealsonwheels.Services.UserAppService;
@@ -53,6 +54,9 @@ public class AuthController {
 
     @Autowired
     private PartnerService partnerService;
+
+    @Autowired
+    private DriverServices driverServices;
 
 
 
@@ -116,8 +120,8 @@ public class AuthController {
 
             // CEK IF THE REGISTER USER IS DRIVER
             if(registerRequest.getUserApp().getUserRole().name().equals("DRIVER")){  
-                 registerRequest.getDriver().setUser(registerRequest.getUserApp());
-                partnerService.save(registerRequest.getPartner());
+                registerRequest.getDriver().setUser(registerRequest.getUserApp());
+                driverServices.save(registerRequest.getDriver());
              }
 			responseData.setPayload(registerRequest);
             

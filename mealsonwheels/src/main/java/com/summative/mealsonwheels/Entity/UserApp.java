@@ -54,6 +54,9 @@ public class UserApp implements UserDetails {
     @Column(name = "user_role")
     private UserRole userRole;
 
+    @Column(name = "is_active")
+    private boolean isActive;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Tokens> tokens;

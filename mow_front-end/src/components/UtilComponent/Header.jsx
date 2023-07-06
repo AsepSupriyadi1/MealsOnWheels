@@ -19,7 +19,7 @@ function Header() {
   return (
     <>
       <header className="site-header">
-        <div className="top-header">
+        <div className="top-header d-none d-lg-block">
           <div className="container">
             <div className="inner-top">
               <div className="row">
@@ -70,7 +70,7 @@ function Header() {
               </div>
               <div className="col-md col-sm-7 main-header-right">
                 <div className="social-search text-end">
-                  <div className="search-form">
+                  <div className="search-form d-none d-lg-block">
                     <form method="get" name="SearchForm">
                       <fieldset>
                         <input type="text" name="s" id="s" placeholder="Search Here..." />
@@ -82,53 +82,82 @@ function Header() {
             </div>
           </div>
         </div>
-        <div className="menu-wrapper visible-md visible-lg">
-          <div className="container">
-            <div className="inner-menu">
-              <div className="row">
-                <div className="col-md-9 main-menu">
-                  <nav>
-                    <ul className="sf-menu">
-                      <li>
-                        <a href="/home">Home</a>
-                      </li>
-                      <li>
-                        <a href="/about">About</a>
-                      </li>
-                      <li>
-                        <a href="/contact">Contact Us</a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
+        <div id="navbar" class="menu-wrapper visible-md visible-lg ">
+          <div class="container">
 
-                {currentUser.name ? (
-                  currentUser.name && (
-                    <>
-                      <div className="col-md-3 button-holder">
-                        <span className="fs-5">{currentUser.name}</span> |
-                        <button onClick={handleLogout} className="btn btn-danger">
-                          Logout
-                        </button>
+
+        
+
+            <div class="inner-menu">
+
+
+
+
+              <div class="row">
+            
+
+                  <nav class="navbar navbar-expand-md navbar-light">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                      <div class="search-form d-sm-block d-lg-none">
+                        <form method="get" name="SearchForm">
+                          <fieldset>
+                            <input type="text" name="s" id="s" placeholder="Search Here..." />
+                          </fieldset>
+                        </form>
                       </div>
-                    </>
-                  )
-                ) : (
-                  <>
-                    <div className="col-md-3 button-holder">
-                      <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
-                        Register
-                      </a>
-                      <a href="/login" className="btn main-btn">
-                        Login
-                      </a>
+
+
+                      <div className="col-md">
+                      <ul class="navbar-nav">
+                        <li class="nav-item border border-1 border-light" >
+                          <a class="nav-link" href="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/about">About</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/contact">Contact Us</a>
+                        </li>
+                      </ul>
+                      </div>
+                     
+              
+                      {currentUser.name ? (
+                        currentUser.name && (
+                          <>
+
+                            <div class="col-md-3 button-holder">
+                              <span class="fs-5">{currentUser.name}</span> |
+                              <button onClick={handleLogout} class="btn btn-danger">
+                                Logout
+                              </button>
+                            </div>
+                          </>
+                        )
+                      ) : (
+                        <>
+                          <div class="col-md-3 me-auto bg-light text-end">
+                            <a href="/register" class="btn main-btn" style={{ marginRight: " 10px" }}>
+                              Register
+                            </a>
+                            <a href="/login" class="btn main-btn">
+                              Login
+                            </a>
+                          </div>
+                        </>
+                      )}
                     </div>
-                  </>
-                )}
+                  </nav>
+             
               </div>
             </div>
           </div>
         </div>
+
+
       </header>
     </>
   );

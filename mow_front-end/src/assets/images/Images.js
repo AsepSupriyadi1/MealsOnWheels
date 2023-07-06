@@ -22,7 +22,7 @@ import imgtesti from "./placehold/testimonials/giver.png";
 import membereat from "./placehold/gallery/memberfood.jpg";
 import david from "./placehold/staff/mr_david.jpg";
 import darren from "./placehold/staff/darren.jpg";
-import ajri from "./placehold/staff/ajri.jpg";
+import ajri from "./placehold/staff/ajri.jpeg";
 import rahman from "./placehold/staff/rahman.jpg";
 import syukur from "./placehold/staff/syukur.jpg";
 import asep from "./placehold/staff/asep.jpg";

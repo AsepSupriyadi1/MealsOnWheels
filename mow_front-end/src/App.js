@@ -46,7 +46,6 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
-      
 
         {!isLoggedIn && (
           <>
@@ -67,27 +66,38 @@ function App() {
             <Route path="/thanks" element={<BankAddress />} />
 
             {/* DRIVER */}
-            {currentUser.role === "MEMBER" && (
+            {currentUser.userRole === "MEMBER" && (
               <>
-                <Route path="/driver" element={<DriverDashboard />} />
-                <Route path="/member" element={<MemberDashboard />} />
+                <Route path="/meals" element={<MemberDashboard />} />
+              </>
+            )}
+
+            {/* PARTNER */}
+            {currentUser.userRole === "PARTNER" && (
+              <>
                 <Route path="/partner" element={<PartnerDashboard />} />
               </>
             )}
 
+            {/* DRIVER */}
+            {currentUser.userRole === "PARTNER" && (
+              <>
+                <Route path="/driver" element={<DriverDashboard />} />
+              </>
+            )}
+
             {/* MEMBER */}
-            {currentUser.role === "MEMBER" && (
+            {currentUser.userRole === "MEMBER" && (
               <>
                 <Route path="/member" element={<MemberDashboard />} />
                 <Route path="/detailpakage" element={<DetailpakageMember />} />
                 <Route path="/feedback" element={<FeedbackMember />} />
-                <Route path="/profile" element={<Profile/>}/>
-                
+                <Route path="/profile" element={<Profile />} />
               </>
             )}
 
             {/* ADMIN */}
-            {currentUser.role === "ADMIN" && (
+            {currentUser.userRole === "ADMIN" && (
               <>
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/all-drivers" element={<ManageDriver />} />

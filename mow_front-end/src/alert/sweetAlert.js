@@ -5,6 +5,8 @@ export const errorAlert = (errTitle, errMsg) => {
     icon: "error",
     title: `${errTitle}`,
     text: `${errMsg}`,
+  }).then(() => {
+    window.location.reload();
   });
 };
 

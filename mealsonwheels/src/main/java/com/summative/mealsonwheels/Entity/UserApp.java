@@ -71,6 +71,9 @@ public class UserApp implements UserDetails {
     @OneToOne(mappedBy = "user")
     private Partner partner;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private Driver driver;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

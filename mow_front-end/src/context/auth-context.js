@@ -50,7 +50,7 @@ export function AuthContextProvider(props) {
   let contextValue = {
     currentUser: {
       userId: user.userId,
-      fullName: user.fullname,
+      fullname: user.fullname,
       email: user.email,
       address: user.address,
       userRole: user.userRole,

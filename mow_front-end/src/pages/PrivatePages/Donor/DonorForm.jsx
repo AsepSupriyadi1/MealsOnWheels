@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../../../context/auth-context';
+
 
 const DonorForm = () => {
   const [firstName, setFirstName] = useState('');
@@ -9,6 +11,8 @@ const DonorForm = () => {
   const [address, setAddress] = useState('');
   const [donorAmount, setDonorAmount] = useState('');
 
+  const { currentUser } = useContext(AuthContext);
+  
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -20,6 +24,7 @@ const DonorForm = () => {
       address,
       status: 'p',
       donorAmount,
+      senderId: currentUser.userId,
     };
 
     // Make Axios request to the backend endpoint
@@ -123,6 +128,7 @@ const DonorForm = () => {
                   />
                 </fieldset>
                 <input type="hidden" id="status" name="status" value="p" />
+                <input type="hidden" id="senderId" name="senderId" value={currentUser.userId} /> {/* Replace with the actual sender ID */}
                 <fieldset>
                   <label htmlFor="donorAmount">
                     Donation Amount: <span>Enter The amount you want to donate</span>

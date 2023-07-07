@@ -106,6 +106,7 @@ const RegisterPage = () => {
                         <option value="DRIVER">Rider</option>
                         <option value="PARTNER">Partner</option>
                         <option value="VOLUNTEER">Volunteer</option>
+                        <option value="DONOR">Donor</option>
                       </Form.Select>
                     </Form.Group>
 

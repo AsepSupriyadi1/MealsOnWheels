@@ -33,6 +33,7 @@ import { AuthContext } from "./context/auth-context";
 
 import "./pages/PrivatePages/Member/member.css";
 import Profile from "./pages/PrivatePages/Member/Profile";
+import OurDonor from "./pages/PrivatePages/Donor/OurDonor";
 function App() {
   const { isLoggedIn, currentUser } = useContext(AuthContext);
 
@@ -46,6 +47,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
+
 
         {!isLoggedIn && (
           <>
@@ -62,6 +64,7 @@ function App() {
             {/* DONOR */}
             <Route path="/donor" element={<DonorDashboard />} />
             <Route path="/donate" element={<DonorForm />} />
+            <Route path="/our-donor" element={<OurDonor />} />
             <Route path="/donationStatus" element={<DonationDetails />} />
             <Route path="/thanks" element={<BankAddress />} />
             <Route path="/profile" element={<Profile />} />

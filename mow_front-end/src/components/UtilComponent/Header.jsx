@@ -70,14 +70,14 @@ function Header() {
                 </a>
               </div>
               <div className="col-md col-sm-7">
-                <div className="me-auto  text-lg-end text-start d-lg-block d-sm-none ">
-                  <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
-                    Register
-                  </a>
-                  <a href="/login" className="btn main-btn">
-                    Login
-                  </a>
-                </div>
+              <div className="me-auto  text-lg-end text-start d-none d-sm-none d-lg-block ">
+                      <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
+                        Register
+                      </a>
+                      <a href="/login" className="btn main-btn">
+                        Login
+                      </a>
+                    </div>
               </div>
             </div>
           </div>
@@ -149,35 +149,37 @@ function Header() {
                       </Nav>
                     </div>
 
-                    {currentUser.fullName ? (
-                      currentUser.fullName && (
-                        <>
-                          <div className="col-md-3 button-holder">
-                            <span className="fs-5">{currentUser.fullName}</span> |
-                            <Button onClick={handleLogout} variant="danger">
-                              Logout
-                            </Button>
-                          </div>
-                        </>
-                      )
-                    ) : (
-                      <>
-                        <div className="col-md-3 d-sm-block d-lg-none me-auto text-lg-end text-start ">
-                          <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
-                            Register
-                          </a>
-                          <a href="/login" className="btn main-btn">
-                            Login
-                          </a>
-                        </div>
-                      </>
-                    )}
-                  </Navbar.Collapse>
-                </Navbar>
-              </div>
-            </div>
+                {currentUser.name ? (
+                  currentUser.name && (
+                    <>
+                      <div className="col-md-3 button-holder">
+                        <span className="fs-5">{currentUser.name}</span> |
+                        <Button onClick={handleLogout} variant="danger">
+                          Logout
+                        </Button>
+                      </div>
+                    </>
+                  )
+                ) : (
+                  <>
+                    <div className="col-md-3 d-sm-block d-lg-none me-auto text-lg-end text-start ">
+                      <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
+                        Register
+                      </a>
+                      <a href="/login" className="btn main-btn">
+                        Login
+                      </a>
+                    </div>
+                  </>
+                )}
+              </Navbar.Collapse>
+            </Navbar>
           </div>
         </div>
+      </div>
+    </div>
+
+
       </header>
     </>
   );

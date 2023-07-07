@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MealsonwheelsApplication<mealsonwheels>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.summative.mealsonwheels.MealsonwheelsApplication",
+            "projectName": "mealsonwheels",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.summative.mealsonwheels.Config.JwtService;
 import com.summative.mealsonwheels.Dto.AuthenticationRequest;
 import com.summative.mealsonwheels.Dto.AuthenticationResponse;
+import com.summative.mealsonwheels.Dto.RegisterRequest;
 import com.summative.mealsonwheels.Dto.ResponseData;
 import com.summative.mealsonwheels.Dto.UserResponse;
 import com.summative.mealsonwheels.Entity.TokenType;
@@ -23,6 +24,8 @@ import com.summative.mealsonwheels.Entity.Tokens;
 import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Exception.UserNotActiveException;
 import com.summative.mealsonwheels.Repositories.TokensRepository;
+import com.summative.mealsonwheels.Services.DriverServices;
+import com.summative.mealsonwheels.Services.PartnerService;
 import com.summative.mealsonwheels.Services.TokensService;
 import com.summative.mealsonwheels.Services.UserAppService;
 
@@ -47,6 +50,14 @@ public class AuthController {
 
     @Autowired 
     private JwtService jwtService;
+
+
+    @Autowired
+    private PartnerService partnerService;
+
+    @Autowired
+    private DriverServices driverServices;
+
 
 
     @PostMapping("/authenticate")
@@ -92,15 +103,31 @@ public class AuthController {
 
 
     @PostMapping(value = "/register")
-	public ResponseEntity<ResponseData<UserApp>> registerUser(@RequestBody UserApp user) {
+	public ResponseEntity<ResponseData<RegisterRequest>> registerUser(@RequestBody RegisterRequest registerRequest) {
 
-		ResponseData<UserApp> responseData = new ResponseData<UserApp>();
-
+		ResponseData<RegisterRequest> responseData = new ResponseData<RegisterRequest>();
+    
 		try {
-			responseData.setPayload(userAppService.save(user));
+            userAppService.save(registerRequest.getUserApp());
+
+
+            // CEK IF THE REGISTER USER IS PARTNER
+            if(registerRequest.getUserApp().getUserRole().name().equals("PARTNER")){   
+                registerRequest.getPartner().setUser(registerRequest.getUserApp());
+                partnerService.save(registerRequest.getPartner());
+            }
+
+
+            // CEK IF THE REGISTER USER IS DRIVER
+            if(registerRequest.getUserApp().getUserRole().name().equals("DRIVER")){  
+                registerRequest.getDriver().setUser(registerRequest.getUserApp());
+                driverServices.save(registerRequest.getDriver());
+             }
+			responseData.setPayload(registerRequest);
+            
 		} catch (Exception e) {
 			responseData.setStatus(false);
-			responseData.setMessages("Username Already Exist !");
+			responseData.setMessages(e.getMessage());
 			responseData.setPayload(null);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
 		}
@@ -110,6 +137,8 @@ public class AuthController {
 		return ResponseEntity.ok(responseData);
 
 	}
+
+
 
 
     @GetMapping(value = "/user")

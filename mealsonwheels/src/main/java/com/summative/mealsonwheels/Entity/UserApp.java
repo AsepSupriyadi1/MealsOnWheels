@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -64,6 +65,12 @@ public class UserApp implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Funds> funds;
+
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private Partner partner;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

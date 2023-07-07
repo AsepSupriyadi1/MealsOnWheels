@@ -32,6 +32,7 @@ import kentang from "./placehold/testimonials/kentang.jpg";
 import grand from "./placehold/testimonials/grand.jpg";
 import grandma from "./placehold/testimonials/grandma.jpg";
 import sorry from "./modals/sorry.png";
+import staff2 from "./foto/staff2.png";
 
 export const resources = {
   logo1,
@@ -95,4 +96,8 @@ export const DashHeader = {
 
 export const ImgModal = {
   sorry,
+};
+
+export const foto = {
+  staff2,
 };

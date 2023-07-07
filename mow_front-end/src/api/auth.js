@@ -8,7 +8,7 @@ export const registerAPI = async (user) => {
   axios
     .post(`${BASE_URL}/auth/register`, user)
     .then((response) => {
-      successConfAlert("Success", `${response.data.messages}`, "/login");
+      successConfAlert("Success", `${response.data.messages}`);
     })
     .catch((err) => {
       errorAlert("Error Occured", err.response.data.messages);

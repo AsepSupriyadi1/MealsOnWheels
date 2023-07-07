@@ -3,12 +3,13 @@ import { BASE_URL } from "./constant";
 import { errorAlert, successConfAlert } from "../alert/sweetAlert";
 
 // REGISTER
-export const registerAPI = async (user) => {
+export const registerAPI = async (user, navigate) => {
   // mengembalikan alert success / alert gagal untuk prosess registrasi
   axios
     .post(`${BASE_URL}/auth/register`, user)
     .then((response) => {
       successConfAlert("Success", `${response.data.messages}`);
+      navigate("/login");
     })
     .catch((err) => {
       errorAlert("Error Occured", err.response.data.messages);

@@ -51,7 +51,7 @@ const LoginPage = () => {
 
         <div class="row">
           <div class="col-md-12">
-            <div class="box-content">
+            <div class="box-content rounded shadow">
               <h4 class="widget-title">
                 <span>Enter Login Information</span>
               </h4>

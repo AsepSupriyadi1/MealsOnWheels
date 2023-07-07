@@ -50,6 +50,10 @@ public class AdminController {
 
 
 
+    @GetMapping("/all-users")
+    public List<UserApp> getAllUsers(){
+        return userAppService.getAllUsers();
+    }
 
 
 
@@ -58,7 +62,8 @@ public class AdminController {
 
 
 
-    // -=-=-=-= GET ALL CONTROLLER START -=-=-=-=-=
+
+    // -=-=-=-=-=-= MANAGE DRIVER -=-=-=-=-=
     @GetMapping("/all-active-partner")
     public List<Partner> getAllActivePartner(){
         return partnerService.getAllActivePartners();
@@ -71,6 +76,9 @@ public class AdminController {
     }
 
 
+    // -=-=-=-=-=-= MANAGE DRIVER -=-=-=-=-=
+
+
     @GetMapping("/all-active-driver")
     public List<Driver> getAllActiveDrivers(){
         return driverServices.getAllActiveDrivers();
@@ -81,7 +89,5 @@ public class AdminController {
     public List<Driver> getAllNotActiveDrivers(){
         return driverServices.getAllNonActiveDrivers();
     }
-    // -=-=-=-= GET ALL CONTROLLER END -=-=-=-=-=
-
 
 }

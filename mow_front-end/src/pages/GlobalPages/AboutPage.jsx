@@ -50,9 +50,8 @@ const AboutPage = () => {
                         <h4 class="event-title text-success">Mr.David</h4>
                         <h6 className="text-black-50">Owner</h6>
 
-                        <p>Meals on Wheels was initially founded due to Mr. David's dream of helping people in need. With the intention of reaching out to individuals who were facing difficulties, Mr. David conceived the idea of creating a website that would enable anyone to access support and aid, regardless of their geographical distance from the organization.</p>
-
-<p> From the year 2023, Mr. David embarked on building his dream, starting with utilizing his personal savings as a means to fund the project. Through unwavering dedication and perseverance, he worked tirelessly to ensure that his vision would eventually come to fruition.</p>
+                        <p>
+Meals on Wheels was initially founded due to Mr. David's dream of helping people in need. With the intention of reaching out to individuals who were facing difficulties, Mr. David conceived the idea of creating a website that would enable anyone to access support and aid.</p>
                       </div>
                     </div>
                   </div>

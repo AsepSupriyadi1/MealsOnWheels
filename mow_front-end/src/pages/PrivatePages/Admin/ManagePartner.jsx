@@ -1,8 +1,47 @@
 import { faCheck, faCircle, faDotCircle, faEye, faPencil, faPiggyBank, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext, useEffect, useState } from "react";
 import { Badge, ListGroup, Tab, Tabs } from "react-bootstrap";
+import { activateUser, getAllNonActivePartners } from "../../../api/admin";
+import { AuthContext } from "../../../context/auth-context";
+import Swal from "sweetalert2";
+import { confirmALert } from "../../../alert/sweetAlert";
 
 const ManagePartner = () => {
+  const userCtx = useContext(AuthContext);
+  const [nonActivePartners, setNonActivePartners] = useState(null);
+  const [activePartners, setActivePartner] = useState(null);
+
+  useEffect(() => {
+    getAllNonActivePartners(userCtx.token).then((response) => {
+      setNonActivePartners(response.data);
+    });
+  }, []);
+
+  const handleApprovePartner = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        activateUser(userCtx.token, id)
+          .then((response) => {
+            Swal.fire("User Activated Successfully !", "Partner's account has been approved.", "success");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
+
+  if (!nonActivePartners) return null;
+
   return (
     <>
       <div className="container">
@@ -74,26 +113,30 @@ const ManagePartner = () => {
                       <thead className="table-dark">
                         <tr>
                           <th>No</th>
-                          <th>Partners Name</th>
+                          <th>Partner Name</th>
                           <th>Company Name</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Pentil Megalodon</td>
-                          <td>ABC Pentil</td>
+                        {nonActivePartners.map((value) => (
+                          <>
+                            <tr>
+                              <td>1</td>
+                              <td>{value.user.fullname}</td>
+                              <td>{value.companyName}</td>
 
-                          <td>
-                            <a className="btn btn-secondary rounded m-1">
-                              Details <FontAwesomeIcon icon={faEye} className="ps-3" />
-                            </a>
-                            <a className="btn btn-success rounded m-1">
-                              Approve <FontAwesomeIcon icon={faCheck} className="ps-3" />
-                            </a>
-                          </td>
-                        </tr>
+                              <td>
+                                <a className="btn btn-secondary rounded m-1">
+                                  Details <FontAwesomeIcon icon={faEye} className="ps-3" />
+                                </a>
+                                <button className="btn btn-success rounded m-1" onClick={() => handleApprovePartner(value.user.userId)}>
+                                  Approve <FontAwesomeIcon icon={faCheck} className="ps-3" />
+                                </button>
+                              </td>
+                            </tr>
+                          </>
+                        ))}
                       </tbody>
                     </table>
                   </div>

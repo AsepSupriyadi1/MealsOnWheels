@@ -6,7 +6,7 @@ import { useContext, useEffect } from "react";
 import { ThemeContext, useTheme } from "../../context/theme";
 import { AuthContext } from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
-import { Button, Nav, Navbar } from 'react-bootstrap';
+import { Button, Nav, Navbar } from "react-bootstrap";
 
 function Header() {
   const { currentUser, logout } = useContext(AuthContext);
@@ -83,25 +83,71 @@ function Header() {
           </div>
         </div>
         <div id="navbar" className="menu-wrapper visible-md visible-lg">
-      <div className="container">
-        <div className="inner-menu">
-          <div className="row">
-            <Navbar expand="md" variant="light" className="px-5">
-              <Navbar.Toggle aria-controls="navbarCollaps" className="mb-4 bg-light mt-3"  />
-              <Navbar.Collapse id="navbarCollapse">
-                <div className="col-md">
-                  <Nav className="navbar-nav">
-                    <Nav.Item>
-                      <Nav.Link className="fs-6 border-start-secondary" href="/home">Home</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link className="fs-6" href="/about">About</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link className="fs-6" href="/contact">Contact Us</Nav.Link>
-                    </Nav.Item>
-                  </Nav>
-                </div>
+          <div className="container">
+            <div className="inner-menu">
+              <div className="row">
+                <Navbar expand="md" variant="light" className="px-5">
+                  <Navbar.Toggle aria-controls="navbarCollaps" className="mb-4 bg-light mt-3" />
+                  <Navbar.Collapse id="navbarCollapse">
+                    <div className="col-md">
+                      <Nav className="navbar-nav">
+                        <Nav.Item>
+                          <Nav.Link className="fs-6 border-start-secondary" href="/home">
+                            Home
+                          </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                          <Nav.Link className="fs-6" href="/about">
+                            About
+                          </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                          <Nav.Link className="fs-6" href="/contact">
+                            Contact Us
+                          </Nav.Link>
+                        </Nav.Item>
+
+                        {currentUser.userRole == "ADMIN" && (
+                          <>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6 border-start-secondary" href="/admin">
+                                Dashboard
+                              </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6" href="/all-partners">
+                                Partners
+                              </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6" href="/all-drivers">
+                                Drivers
+                              </Nav.Link>
+                            </Nav.Item>
+                          </>
+                        )}
+
+                        {currentUser.userRole == "MEMBER" && (
+                          <>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6 border-start-secondary" href="/admin">
+                                Dashboard
+                              </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6" href="/about">
+                                Partners
+                              </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6" href="/contact">
+                                Drivers
+                              </Nav.Link>
+                            </Nav.Item>
+                          </>
+                        )}
+                      </Nav>
+                    </div>
 
                 {currentUser.name ? (
                   currentUser.name && (
@@ -116,7 +162,7 @@ function Header() {
                   )
                 ) : (
                   <>
-                    <div className="col-md-3 d-sm-block d-md-none d-lg-none me-auto text-lg-end text-start ">
+                    <div className="col-md-3 d-sm-block d-lg-none me-auto text-lg-end text-start ">
                       <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
                         Register
                       </a>

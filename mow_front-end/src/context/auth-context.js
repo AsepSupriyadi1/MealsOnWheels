@@ -34,7 +34,6 @@ export function AuthContextProvider(props) {
         .catch((err) => console.log(err));
     }
 
-    console.log(user);
     return () => {};
   }, [token]);
 
@@ -50,11 +49,11 @@ export function AuthContextProvider(props) {
 
   let contextValue = {
     currentUser: {
-      id: user.userId,
-      name: user.fullname,
+      userId: user.userId,
+      fullName: user.fullname,
       email: user.email,
       address: user.address,
-      role: user.userRole,
+      userRole: user.userRole,
     },
     token: token,
     isLoggedIn: userIsLoggedIn,

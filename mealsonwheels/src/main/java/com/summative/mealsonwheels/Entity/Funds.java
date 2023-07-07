@@ -48,6 +48,9 @@ public class Funds {
     private String address;
 
     @Column(nullable = false)
+    private Long senderId;
+
+    @Column(nullable = false)
     private String status;
 
    

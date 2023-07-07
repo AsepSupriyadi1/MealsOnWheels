@@ -17,6 +17,7 @@ public class FundRequest {
     private String email;
     private String phoneNumber;
     private String address;
+    private Long senderId;
     private String status;
 
 

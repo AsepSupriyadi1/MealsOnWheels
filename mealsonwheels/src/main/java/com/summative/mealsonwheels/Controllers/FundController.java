@@ -1,6 +1,8 @@
 package com.summative.mealsonwheels.Controllers;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +41,7 @@ public class FundController {
         funds.setEmail(fundsRequest.getEmail());
         funds.setAddress(fundsRequest.getAddress());
         funds.setStatus(fundsRequest.getStatus());
+        funds.setSenderId(fundsRequest.getSenderId());
         
         // DONOR INFORMATION
         funds.setDonorAmount(Double.parseDouble(fundsRequest.getDonorAmount()));
@@ -46,6 +49,11 @@ public class FundController {
 
         return fundServices.saveFunds(funds);   
     }
+
+        @GetMapping("/funds")
+        public List<Funds> getAllFunds() {
+            return fundServices.getAllFunds();
+        }
 
     @GetMapping("/test")
     public String testFunds(){

@@ -21,3 +21,5 @@ export const activateUser = async (token, userId) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// -=-=-=-=-= MEALS -=-=-=-=-=

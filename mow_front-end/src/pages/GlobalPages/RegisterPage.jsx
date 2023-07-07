@@ -3,9 +3,11 @@ import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { registerAPI } from "../../api/auth";
 import axios from "axios";
 import { foto } from "../../assets/images/Images";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   // GENERAL USER INFORMATION
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullname, setFullname] = useState("");
@@ -41,7 +43,7 @@ const RegisterPage = () => {
       },
     };
 
-    registerAPI(formData);
+    registerAPI(formData, navigate);
   };
 
   useEffect(() => {

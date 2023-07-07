@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.summative.mealsonwheels.Dto.MessageResponse;
+import com.summative.mealsonwheels.Entity.Driver;
 import com.summative.mealsonwheels.Entity.Partner;
 import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Repositories.Dto.PartnerDto;
+import com.summative.mealsonwheels.Services.DriverServices;
 import com.summative.mealsonwheels.Services.PartnerService;
 import com.summative.mealsonwheels.Services.UserAppService;
 
@@ -24,6 +26,9 @@ public class AdminController {
 
     @Autowired
     private PartnerService partnerService;
+
+    @Autowired
+    private DriverServices driverServices;
 
 
     // ACTIVATE USER BY THE ID
@@ -66,7 +71,16 @@ public class AdminController {
     }
 
 
+    @GetMapping("/all-active-driver")
+    public List<Driver> getAllActiveDrivers(){
+        return driverServices.getAllActiveDrivers();
+    }
 
+
+    @GetMapping("/all-notactive-driver")
+    public List<Driver> getAllNotActiveDrivers(){
+        return driverServices.getAllNonActiveDrivers();
+    }
     // -=-=-=-= GET ALL CONTROLLER END -=-=-=-=-=
 
 

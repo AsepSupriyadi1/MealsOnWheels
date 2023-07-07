@@ -3,6 +3,7 @@ import { gallery } from "../../../assets/images/Images";
 import { faArrowAltCircleRight, faBuilding, faCar, faCartPlus, faDollar, faDriversLicense, faHamburger, faPiggyBank, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
 
 import "./admin.css";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   return (
@@ -35,7 +36,7 @@ const AdminDashboard = () => {
               </div>
 
               <div className="admin__status_links bg-light rounded">
-                <a href="">
+                <a href="all-meals">
                   View details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
                 </a>
               </div>
@@ -53,7 +54,7 @@ const AdminDashboard = () => {
               </div>
 
               <div className="admin__status_links bg-light rounded">
-                <a href="">
+                <a href="orders">
                   View details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
                 </a>
               </div>
@@ -71,7 +72,7 @@ const AdminDashboard = () => {
               </div>
 
               <div className="admin__status_links bg-light rounded">
-                <a href="">
+                <a href="all-partners">
                   View Details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
                 </a>
               </div>
@@ -89,7 +90,7 @@ const AdminDashboard = () => {
               </div>
 
               <div className="admin__status_links bg-light rounded">
-                <a href="">
+                <a href="all-drivers">
                   View Details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
                 </a>
               </div>

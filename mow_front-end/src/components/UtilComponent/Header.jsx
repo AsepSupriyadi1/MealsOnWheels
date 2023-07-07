@@ -65,7 +65,7 @@ function Header() {
         <div className="container">
           <div className="main-header">
             <div className="row  d-flex justify-content-between align-items-center">
-              <div className="col-md col-sm-5 ">
+              <div className=" col-lg-8  col-sm-5 ">
                 <a href="/home">
                   <img src={resources.logo1} classNameName="my-logo" alt="" style={{ height: "80px" }} />
                 </a>
@@ -73,8 +73,8 @@ function Header() {
 
               {currentUser.fullname ? (
                 currentUser.fullname && (
-                  <a href="/profile" className="col-md-3">
-                    <div className=" pe-2 text-end d-flex justify-content-end align-items-center">
+                  <a href="/profile" className="col-lg d-lg-block d-md-block d-none">
+                    <div className="  text-end d-flex justify-content-end align-items-center ">
                       <div className="mt-2">
                         <h5 className="m-0 text-light">{currentUser.fullname}</h5>
                         <p className="fs-6 m-0 text-warning">{currentUser.userRole}</p>
@@ -85,7 +85,7 @@ function Header() {
                 )
               ) : (
                 <div className="col-md col-sm-7">
-                  <div className="me-auto  text-lg-end text-start ">
+                  <div className="me-auto  text-lg-end text-start d-lg-block d-md-block d-sm-none d-none ">
                     <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
                       Register
                     </a>
@@ -103,9 +103,21 @@ function Header() {
             <div className="inner-menu">
               <div className="row">
                 <Navbar expand="md" variant="light" className="px-5">
-                  <Navbar.Toggle aria-controls="navbarCollaps" className="mb-4 bg-light mt-3" />
+                  <Navbar.Toggle aria-controls="navbarCollaps" className="mb-2 bg-light mt-3" />
                   <Navbar.Collapse id="navbarCollapse">
-                    <div className="col-md">
+                    {currentUser.fullname &&((
+                     <a href="/profile" className="col-md-3 d-block d-sm-block d-lg-none d-md-none">
+                     <div className=" mt-2  d-flex align-items-center">
+                     <FontAwesomeIcon icon={faUser} className="text-dark me-3 fs-3 bg-light p-3" />
+                       <div className="mt-2">
+                         <h5 className="m-0 text-light">{currentUser.fullname}</h5>
+                         <p className="fs-6 m-0 text-warning">{currentUser.userRole}</p>
+                       </div>
+                     </div>
+                   </a>
+                    ))}
+                  
+                      <div className="col-md">
                       <Nav className="navbar-nav">
                         <Nav.Item>
                           <Nav.Link className="fs-6 border-start-secondary" href="/home">
@@ -167,15 +179,31 @@ function Header() {
 
                     {console.log(currentUser.fullname)}
 
-                    {currentUser.fullname && (
-                      <>
-                        <div className="col-md-3 button-holder">
-                          <Button onClick={handleLogout} variant="danger">
+                    {currentUser.fullname ? (
+                      currentUser.fullname && (
+                        <div className="col-md-3 text-lg-end ">
+                          <Button onClick={handleLogout} className="" variant="danger">
                             Logout
                           </Button>
                         </div>
-                      </>
+                      )
+                    ) : (
+                      <div className="col-md col-sm-7 d-lg-none d-md-none d-sm-block d-xs-block">
+                        <div className="me-auto  text-lg-end text-start ">
+                          <a href="/register" className="btn main-btn d-block mb-3" >
+                            Register
+                          </a>
+                          <a href="/login" className="btn main-btn d-block">
+                            Login
+                          </a>
+                        </div>
+                      </div>
                     )}
+                    {/* {currentUser.fullname && (
+                      
+                        
+                      
+                    )} */}
                   </Navbar.Collapse>
                 </Navbar>
               </div>

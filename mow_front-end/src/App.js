@@ -64,6 +64,7 @@ function App() {
             <Route path="/donate" element={<DonorForm />} />
             <Route path="/donationStatus" element={<DonationDetails />} />
             <Route path="/thanks" element={<BankAddress />} />
+            <Route path="/profile" element={<Profile />} />
 
             {/* DRIVER */}
             {currentUser.userRole === "MEMBER" && (
@@ -92,7 +93,6 @@ function App() {
                 <Route path="/member" element={<MemberDashboard />} />
                 <Route path="/detailpakage" element={<DetailpakageMember />} />
                 <Route path="/feedback" element={<FeedbackMember />} />
-                <Route path="/profile" element={<Profile />} />
               </>
             )}
 

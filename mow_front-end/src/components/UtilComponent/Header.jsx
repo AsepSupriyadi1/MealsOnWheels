@@ -70,7 +70,7 @@ function Header() {
                 </a>
               </div>
               <div className="col-md col-sm-7">
-              <div className="me-auto  text-lg-end text-start d-lg-block d-sm-none ">
+              <div className="me-auto  text-lg-end text-start d-none d-sm-none d-lg-block ">
                       <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
                         Register
                       </a>
@@ -116,7 +116,7 @@ function Header() {
                   )
                 ) : (
                   <>
-                    <div className="col-md-3 d-sm-block d-lg-none me-auto text-lg-end text-start ">
+                    <div className="col-md-3 d-sm-block d-md-none d-lg-none me-auto text-lg-end text-start ">
                       <a href="/register" className="btn main-btn" style={{ marginRight: "10px" }}>
                         Register
                       </a>

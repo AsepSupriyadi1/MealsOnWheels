@@ -42,7 +42,7 @@ const RegisterPage = () => {
     };
 
     registerAPI(formData);
-    window.location.reload();
+    // window.location.reload();
   };
 
   useEffect(() => {

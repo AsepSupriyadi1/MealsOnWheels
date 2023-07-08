@@ -34,6 +34,7 @@ import { AuthContext } from "./context/auth-context";
 import "./pages/PrivatePages/Member/member.css";
 import Profile from "./pages/PrivatePages/Member/Profile";
 import OurDonor from "./pages/PrivatePages/Donor/OurDonor";
+import ManageMember from "./pages/PrivatePages/Admin/ManageMembers";
 function App() {
   const { isLoggedIn, currentUser } = useContext(AuthContext);
 
@@ -47,7 +48,6 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
-
 
         {!isLoggedIn && (
           <>
@@ -94,7 +94,7 @@ function App() {
             {currentUser.userRole === "MEMBER" && (
               <>
                 <Route path="/member" element={<MemberDashboard />} />
-                <Route path="/detailpakage" element={<DetailpakageMember />} />
+                <Route path="/detail-meals" element={<DetailpakageMember />} />
                 <Route path="/feedback" element={<FeedbackMember />} />
               </>
             )}
@@ -105,6 +105,7 @@ function App() {
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/all-drivers" element={<ManageDriver />} />
                 <Route path="/all-partners" element={<ManagePartner />} />
+                <Route path="/all-members" element={<ManageMember />} />
                 <Route path="/all-meals" element={<ManageMeals />} />
                 <Route path="/orders" element={<ManageOrders />} />
                 <Route path="/order-details" element={<DetailsDelivery />} />

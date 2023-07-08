@@ -108,21 +108,35 @@ public class AuthController {
 		ResponseData<RegisterRequest> responseData = new ResponseData<RegisterRequest>();
     
 		try {
-            userAppService.save(registerRequest.getUserApp());
+            String userRole = registerRequest.getUserApp().getUserRole().name();
 
+             // CHECK IF THE REGISTER USER IS MEMBER / DONOR
+            if(userRole.equals("MEMBER") || userRole.equals("DONOR")){  
+                registerRequest.getUserApp().setActive(true);
+             }
+
+
+            // SAVE THE USERS
+            userAppService.save(registerRequest.getUserApp());
+         
 
             // CEK IF THE REGISTER USER IS PARTNER
-            if(registerRequest.getUserApp().getUserRole().name().equals("PARTNER")){   
+            if(userRole.equals("PARTNER")){   
                 registerRequest.getPartner().setUser(registerRequest.getUserApp());
                 partnerService.save(registerRequest.getPartner());
             }
 
 
             // CEK IF THE REGISTER USER IS DRIVER
-            if(registerRequest.getUserApp().getUserRole().name().equals("DRIVER")){  
+            if(userRole.equals("DRIVER")){  
                 registerRequest.getDriver().setUser(registerRequest.getUserApp());
                 driverServices.save(registerRequest.getDriver());
              }
+
+
+           
+
+
 			responseData.setPayload(registerRequest);
             
 		} catch (Exception e) {

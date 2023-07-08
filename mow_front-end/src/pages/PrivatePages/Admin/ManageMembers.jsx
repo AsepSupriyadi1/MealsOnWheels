@@ -7,45 +7,45 @@ import { AuthContext } from "../../../context/auth-context";
 import Swal from "sweetalert2";
 import { confirmALert } from "../../../alert/sweetAlert";
 
-const ManagePartner = () => {
+const ManageVolunteer = () => {
   const userCtx = useContext(AuthContext);
-  const [partnerRequest, setPartnerRequest] = useState(null);
-  const [partners, setPartners] = useState(null);
+  //   const [partnerRequest, setPartnerRequest] = useState(null);
+  //   const [partners, setPartners] = useState(null);
 
-  useEffect(() => {
-    getAllPartnersRequest(userCtx.token).then((response) => {
-      setPartnerRequest(response.data);
-    });
+  //   useEffect(() => {
+  //     getAllPartnersRequest(userCtx.token).then((response) => {
+  //       setPartnerRequest(response.data);
+  //     });
 
-    getAllPartners(userCtx.token).then((response) => {
-      setPartners(response.data);
-    });
-  }, []);
+  //     getAllPartners(userCtx.token).then((response) => {
+  //       setPartners(response.data);
+  //     });
+  //   }, []);
 
-  const handleApprovePartner = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        activateUser(userCtx.token, id)
-          .then((response) => {
-            Swal.fire("User Activated Successfully !", "Partner's account has been approved.", "success");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    });
-  };
+  //   const handleApprovePartner = (id) => {
+  //     Swal.fire({
+  //       title: "Are you sure?",
+  //       text: "You won't be able to revert this!",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         activateUser(userCtx.token, id)
+  //           .then((response) => {
+  //             Swal.fire("User Activated Successfully !", "Partner's account has been approved.", "success");
+  //           })
+  //           .catch((err) => {
+  //             console.log(err);
+  //           });
+  //       }
+  //     });
+  //   };
 
-  if (!partnerRequest) return null;
-  if (!partners) return null;
+  //   if (!partnerRequest) return null;
+  //   if (!partners) return null;
 
   return (
     <>
@@ -54,7 +54,7 @@ const ManagePartner = () => {
         <div class="page-header">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <h2 class="page-title">Manage all partners</h2>
+              <h2 class="page-title">Manage all Volunteers</h2>
             </div>
             <div class="col-md-6 col-sm-6 hidden-xs back-home">
               <a href="index.html">&larr; Go back Home</a>
@@ -69,7 +69,7 @@ const ManagePartner = () => {
               <Tabs defaultActiveKey="home" className="mb-3">
                 <Tab eventKey="home" title="Home">
                   <div className="d-flex justify-content-between align-items-center pb-4">
-                    <h4>All Partners</h4>
+                    <h4>All Members</h4>
                     {/* <button className="btn btn-primary">
                   Add New Driver <FontAwesomeIcon icon={faPlus} className="ps-3" />
                 </button> */}
@@ -80,14 +80,12 @@ const ManagePartner = () => {
                       <thead className="table-dark">
                         <tr>
                           <th>No</th>
-                          <th>Partners Name</th>
-                          <th>Company Name</th>
-                          <th>Address</th>
+                          <th>Member Name</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {partners.map((value, index) => {
+                        {/* {partners.map((value, index) => {
                           <>
                             <tr>
                               <td>{index + 1}</td>
@@ -104,14 +102,14 @@ const ManagePartner = () => {
                               </td>
                             </tr>
                           </>;
-                        })}
+                        })} */}
                       </tbody>
                     </table>
                   </div>
                 </Tab>
                 <Tab eventKey="partner" title="Partner Request">
                   <div className="d-flex justify-content-between align-items-center pb-4">
-                    <h4>Partnership Request</h4>
+                    <h4>Membership Request</h4>
                     {/* <button className="btn btn-primary">
                   Add New Driver <FontAwesomeIcon icon={faPlus} className="ps-3" />
                 </button> */}
@@ -128,7 +126,7 @@ const ManagePartner = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {partnerRequest.map((value, index) => (
+                        {/* {partnerRequest.map((value, index) => (
                           <>
                             <tr>
                               <td>{index + 1}</td>
@@ -145,7 +143,7 @@ const ManagePartner = () => {
                               </td>
                             </tr>
                           </>
-                        ))}
+                        ))} */}
                       </tbody>
                     </table>
                   </div>
@@ -159,4 +157,4 @@ const ManagePartner = () => {
   );
 };
 
-export default ManagePartner;
+export default ManageVolunteer;

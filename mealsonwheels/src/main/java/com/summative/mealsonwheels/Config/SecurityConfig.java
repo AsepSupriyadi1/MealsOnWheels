@@ -31,6 +31,8 @@ public class SecurityConfig {
         .requestMatchers("/api/v1/auth/**").permitAll()
         .requestMatchers("/api/v1/fund/**").permitAll()
         .requestMatchers("/api/v1/meal/testMeals").permitAll()
+        .requestMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN")
+        .requestMatchers("/api/v1/member/**").hasAnyAuthority("MEMBER")
         .anyRequest()
         .authenticated()
         .and()

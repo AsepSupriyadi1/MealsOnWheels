@@ -11,7 +11,7 @@ import com.summative.mealsonwheels.Entity.Driver;
 
 public interface DriverRepository  extends JpaRepository<Driver, Long> {
     
-     @Query("SELECT p FROM Driver p JOIN p.user u WHERE u.isActive = :isActive")
-    List<Driver> findActiveDrivers(@Param("isActive") boolean isActive);
+    @Query("SELECT p FROM Driver p JOIN p.user u WHERE u.isActive = :isActive")
+    List<Driver> getAllDrivers(@Param("isActive") boolean isActive);
 
 }

@@ -75,6 +75,13 @@ public class UserAppService implements UserDetailsService {
 		return user;
     }
 
+
+
+	public UserApp countAllRoles(String email) throws UsernameNotFoundException {
+        UserApp user = userAppRepo.findByEmail(email).get();
+		return user;
+    }
+
 }
 
 

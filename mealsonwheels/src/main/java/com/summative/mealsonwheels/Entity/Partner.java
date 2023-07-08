@@ -2,6 +2,8 @@ package com.summative.mealsonwheels.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,8 +33,14 @@ public class Partner {
     @Column(name = "company_address")
     private String companyAddress;
 
+
+    @Enumerated(EnumType.STRING)
+    private PartnerStatus partnerStatus;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserApp user;
+
+    
 
 }

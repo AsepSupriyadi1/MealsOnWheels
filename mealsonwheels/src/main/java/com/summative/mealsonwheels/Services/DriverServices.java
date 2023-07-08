@@ -19,12 +19,14 @@ public class DriverServices {
     }
 
 
+
+
     public List<Driver> getAllNonActiveDrivers(){
-        return repo.findActiveDrivers(false);
+        return repo.getAllDrivers(false);
     }
 
      public List<Driver> getAllActiveDrivers(){
-        return repo.findActiveDrivers(true);
+        return repo.getAllDrivers(true);
     }
 
 

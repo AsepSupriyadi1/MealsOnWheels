@@ -1,5 +1,12 @@
 /* -=-=-=-= FONT SIZE START -=-=-=-=-= */
 
+.img-card {
+    height: 170px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
 p {
     font-size: 1rem !important;
     line-height: 1.5;

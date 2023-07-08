@@ -2,6 +2,8 @@ package com.summative.mealsonwheels.Services;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,15 @@ public class MealsServices {
 
     public Meals addMeals(Meals meal){
        return mealsRepository.save(meal);
+    }
+
+
+    public List<Meals> getAllMeals(){
+       return mealsRepository.findAll();
+    }
+
+    public Long countAllMeals(){
+       return mealsRepository.count();
     }
 
 

@@ -1,8 +1,51 @@
 import { faCheck, faCircle, faDotCircle, faEye, faPencil, faPiggyBank, faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge, ListGroup, Tab, Tabs } from "react-bootstrap";
+import { activateUser, getAllDrivers, getAllDriversRequest } from "../../../api/admin";
+import { AuthContext } from "../../../context/auth-context";
+import { useContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
-const DetailOrder = () => {
+const ManageDriver = () => {
+  const userCtx = useContext(AuthContext);
+  const [driversRequest, setDriversRequest] = useState(null);
+  const [drivers, setDrivers] = useState(null);
+
+  useEffect(() => {
+    getAllDrivers(userCtx.token).then((response) => {
+      setDrivers(response.data);
+    });
+
+    getAllDriversRequest(userCtx.token).then((response) => {
+      setDriversRequest(response.data);
+    });
+  }, []);
+
+  const handleApproveDriver = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        activateUser(userCtx.token, id)
+          .then((response) => {
+            Swal.fire("User Activated Successfully !", "Driver's account has been approved.", "success");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
+
+  if (!driversRequest) return null;
+  if (!drivers) return null;
+
   return (
     <>
       <div className="container">
@@ -43,24 +86,28 @@ const DetailOrder = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Pentil Megalodon</td>
-                          <td>Truck</td>
-                          <td>
-                            <h5>
-                              <Badge bg="success">Available</Badge>
-                            </h5>
-                          </td>
-                          <td>
-                            <a className="btn btn-danger m-1">
-                              <FontAwesomeIcon icon={faTrashAlt} />
-                            </a>
-                            <a className="btn btn-secondary">
-                              <FontAwesomeIcon icon={faPencil} />
-                            </a>
-                          </td>
-                        </tr>
+                        {drivers.map((value, index) => (
+                          <>
+                            <tr>
+                              <td>{index + 1}</td>
+                              <td>{value.fullname}</td>
+                              <td>{value.car}</td>
+                              <td>
+                                <h5>
+                                  <Badge bg="success">{value.driverStatus}</Badge>
+                                </h5>
+                              </td>
+                              <td>
+                                <a className="btn btn-danger m-1">
+                                  <FontAwesomeIcon icon={faTrashAlt} />
+                                </a>
+                                <a className="btn btn-secondary">
+                                  <FontAwesomeIcon icon={faPencil} />
+                                </a>
+                              </td>
+                            </tr>
+                          </>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -84,20 +131,22 @@ const DetailOrder = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Pentil Megalodon</td>
-                          <td>Truck</td>
+                        {driversRequest.map((value, index) => (
+                          <tr>
+                            <td>{index + 1}</td>
+                            <td>{value.fullname}</td>
+                            <td>{value.car}</td>
 
-                          <td>
-                            <a className="btn btn-secondary rounded m-1">
-                              Details <FontAwesomeIcon icon={faEye} className="ps-3" />
-                            </a>
-                            <a className="btn btn-success rounded m-1">
-                              Approve <FontAwesomeIcon icon={faCheck} className="ps-3" />
-                            </a>
-                          </td>
-                        </tr>
+                            <td>
+                              <a className="btn btn-secondary rounded m-1">
+                                Details <FontAwesomeIcon icon={faEye} className="ps-3" />
+                              </a>
+                              <button className="btn btn-success rounded m-1" onClick={() => handleApproveDriver(value.userId)}>
+                                Approve Driver <FontAwesomeIcon icon={faCheck} className="ps-3" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -128,4 +177,4 @@ const DetailOrder = () => {
   );
 };
 
-export default DetailOrder;
+export default ManageDriver;

@@ -146,18 +146,8 @@ function Header() {
                         {currentUser.userRole == "MEMBER" && (
                           <>
                             <Nav.Item>
-                              <Nav.Link className="fs-6 border-start-secondary" href="/admin">
-                                Dashboard
-                              </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                              <Nav.Link className="fs-6" href="/about">
-                                Partners
-                              </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                              <Nav.Link className="fs-6" href="/contact">
-                                Drivers
+                              <Nav.Link className="fs-6 border-start-secondary" href="/meals">
+                                Daily Meals
                               </Nav.Link>
                             </Nav.Item>
                           </>

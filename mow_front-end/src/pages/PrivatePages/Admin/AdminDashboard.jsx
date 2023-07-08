@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { gallery } from "../../../assets/images/Images";
-import { faArrowAltCircleRight, faBuilding, faCar, faCartPlus, faDollar, faDriversLicense, faHamburger, faPiggyBank, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faArrowAltCircleRight, faBuilding, faCar, faCartPlus, faDollar, faDriversLicense, faHamburger, faHandsHelping, faPiggyBank, faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
 
 import "./admin.css";
 import { useNavigate } from "react-router-dom";
@@ -28,11 +28,11 @@ const AdminDashboard = () => {
             <div class="rounded admin__status_card shadow">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <h3 className="fs-6">Meals Menu</h3>
+                  <h3 className="fs-6">Volunteers</h3>
                   <h2 className="fs-1 fw-bold">85</h2>
                 </div>
 
-                <FontAwesomeIcon icon={faHamburger} className="admin__status_icon" />
+                <FontAwesomeIcon icon={faHandsHelping} className="admin__status_icon" />
               </div>
 
               <div className="admin__status_links bg-light rounded">
@@ -46,15 +46,15 @@ const AdminDashboard = () => {
             <div class="rounded admin__status_card shadow">
               <div className="d-flex justify-content-between align-items-center ">
                 <div>
-                  <h3 className="fs-6">Orders</h3>
+                  <h3 className="fs-6">Members</h3>
                   <h2 className="fs-1 fw-bold">85</h2>
                 </div>
 
-                <FontAwesomeIcon icon={faCartPlus} className="admin__status_icon" />
+                <FontAwesomeIcon icon={faUsers} className="admin__status_icon" />
               </div>
 
               <div className="admin__status_links bg-light rounded">
-                <a href="orders">
+                <a href="all-members">
                   View details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
                 </a>
               </div>
@@ -68,7 +68,7 @@ const AdminDashboard = () => {
                   <h2 className="fs-1 fw-bold">85</h2>
                 </div>
 
-                <FontAwesomeIcon icon={faBuilding} className="admin__status_icon" />
+                <FontAwesomeIcon icon={faHandsHelping} className="admin__status_icon" />
               </div>
 
               <div className="admin__status_links bg-light rounded">

@@ -21,12 +21,9 @@ public class Meals {
     private Long id_meals;
 
     @Column(nullable = false)
-    private String meals_name;
+    private String mealsName;
 
-    @Column(nullable = false)
-    private String meals_desc;
 
-    @Column(nullable = false)
-    private String amount;
-
+    private boolean isActive;
+    
 }

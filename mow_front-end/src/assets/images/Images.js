@@ -33,6 +33,7 @@ import grand from "./placehold/testimonials/grand.jpg";
 import grandma from "./placehold/testimonials/grandma.jpg";
 import sorry from "./modals/sorry.png";
 import staff2 from "./foto/staff2.png";
+import mealsIcon from "./foto/meals.jpg";
 
 export const resources = {
   logo1,
@@ -100,4 +101,5 @@ export const ImgModal = {
 
 export const foto = {
   staff2,
+  mealsIcon,
 };

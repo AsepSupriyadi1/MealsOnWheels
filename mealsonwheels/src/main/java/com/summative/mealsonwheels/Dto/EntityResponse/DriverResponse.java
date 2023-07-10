@@ -1,7 +1,7 @@
 package com.summative.mealsonwheels.Dto.EntityResponse;
 
-import com.summative.mealsonwheels.Entity.DriverStatus;
 import com.summative.mealsonwheels.Entity.UserRole;
+import com.summative.mealsonwheels.Entity.constrant.DriverStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

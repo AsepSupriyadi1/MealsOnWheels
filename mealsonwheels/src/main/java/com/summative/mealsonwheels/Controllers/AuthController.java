@@ -19,11 +19,13 @@ import com.summative.mealsonwheels.Dto.AuthenticationResponse;
 import com.summative.mealsonwheels.Dto.RegisterRequest;
 import com.summative.mealsonwheels.Dto.ResponseData;
 import com.summative.mealsonwheels.Dto.UserResponse;
-import com.summative.mealsonwheels.Entity.TokenType;
 import com.summative.mealsonwheels.Entity.Tokens;
 import com.summative.mealsonwheels.Entity.UserApp;
+import com.summative.mealsonwheels.Entity.constrant.TokenType;
 import com.summative.mealsonwheels.Exception.UserNotActiveException;
+import com.summative.mealsonwheels.Repositories.MemberRepository;
 import com.summative.mealsonwheels.Repositories.TokensRepository;
+import com.summative.mealsonwheels.Repositories.VolunteerRepository;
 import com.summative.mealsonwheels.Services.DriverServices;
 import com.summative.mealsonwheels.Services.PartnerService;
 import com.summative.mealsonwheels.Services.TokensService;
@@ -57,6 +59,12 @@ public class AuthController {
 
     @Autowired
     private DriverServices driverServices;
+
+    @Autowired
+    private VolunteerRepository volunteerRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
 
 
@@ -110,8 +118,8 @@ public class AuthController {
 		try {
             String userRole = registerRequest.getUserApp().getUserRole().name();
 
-             // CHECK IF THE REGISTER USER IS MEMBER / DONOR
-            if(userRole.equals("MEMBER") || userRole.equals("DONOR")){  
+             // CHECK IF THE REGISTER USER IS MEMBER / DONOR then activated the account
+            if(userRole.equals("DONOR")){  
                 registerRequest.getUserApp().setActive(true);
              }
 
@@ -134,7 +142,18 @@ public class AuthController {
              }
 
 
-           
+             // CEK IF THE REGISTER USER IS DRIVER
+            if(userRole.equals("MEMBER")){  
+                registerRequest.getMember().setUser(registerRequest.getUserApp());
+                memberRepository.save(registerRequest.getMember());
+             }
+
+
+             // CEK IF THE REGISTER USER IS DRIVER
+            if(userRole.equals("VOLUNTEER")){  
+                registerRequest.getVolunteer().setUser(registerRequest.getUserApp());
+                volunteerRepository.save(registerRequest.getVolunteer());
+             }
 
 
 			responseData.setPayload(registerRequest);

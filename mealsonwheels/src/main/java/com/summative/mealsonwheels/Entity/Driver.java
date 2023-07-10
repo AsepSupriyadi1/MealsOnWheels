@@ -1,5 +1,7 @@
 package com.summative.mealsonwheels.Entity;
 
+import com.summative.mealsonwheels.Entity.constrant.DriverStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

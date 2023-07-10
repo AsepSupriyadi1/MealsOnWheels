@@ -1,11 +1,13 @@
 package com.summative.mealsonwheels.Services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.summative.mealsonwheels.Entity.Driver;
+import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Repositories.DriverRepository;
 
 @Service
@@ -18,16 +20,24 @@ public class DriverServices {
         return repo.save(driver);
     }
 
-
-
-
-    public List<Driver> getAllNonActiveDrivers(){
-        return repo.getAllDrivers(false);
+    public Driver findDriverByUserId(Long userId){
+        return repo.getDriversByUserId(userId);
     }
 
-     public List<Driver> getAllActiveDrivers(){
-        return repo.getAllDrivers(true);
+
+
+    public Driver findDriverByUser(UserApp user){
+        return repo.findDriverByUser(user).get();
     }
+
+
+    // public List<Driver> getAllNonActiveDrivers(){
+    //     return repo.getAllDrivers(false);
+    // }
+
+    //  public List<Driver> getAllActiveDrivers(){
+    //     return repo.getAllDrivers(true);
+    // }
 
 
 }

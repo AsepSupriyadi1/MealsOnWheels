@@ -31,7 +31,10 @@ export function AuthContextProvider(props) {
     } else {
       getUserLoginAPI(token)
         .then((res) => setUser(res.data))
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        });
     }
 
     return () => {};

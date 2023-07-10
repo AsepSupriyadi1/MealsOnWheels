@@ -22,19 +22,16 @@ import FeedbackMember from "./pages/PrivatePages/Member/feedback";
 import DonorDashboard from "./pages/PrivatePages/Donor/DonorDashboard";
 import DonorForm from "./pages/PrivatePages/Donor/DonorForm";
 import DonationDetails from "./pages/PrivatePages/Donor/DonationDetails";
-import ManageDriver from "./pages/PrivatePages/Admin/ManageDriver";
 import ManageMeals from "./pages/PrivatePages/Admin/ManageMeals";
-import ManagePartner from "./pages/PrivatePages/Admin/ManagePartner";
 import ManageOrders from "./pages/PrivatePages/Admin/ManageOrders";
 import BankAddress from "./pages/PrivatePages/Donor/BankAddress";
 import { useContext } from "react";
 import ErrorPage from "./pages/GlobalPages/ErrorPage";
 import { AuthContext } from "./context/auth-context";
-
 import "./pages/PrivatePages/Member/member.css";
 import Profile from "./pages/PrivatePages/Member/Profile";
 import OurDonor from "./pages/PrivatePages/Donor/OurDonor";
-import ManageMember from "./pages/PrivatePages/Admin/ManageMembers";
+import ManageInactiveUsers from "./pages/PrivatePages/Admin/ManageInactiveUsers";
 function App() {
   const { isLoggedIn, currentUser } = useContext(AuthContext);
 
@@ -103,9 +100,7 @@ function App() {
             {currentUser.userRole === "ADMIN" && (
               <>
                 <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/all-drivers" element={<ManageDriver />} />
-                <Route path="/all-partners" element={<ManagePartner />} />
-                <Route path="/all-members" element={<ManageMember />} />
+                <Route path="/all-users" element={<ManageInactiveUsers />} />
                 <Route path="/all-meals" element={<ManageMeals />} />
                 <Route path="/orders" element={<ManageOrders />} />
                 <Route path="/order-details" element={<DetailsDelivery />} />

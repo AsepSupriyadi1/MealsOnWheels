@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import { Testimonial } from "../../assets/images/Images";
 import { anjay } from "../../assets/images/Images";
 // import { Contactus } from "../../assets/images/Images";
 // import { gallery } from "../../assets/images/Images";
 import OurGallery from "../../components/UtilComponent/OurGallery";
 import OurTeam from "../../components/UtilComponent/OurTeam";
+import axios from "axios";
 const AboutPage = () => {
   return (
     <>
@@ -51,7 +53,9 @@ const AboutPage = () => {
                         <h6 className="text-black-50">Owner</h6>
 
                         <p>
-                        Meals on Wheels was initially established because of Mr. David's dream to help people in need. With the aim of reaching out to people facing hardships, Mr. David conceived the idea of creating an organization that helps the elderly to be nourished.</p>
+                          Meals on Wheels was initially established because of Mr. David's dream to help people in need. With the aim of reaching out to people facing hardships, Mr. David conceived the idea of creating an organization that
+                          helps the elderly to be nourished.
+                        </p>
                       </div>
                     </div>
                   </div>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,11 +12,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.maps.DirectionsApi.Response;
 import com.summative.mealsonwheels.Dto.MessageResponse;
 import com.summative.mealsonwheels.Dto.EntityResponse.DriverResponse;
 import com.summative.mealsonwheels.Dto.EntityResponse.PartnerResponse;
+import com.summative.mealsonwheels.Dto.EntityResponse.UserApproval;
+import com.summative.mealsonwheels.Dto.EntityResponse.UserDetailsResponse;
+import com.summative.mealsonwheels.Entity.Driver;
 import com.summative.mealsonwheels.Entity.Meals;
+import com.summative.mealsonwheels.Entity.Member;
+import com.summative.mealsonwheels.Entity.Partner;
 import com.summative.mealsonwheels.Entity.UserApp;
+import com.summative.mealsonwheels.Entity.Volunteer;
+import com.summative.mealsonwheels.Repositories.MemberRepository;
+import com.summative.mealsonwheels.Repositories.VolunteerRepository;
 import com.summative.mealsonwheels.Services.DriverServices;
 import com.summative.mealsonwheels.Services.MealsServices;
 import com.summative.mealsonwheels.Services.PartnerService;
@@ -37,6 +47,12 @@ public class AdminController {
     @Autowired
     private MealsServices mealsServices;
 
+    @Autowired
+    private MemberRepository memberRepo;
+
+    @Autowired
+    private VolunteerRepository volunteerRepo;
+
 
     // ACTIVATE USER BY THE ID
     @GetMapping("/user/activate/{userId}")
@@ -55,15 +71,25 @@ public class AdminController {
 
 
 
+    @GetMapping("/all-inactive-users")
+    public List<UserApproval> getAllInactiveUsers(){
 
 
-    @GetMapping("/all-users")
-    public List<UserApp> getAllUsers(){
-        return userAppService.getAllUsers();
+        List<UserApproval> listUsers = new ArrayList<UserApproval>();
+        
+        
+         userAppService.getAllInactiveUser().forEach(x -> listUsers.add(
+            UserApproval.builder()
+            .userId(x.getUserId())
+            .fullname(x.getFullname())
+            .email(x.getUsername())
+            .userRole(x.getUserRole().name())
+            .build()
+        ));
+
+        return listUsers;
+
     }
-
-
-
 
     
     @PostMapping("/add-meals")
@@ -77,96 +103,28 @@ public class AdminController {
         return mealsServices.getAllMeals();
     }
 
-    // -=-=-=-=-=-= MANAGE PARTNER -=-=-=-=-=
-    @GetMapping("/all-partner")
-    public List<PartnerResponse> getAllPartner(){
+    @GetMapping("/users-details/{userId}")
+    public ResponseEntity<?> getUserDetails(@PathVariable(name = "userId") Long userId){
 
-        List<PartnerResponse> listPartners = new ArrayList<PartnerResponse>();
+        UserApp user = userAppService.findUserById(userId);
 
-        partnerService.getAllActivePartners().forEach(x -> listPartners.add(
-            PartnerResponse.builder()
-            .partnerId(x.getPartnerId())
-            .userId(x.getUser().getUserId())
-            .fullname(x.getUser().getFullname())
-            .email(x.getUser().getEmail())
-            .address(x.getUser().getAddress())
-            .partnerStatus(x.getPartnerStatus())
-            .companyName(x.getCompanyName())
-            .companyAddress(x.getCompanyAddress())
-            .build()
-        ));
+        String role = user.getUserRole().name(); 
 
+        if(role.equals("DRIVER")){
+            Driver driver = driverServices.findDriverByUser(user);
+            return ResponseEntity.ok(driver);
+        } else if (role.equals("PARTNER")){
+            Partner partner = partnerService.getPartnerByUser(user);
+            return ResponseEntity.ok(partner);
+        } else if (role.equals("MEMBER")){
+            Member member = memberRepo.findMemberByUser(user).get();
+            return ResponseEntity.ok(member);
+        } else if (role.equals("VOLUNTEER")){
+            Volunteer volunteer = volunteerRepo.findVolunteerByUser(user).get();
+            return ResponseEntity.ok(volunteer);
+        }
 
-        return listPartners;
-
-       
-    }
-
-
-
-    
-    @GetMapping("/all-partner-request")
-    public List<PartnerResponse> getAllNotActivePartner(){
-        List<PartnerResponse> listPartners = new ArrayList<PartnerResponse>();
-
-        partnerService.getAllNonActivePartners().forEach(x -> listPartners.add(
-            PartnerResponse.builder()
-            .partnerId(x.getPartnerId())
-            .userId(x.getUser().getUserId())
-            .fullname(x.getUser().getFullname())
-            .email(x.getUser().getEmail())
-            .address(x.getUser().getAddress())
-            .companyName(x.getCompanyName())
-            .companyAddress(x.getCompanyAddress())
-            .build()
-        ));
-
-
-        return listPartners;
-    }
-
-
-    // -=-=-=-=-=-= MANAGE DRIVER -=-=-=-=-=
-    @GetMapping("/all-driver")
-    public List<DriverResponse> getAllDrivers(){
-        List<DriverResponse> listDrivers = new ArrayList<DriverResponse>();
-
-        driverServices.getAllActiveDrivers().forEach(x -> listDrivers.add(
-            DriverResponse.builder()
-            .driverId(x.getDriverId())
-            .userId(x.getUser().getUserId())
-            .fullname(x.getUser().getFullname())
-            .email(x.getUser().getEmail())
-            .address(x.getUser().getAddress())
-            .car(x.getCarName())
-            .driverStatus(x.getDriverStatus())
-            .build()
-        ));
-
-
-        return listDrivers;
-
-    }
-
-
-    @GetMapping("/all-driver-request")
-    public List<DriverResponse> getAllRequestDrivers(){
-        List<DriverResponse> listDrivers = new ArrayList<DriverResponse>();
-
-        driverServices.getAllNonActiveDrivers().forEach(x -> listDrivers.add(
-            DriverResponse.builder()
-            .driverId(x.getDriverId())
-            .userId(x.getUser().getUserId())
-            .fullname(x.getUser().getFullname())
-            .email(x.getUser().getEmail())
-            .address(x.getUser().getAddress())
-            .car(x.getCarName())
-            .build()
-        ));
-
-
-        return listDrivers;
-
+        return ResponseEntity.ok(user);
     }
 
 

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.summative.mealsonwheels.Entity.Driver;
 import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Exception.UserNotActiveException;
 import com.summative.mealsonwheels.Repositories.UserAppRepository;
@@ -63,12 +64,14 @@ public class UserAppService implements UserDetailsService {
 		return userAppRepo.findById(id).get();
 	}
 	
-	
 	public List<UserApp> getAllUsers(){
 		return userAppRepo.findAll();
 	}
 
 
+	public List<UserApp> getAllInactiveUser(){
+		return userAppRepo.getAllInactiveUsers();
+	}
 
     public UserApp findUserByEmail(String email) throws UsernameNotFoundException {
         UserApp user = userAppRepo.findByEmail(email).get();

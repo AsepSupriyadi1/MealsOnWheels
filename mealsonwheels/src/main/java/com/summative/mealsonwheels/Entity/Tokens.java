@@ -1,4 +1,6 @@
 package com.summative.mealsonwheels.Entity;
+import com.summative.mealsonwheels.Entity.constrant.TokenType;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

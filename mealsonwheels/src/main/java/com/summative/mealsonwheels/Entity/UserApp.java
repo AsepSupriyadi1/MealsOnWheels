@@ -73,6 +73,14 @@ public class UserApp implements UserDetails {
 
     @JsonIgnore
     @OneToOne(mappedBy = "user")
+    private Volunteer volunteer;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private Member member;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
     private Driver driver;
 
     @Override

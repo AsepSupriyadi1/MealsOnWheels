@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
+import { Button, Col, Form, InputGroup, ListGroup, Row } from "react-bootstrap";
 import { registerAPI } from "../../api/auth";
 import axios from "axios";
 import { foto } from "../../assets/images/Images";
@@ -11,8 +11,7 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullname, setFullname] = useState("");
-  const [address, setAddress] = useState("");
-  const [userRole, setUserRole] = useState("MEMBER");
+  const [userRole, setUserRole] = useState("DONOR");
 
   // PARTNER INFORMATION
   const [companyName, setCompanyName] = useState("");
@@ -21,8 +20,18 @@ const RegisterPage = () => {
   // DRIVER INFORMATION
   const [carName, setCarName] = useState("");
 
+  // MEMBER INFORMATION
+  const [age, setAge] = useState();
+  const [memberReason, setMemberReason] = useState();
+
+  // Volunteer INFORMATION
+  const [volunteerStatus, setVolunteerStatus] = useState("");
+  const [volunteerReason, setVolunteerReason] = useState("");
+
   const [partnerForm, setPartnerForm] = useState(false);
   const [driverForm, setDriverForm] = useState(false);
+  const [memberForm, setMemberForm] = useState(false);
+  const [volunteerForm, setVolunteerForm] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,6 +50,14 @@ const RegisterPage = () => {
       driver: {
         carName: carName,
       },
+      member: {
+        age: age,
+        reason: memberReason,
+      },
+      volunteer: {
+        status: volunteerStatus,
+        reason: volunteerReason,
+      },
     };
 
     registerAPI(formData, navigate);
@@ -50,14 +67,61 @@ const RegisterPage = () => {
     if (userRole === "PARTNER") {
       setPartnerForm(true);
       setDriverForm(false);
+      setVolunteerForm(false);
+      setMemberForm(false);
     } else if (userRole === "DRIVER") {
-      setPartnerForm(false);
       setDriverForm(true);
-    } else {
+      setVolunteerForm(false);
+      setMemberForm(false);
+      setPartnerForm(false);
+    } else if (userRole === "VOLUNTEER") {
+      setVolunteerForm(true);
+      setMemberForm(false);
       setPartnerForm(false);
       setDriverForm(false);
+    } else if (userRole === "MEMBER") {
+      setMemberForm(true);
+      setVolunteerForm(false);
+      setPartnerForm(false);
+      setDriverForm(false);
+    } else {
+      setDriverForm(false);
+      setVolunteerForm(false);
+      setMemberForm(false);
+      setPartnerForm(false);
     }
   }, [userRole]);
+
+  const [address, setAddress] = useState("");
+  const [results, setResults] = useState(null);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setAddress(value);
+
+    if (value.length >= 5) {
+      fetchResults(value);
+    } else {
+      setResults([]);
+    }
+  };
+
+  const fetchResults = async (value) => {
+    await axios.get(`https://nominatim.openstreetmap.org/search?format=json&limit=5&q=` + value).then((response) => {
+      setResults(response.data);
+      console.log(response.data);
+    });
+
+    // fetch(apiUrl)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setResults(data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching results:", error);
+    //     setResults([]);
+    //   });
+  };
 
   return (
     <>
@@ -102,17 +166,27 @@ const RegisterPage = () => {
                     <Form.Group className="mb-3">
                       <Form.Label className="m-0">Join as :</Form.Label>
                       <Form.Select value={userRole} onChange={(e) => setUserRole(e.target.value)} required>
-                        <option value="MEMBER">Member</option>
+                        <option value="DONOR">Donor</option>
                         <option value="DRIVER">Rider</option>
                         <option value="PARTNER">Partner</option>
                         <option value="VOLUNTEER">Volunteer</option>
-                        <option value="DONOR">Donor</option>
+                        <option value="MEMBER">Member</option>
                       </Form.Select>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
                       <Form.Label className="m-0">Address :</Form.Label>
+
                       <Form.Control type="text" placeholder="Enter address......" value={address} onChange={(e) => setAddress(e.target.value)} required />
+
+                      {/* <Form.Select value={userRole} onChange={(e) => setAddress(e.target.value)} required>
+                        {results !== null &&
+                          results.map((value) => (
+                            <>
+                              <option value={value.display_name}>{value.display_name}</option>
+                            </>
+                          ))}
+                      </Form.Select> */}
                     </Form.Group>
 
                     <Form.Group className="mb-3">
@@ -139,6 +213,36 @@ const RegisterPage = () => {
                         <Form.Group className="mb-3">
                           <Form.Label className="m-0">Car Name :</Form.Label>
                           <Form.Control type="text" placeholder="Enter your car name......" value={carName} onChange={(e) => setCarName(e.target.value)} />
+                        </Form.Group>
+                      </>
+                    )}
+
+                    {memberForm && (
+                      <>
+                        <Form.Group className="mb-3">
+                          <Form.Label className="m-0">Reason :</Form.Label>
+                          <Form.Control type="text" placeholder="Enter your Reason for membership......" value={memberReason} onChange={(e) => setMemberReason(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                          <Form.Label className="m-0">Age :</Form.Label>
+                          <Form.Control type="number" placeholder="Enter your age......" value={age} onChange={(e) => setAge(e.target.value)} />
+                        </Form.Group>
+                      </>
+                    )}
+
+                    {volunteerForm && (
+                      <>
+                        <Form.Group className="mb-3">
+                          <Form.Label className="m-0">Reason :</Form.Label>
+                          <Form.Control type="text" placeholder="Enter your Reason for being a volunteer......" value={volunteerReason} onChange={(e) => setVolunteerReason(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                          <Form.Label className="m-0">Status :</Form.Label>
+                          <Form.Select value={volunteerStatus} onChange={(e) => setVolunteerStatus(e.target.value)} required>
+                            <option value="Student">Student</option>
+                            <option value="Freelancer">Freelancer</option>
+                            <option value="Employee">Employee</option>
+                          </Form.Select>
                         </Form.Group>
                       </>
                     )}

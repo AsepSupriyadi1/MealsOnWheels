@@ -1,7 +1,6 @@
 package com.summative.mealsonwheels.Dto.EntityResponse;
 
-import com.summative.mealsonwheels.Entity.PartnerStatus;
-
+import com.summative.mealsonwheels.Entity.constrant.PartnerStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -52,3 +52,17 @@ export const addMealsAPI = async (meals, token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// GET ALL ACTIVE PARTNERS REQUEST
+export const getAllUsers = async (token) => {
+  return await axios.get(`${BASE_URL}/admin/all-inactive-users`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+// GET ALL ACTIVE PARTNERS REQUEST
+export const getUserDetails = async (token, userId) => {
+  return await axios.get(`${BASE_URL}/admin/users-details/` + userId, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

@@ -5,9 +5,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import com.summative.mealsonwheels.Entity.Partner;
 import com.summative.mealsonwheels.Entity.UserApp;
 
 
@@ -16,8 +13,11 @@ public interface UserAppRepository extends JpaRepository<UserApp, Long> {
 
     public Optional<UserApp> findByEmail(String email);
 
-    // @Query("SELECT p FROM UserApp WHERE u.isActive = :isActive")
-    // List<Partner> findActivePartners(@Param("isActive") boolean isActive);
+    @Query("SELECT u FROM UserApp u WHERE u.isActive = false AND u.userRole != ADMIN")
+    List<UserApp> getAllInactiveUsers();
 
+
+    @Query("SELECT p FROM UserApp p JOIN p.driver d WHERE d.user.userId = :userId")
+    UserApp getUserDriverById(Long userId);
 
 }

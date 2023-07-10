@@ -1,4 +1,4 @@
-package com.summative.mealsonwheels.Entity;
+package com.summative.mealsonwheels.Entity.constrant;
 
 public enum PartnerStatus {
     AVAILABLE, UNAVAILABLE

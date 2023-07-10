@@ -45,7 +45,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
-
+        
         {!isLoggedIn && (
           <>
             <Route path="/login" element={<LoginPage />} />
@@ -90,7 +90,7 @@ function App() {
             {/* MEMBER */}
             {currentUser.userRole === "MEMBER" && (
               <>
-                <Route path="/member" element={<MemberDashboard />} />
+      <Route path="/member" element={<MemberDashboard />} />
                 <Route path="/detail-meals" element={<DetailpakageMember />} />
                 <Route path="/feedback" element={<FeedbackMember />} />
               </>

@@ -25,8 +25,8 @@ const MemberDashboard = () => {
           <div class="row">
             <div class="col-md-6 col-sm-6">
               <h2 class="page-title">DAILY MEALS</h2>
-            </div>
-            {/* <div class="col-md-6 col-sm-6 back-home">
+            </div>                    
+            <div class="col-md-6 col-sm-6 back-home">
               <Link to="/member">
                 <a className="btn primary-btn" style={{ marginRight: "10px" }}>
                   View daily meals
@@ -36,7 +36,7 @@ const MemberDashboard = () => {
                 {" "}
                 <a className="btn primary-btn">Feedback</a>
               </Link>
-            </div> */}
+            </div>
           </div>
         </div>
         {/* end page header */}

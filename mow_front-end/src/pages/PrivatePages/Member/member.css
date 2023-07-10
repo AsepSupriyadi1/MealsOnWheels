@@ -47,4 +47,9 @@
     object-fit: cover; /* Atur tipe pengisian objek sesuai preferensi */
   }
 
+  .card-image {
+    max-width: 100%;
+  }
+
+
   

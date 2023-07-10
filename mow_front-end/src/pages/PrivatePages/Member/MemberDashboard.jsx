@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Testimonial, foto } from "../../../assets/images/Images";
+import { Testimonial, food } from "../../../assets/images/Images";
 import { Link } from "react-router-dom";
 import { getAllActiveMeals } from "../../../api/member";
 import { AuthContext } from "../../../context/auth-context";
@@ -30,13 +30,13 @@ const MemberDashboard = () => {
             <div className="shadow" id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel ">
               <div class="carousel-inner" >
                 <div class="carousel-item active" data-bs-interval="10000" >
-                  <img src={Testimonial.imgtesti} className="d-block w-100" alt="..." />
+                  <img src={food.food2} className="d-block w-100" alt="..." />
                 </div>
                 <div class="carousel-item" data-bs-interval="2000">
-                  <img src={Testimonial.kentang} class="d-block w-100" alt="..." />
+                  <img src={food.food3} class="d-block w-100" alt="..." />
                 </div>
                 <div class="carousel-item">
-                  <img src={Testimonial.givers} class="d-block w-100" alt="..." />
+                  <img src={food.food4} class="d-block w-100" alt="..." />
                 </div>
               </div>
               <div class="carousel-controls">
@@ -55,123 +55,123 @@ const MemberDashboard = () => {
         </div>
 
         <div class="container p-0">
-          <div className="box-content rounded bg-light shadow">
-            <div className="row">
-            <h4 className="widget-title text-success fw-bold">
-                            <span>MAKANAN RINGAN</span>
-                        </h4>
-              {/* {listActiveMeals.map((value) => ( */}
-              <>
-                <div class="col-md-3 col-sm-6 ">
-                  <div className="card-meal">
-                    <img src={Testimonial.imgtesti} className="card-image rounded-2" alt="" />
-                    <div className="detail-card my-3">
-                      <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
-                      <h3>Makanan 1</h3>
-                      <p className="text-secondary">Category : Makanan, minuman, desert</p>
-                      <a className="btn btn-success rounded-1">Detail Meal</a>
-                    </div>
-                  </div>
-
-
-                </div>
-                <div class="col-md-3 col-sm-6 ">
-                  <div className="card-meal">
-                    <img src={Testimonial.imgtesti} className="card-image rounded-2" alt="" />
-                    <div className="detail-card my-3">
-                      <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
-                      <h3>Makanan 2</h3>
-                      <p className="text-secondary">Category : Makanan, minuman, desert</p>
-                      <a className="btn btn-success rounded-1">Detail Meal</a>
-                    </div>
+          <div className="box-content rounded shadow">
+          <h4 className="widget-title text-success fw-bold mt-5">
+              <span>MAKANAN RINGAN</span>
+            </h4>
+            <div className="row overflow-auto flex-nowrap">
+            
+            <div className="col-md-3 col-sm-6">
+                <div className="card-meal">
+                  <img src={food.food2} className="card-image rounded-2" alt="" />
+                  <div className="detail-card my-3">
+                    <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
+                    <h3>Makanan 1</h3>
+                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <a className="btn btn-success rounded-1">Detail Meal</a>
                   </div>
                 </div>
-                <div class="col-md-3 col-sm-6 ">
-                  <div className="card-meal">
-                    <img src={Testimonial.imgtesti} className="card-image rounded-2" alt="" />
-                    <div className="detail-card my-3">
-                      <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
-                      <h3>Makanan 3</h3>
-                      <p className="text-secondary">Category : Makanan, minuman, desert</p>
-                      <a className="btn btn-success rounded-1">Detail Meal</a>
-                    </div>
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="card-meal">
+                  <img src={food.food2} className="card-image rounded-2" alt="" />
+                  <div className="detail-card my-3">
+                    <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
+                    <h3>Makanan 2</h3>
+                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <a className="btn btn-success rounded-1">Detail Meal</a>
                   </div>
                 </div>
-                <div class="col-md-3 col-sm-6 ">
-                  <div className="card-meal">
-                    <img src={Testimonial.imgtesti} className="card-image rounded-2" alt="" />
-                    <div className="detail-card my-3">
-                      <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
-                      <h3>Makanan 3</h3>
-                      <p className="text-secondary">Category : Makanan, minuman, desert</p>
-                      <a className="btn btn-success rounded-1">Detail Meal</a>
-                    </div>
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="card-meal">
+                  <img src={food.food2} className="card-image rounded-2" alt="" />
+                  <div className="detail-card my-3">
+                    <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
+                    <h3>Makanan 3</h3>
+                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <a className="btn btn-success rounded-1">Detail Meal</a>
                   </div>
                 </div>
-              </>
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="card-meal">
+                  <img src={food.food2} className="card-image rounded-2" alt="" />
+                  <div className="detail-card my-3">
+                    <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
+                    <h3>Makanan 4</h3>
+                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <a className="btn btn-success rounded-1">Detail Meal</a>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="card-meal">
+                  <img src={food.food2} className="card-image rounded-2" alt="" />
+                  <div className="detail-card my-3">
+                    <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
+                    <h3>Makanan 5</h3>
+                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <a className="btn btn-success rounded-1">Detail Meal</a>
+                  </div>
+                </div>
+              </div>
+            
 
-              {/* ))} */}
-
-
+              
             </div>
-            <div className="row mt-5">
-            <h4 className="widget-title text-success fw-bold">
-                            <span>MAKANAN BERAT</span>
-                        </h4>
-              {/* {listActiveMeals.map((value) => ( */}
-              <>
-                <div class="col-md-3 col-sm-6 ">
-                  <div className="card-meal">
-                    <img src={Testimonial.imgtesti} className="card-image rounded-2" alt="" />
-                    <div className="detail-card my-3">
-                      <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
-                      <h3>Makanan 1</h3>
-                      <p className="text-secondary">Category : Makanan, minuman, desert</p>
-                      <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
-                    </div>
-                  </div>
-
-
-                </div>
-                <div class="col-md-3 col-sm-6 ">
-                  <div className="card-meal">
-                    <img src={Testimonial.imgtesti} className="card-image rounded-2" alt="" />
-                    <div className="detail-card my-3">
-                      <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
-                      <h3>Makanan 2</h3>
-                      <p className="text-secondary">Category : Makanan, minuman, desert</p>
-                      <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
-                    </div>
+            <h4 className="widget-title text-success fw-bold mt-5">
+              <span>MAKANAN BERAT</span>
+            </h4>
+            <div className="row overflow-auto flex-nowrap">
+            <div className="col-md-3 col-sm-6">
+                <div className="card-meal">
+                  <img src={food.food3} className="card-image rounded-2" alt="" />
+                  <div className="detail-card my-3">
+                    <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
+                    <h3>Makanan 1</h3>
+                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
                   </div>
                 </div>
-                <div class="col-md-3 col-sm-6 ">
-                  <div className="card-meal">
-                    <img src={Testimonial.imgtesti} className="card-image rounded-2" alt="" />
-                    <div className="detail-card my-3">
-                      <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
-                      <h3>Makanan 3</h3>
-                      <p className="text-secondary">Category : Makanan, minuman, desert</p>
-                      <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
-                    </div>
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="card-meal">
+                  <img src={food.food3} className="card-image rounded-2" alt="" />
+                  <div className="detail-card my-3">
+                    <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
+                    <h3>Makanan 2</h3>
+                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
                   </div>
                 </div>
-                <div class="col-md-3 col-sm-6 ">
-                  <div className="card-meal">
-                    <img src={Testimonial.imgtesti} className="card-image rounded-2" alt="" />
-                    <div className="detail-card my-3">
-                      <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
-                      <h3>Makanan 3</h3>
-                      <p className="text-secondary">Category : Makanan, minuman, desert</p>
-                      <a className="btn btn-warning text-light border-1">Detail Meal</a>
-                    </div>
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="card-meal">
+                  <img src={food.food3} className="card-image rounded-2" alt="" />
+                  <div className="detail-card my-3">
+                    <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
+                    <h3>Makanan 3</h3>
+                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
                   </div>
                 </div>
-              </>
-
-              {/* ))} */}
-
-
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="card-meal">
+                  <img src={food.food3} className="card-image rounded-2" alt="" />
+                  <div className="detail-card my-3">
+                    <p className="text-success"><FontAwesomeIcon icon={faCheckCircle} /> Available</p>
+                    <h3>Makanan 4</h3>
+                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <a className="btn btn-warning text-light border-1">Detail Meal</a>
+                  </div>
+                </div>
+              </div>
+          
+              
             </div>
+
 
           </div>
 

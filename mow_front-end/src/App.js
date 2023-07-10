@@ -45,7 +45,12 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/member" element={<MemberDashboard />} />
+
+            <Route path="/donate" element={<DonorForm />} />
+            {/* <Route path="/our-donor" element={<OurDonor />} /> */}
+            <Route path="/donationStatus" element={<DonationDetails />} />
+            <Route path="/thanks" element={<BankAddress />} />
+            <Route path="/profile" element={<Profile />} />
         
         {!isLoggedIn && (
           <>
@@ -60,12 +65,7 @@ function App() {
         {isLoggedIn && (
           <>
             {/* DONOR */}
-            <Route path="/donor" element={<DonorDashboard />} />
-            <Route path="/donate" element={<DonorForm />} />
-            <Route path="/our-donor" element={<OurDonor />} />
-            <Route path="/donationStatus" element={<DonationDetails />} />
-            <Route path="/thanks" element={<BankAddress />} />
-            <Route path="/profile" element={<Profile />} />
+            
 
             {/* DRIVER */}
             {currentUser.userRole === "MEMBER" && (
@@ -91,7 +91,7 @@ function App() {
             {/* MEMBER */}
             {currentUser.userRole === "MEMBER" && (
               <>
-      <Route path="/member" element={<MemberDashboard />} />
+                <Route path="/member" element={<MemberDashboard />} />
                 <Route path="/detail-meals" element={<DetailpakageMember />} />
                 <Route path="/feedback" element={<FeedbackMember />} />
               </>

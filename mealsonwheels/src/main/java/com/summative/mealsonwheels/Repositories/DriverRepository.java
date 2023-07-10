@@ -19,4 +19,8 @@ public interface DriverRepository  extends JpaRepository<Driver, Long> {
 
     Optional<Driver> findDriverByUser(UserApp user);
 
+
+    @Query("SELECT p FROM Driver p JOIN p.user u WHERE u.isActive = true")
+    List<Driver> getAllActiveDriver();
+
 }

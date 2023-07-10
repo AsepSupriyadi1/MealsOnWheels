@@ -28,13 +28,4 @@ public class PartnerService {
 
 
 
-    public List<Partner> getAllNonActivePartners(){
-        return repo.findActivePartners(false);
-    }
-
-     public List<Partner> getAllActivePartners(){
-        return repo.findActivePartners(true);
-    }
-
-
 }

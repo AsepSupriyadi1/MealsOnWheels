@@ -35,6 +35,7 @@ const RegisterPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const formData = {
       userApp: {
         email: email,
@@ -191,6 +192,11 @@ const RegisterPage = () => {
 
                     <Form.Group className="mb-3">
                       <Form.Label className="m-0">Password :</Form.Label>
+                      <Form.Control type="password" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label className="m-0">Confirm Password :</Form.Label>
                       <Form.Control type="password" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </Form.Group>
 

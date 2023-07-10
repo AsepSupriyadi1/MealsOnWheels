@@ -105,19 +105,19 @@ function Header() {
                 <Navbar expand="md" variant="light" className="px-5">
                   <Navbar.Toggle aria-controls="navbarCollaps" className="mb-2 bg-light mt-3" />
                   <Navbar.Collapse id="navbarCollapse">
-                    {currentUser.fullname &&((
-                     <a href="/profile" className="col-md-3 d-block d-sm-block d-lg-none d-md-none">
-                     <div className=" mt-2  d-flex align-items-center">
-                     <FontAwesomeIcon icon={faUser} className="text-dark me-3 fs-3 bg-light p-3" />
-                       <div className="mt-2">
-                         <h5 className="m-0 text-light">{currentUser.fullname}</h5>
-                         <p className="fs-6 m-0 text-warning">{currentUser.userRole}</p>
-                       </div>
-                     </div>
-                   </a>
-                    ))}
-                  
-                      <div className="col-md">
+                    {currentUser.fullname && (
+                      <a href="/profile" className="col-md-3 d-block d-sm-block d-lg-none d-md-none">
+                        <div className=" mt-2  d-flex align-items-center">
+                          <FontAwesomeIcon icon={faUser} className="text-dark me-3 fs-3 bg-light p-3" />
+                          <div className="mt-2">
+                            <h5 className="m-0 text-light">{currentUser.fullname}</h5>
+                            <p className="fs-6 m-0 text-warning">{currentUser.userRole}</p>
+                          </div>
+                        </div>
+                      </a>
+                    )}
+
+                    <div className="col-md">
                       <Nav className="navbar-nav">
                         <Nav.Item>
                           <Nav.Link className="fs-6 border-start-secondary" href="/home">
@@ -143,13 +143,8 @@ function Header() {
                               </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                              <Nav.Link className="fs-6" href="/all-partners">
-                                Partners
-                              </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                              <Nav.Link className="fs-6" href="/all-drivers">
-                                Drivers
+                              <Nav.Link className="fs-6" href="/all-users">
+                                All User Request
                               </Nav.Link>
                             </Nav.Item>
                           </>
@@ -180,7 +175,7 @@ function Header() {
                     ) : (
                       <div className="col-md col-sm-7 d-lg-none d-md-none d-sm-block d-xs-block">
                         <div className="me-auto  text-lg-end text-start ">
-                          <a href="/register" className="btn main-btn d-block mb-3" >
+                          <a href="/register" className="btn main-btn d-block mb-3">
                             Register
                           </a>
                           <a href="/login" className="btn main-btn d-block">

@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.maps.DirectionsApi.Response;
 import com.summative.mealsonwheels.Dto.MessageResponse;
-import com.summative.mealsonwheels.Dto.EntityResponse.DriverResponse;
-import com.summative.mealsonwheels.Dto.EntityResponse.PartnerResponse;
 import com.summative.mealsonwheels.Dto.EntityResponse.UserApproval;
-import com.summative.mealsonwheels.Dto.EntityResponse.UserDetailsResponse;
+import com.summative.mealsonwheels.Dto.EntityResponse.UserRoleDetails;
 import com.summative.mealsonwheels.Entity.Driver;
 import com.summative.mealsonwheels.Entity.Meals;
 import com.summative.mealsonwheels.Entity.Member;
 import com.summative.mealsonwheels.Entity.Partner;
 import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Entity.Volunteer;
+import com.summative.mealsonwheels.Repositories.DriverRepository;
 import com.summative.mealsonwheels.Repositories.MemberRepository;
+import com.summative.mealsonwheels.Repositories.PartnerRepository;
 import com.summative.mealsonwheels.Repositories.VolunteerRepository;
 import com.summative.mealsonwheels.Services.DriverServices;
 import com.summative.mealsonwheels.Services.MealsServices;
@@ -39,10 +39,10 @@ public class AdminController {
     private UserAppService userAppService;
 
     @Autowired
-    private PartnerService partnerService;
+    private PartnerRepository partnerRepository;
 
     @Autowired
-    private DriverServices driverServices;
+    private DriverRepository driverRepository;
 
     @Autowired
     private MealsServices mealsServices;
@@ -92,6 +92,8 @@ public class AdminController {
     }
 
     
+
+    
     @PostMapping("/add-meals")
     public MessageResponse addMeals(@RequestBody Meals meal){
         mealsServices.addMeals(meal);
@@ -102,7 +104,10 @@ public class AdminController {
     public List<Meals> allMeals(){
         return mealsServices.getAllMeals();
     }
+    
 
+
+    // GET USERS DETAILS BY USER ID
     @GetMapping("/users-details/{userId}")
     public ResponseEntity<?> getUserDetails(@PathVariable(name = "userId") Long userId){
 
@@ -111,10 +116,10 @@ public class AdminController {
         String role = user.getUserRole().name(); 
 
         if(role.equals("DRIVER")){
-            Driver driver = driverServices.findDriverByUser(user);
+            Driver driver = driverRepository.findDriverByUser(user).get();
             return ResponseEntity.ok(driver);
         } else if (role.equals("PARTNER")){
-            Partner partner = partnerService.getPartnerByUser(user);
+            Partner partner = partnerRepository.findPartnerByUser(user).get();
             return ResponseEntity.ok(partner);
         } else if (role.equals("MEMBER")){
             Member member = memberRepo.findMemberByUser(user).get();
@@ -129,11 +134,30 @@ public class AdminController {
 
 
 
-    @GetMapping("/admin")
-    public String test(){
-    
-        return "bjrrrr";
+    @GetMapping("/all-active-driver")
+    public ResponseEntity<List<Driver>> getAllUserDetails(){
+        List<Driver> allDriverRoleDetails =  driverRepository.getAllActiveDriver();
+        return ResponseEntity.ok(allDriverRoleDetails);
+    }
 
+    @GetMapping("/all-active-partner")
+    public ResponseEntity<List<Partner>> getAllPartnerDetails(){
+        List<Partner> allPartnerRoleDetails =  partnerRepository.getAllActivePartner();
+        return ResponseEntity.ok(allPartnerRoleDetails);
+    }
+
+
+    @GetMapping("/all-active-member")
+    public ResponseEntity<List<Member>> getAllMemberDetails(){
+        List<Member> allPartnerRoleDetails =  memberRepo.getAllActiveMember();
+        return ResponseEntity.ok(allPartnerRoleDetails);
+    }
+
+
+    @GetMapping("/all-active-volunteer")
+    public ResponseEntity<List<Volunteer>> getAllVolunteerDetails(){
+        List<Volunteer> allPartnerRoleDetails =  volunteerRepo.getAllActiveVolunteer();
+        return ResponseEntity.ok(allPartnerRoleDetails);
     }
 
 

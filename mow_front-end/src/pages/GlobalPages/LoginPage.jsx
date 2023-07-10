@@ -11,6 +11,7 @@ const LoginPage = () => {
   const userCtx = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validated, setValidated] = useState(false);
 
   // -=-=-= ALERT -=-=-=-=
   const [error, setError] = useState({
@@ -26,13 +27,20 @@ const LoginPage = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-
-    const credentials = {
-      email,
-      password,
-    };
-
-    loginAPI(credentials, userCtx.login, navigate, setError, setModalShow);
+  
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    } else {
+      const credentials = {
+        email,
+        password,
+      };
+  
+      loginAPI(credentials, userCtx.login, navigate, setError, setModalShow);
+    }
+  
+    setValidated(true);
   };
 
   return (
@@ -62,7 +70,7 @@ const LoginPage = () => {
                 </Alert>
               )}
 
-              <Form onSubmit={handleLogin}>
+              <Form noValidate validated={validated} onSubmit={handleLogin} >
                 <Form.Group className="mb-3">
                   <Form.Label>Email :</Form.Label>
                   <Form.Control className="bg-light" type="email" placeholder="Enter your email address......" name="email" value={email} onChange={(e) => setEmail(e.target.value)} />

@@ -46,11 +46,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
-            <Route path="/donate" element={<DonorForm />} />
-            {/* <Route path="/our-donor" element={<OurDonor />} /> */}
-            <Route path="/donationStatus" element={<DonationDetails />} />
-            <Route path="/thanks" element={<BankAddress />} />
-            <Route path="/profile" element={<Profile />} />
+
         
         {!isLoggedIn && (
           <>
@@ -65,7 +61,12 @@ function App() {
         {isLoggedIn && (
           <>
             {/* DONOR */}
-            
+            <Route path="/donor" element={<DonorDashboard />} />
+            <Route path="/donate" element={<DonorForm />} />
+            <Route path="/our-donor" element={<OurDonor />} />
+            <Route path="/donationStatus" element={<DonationDetails />} />
+            <Route path="/thanks" element={<BankAddress />} />
+            <Route path="/profile" element={<Profile />} />
 
             {/* DRIVER */}
             {currentUser.userRole === "MEMBER" && (

@@ -80,7 +80,7 @@ const MemberDashboard = () => {
         <div class="container p-0">
           <div className="box-content rounded shadow">
             <h4 className="widget-title text-success fw-bold mt-5">
-              <span>MAKANAN RINGAN</span>
+              <span>Food option</span>
             </h4>
             <div className="row overflow-auto flex-nowrap">
               {listActiveMeals.map((value) => (

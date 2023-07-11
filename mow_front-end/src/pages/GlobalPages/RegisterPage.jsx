@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Form, InputGroup, ListGroup, Row } from "react-bootstrap";
+import { Alert, Button, Col, Form, InputGroup, ListGroup, Row } from "react-bootstrap";
 import { registerAPI } from "../../api/auth";
 import axios from "axios";
 import { foto } from "../../assets/images/Images";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const RegisterPage = () => {
   // GENERAL USER INFORMATION
@@ -12,6 +13,9 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [fullname, setFullname] = useState("");
   const [userRole, setUserRole] = useState("DONOR");
+  const [validated, setValidated] = useState(false);
+  const [confirmedPassword, setConfirmedPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   // PARTNER INFORMATION
   const [companyName, setCompanyName] = useState("");
@@ -35,32 +39,43 @@ const RegisterPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = {
-      userApp: {
-        email: email,
-        password: password,
-        fullname: fullname,
-        address: address,
-        userRole: userRole,
-      },
-      partner: {
-        companyName: companyName,
-        companyAddress: companyAddress,
-      },
-      driver: {
-        carName: carName,
-      },
-      member: {
-        age: age,
-        reason: memberReason,
-      },
-      volunteer: {
-        status: volunteerStatus,
-        reason: volunteerReason,
-      },
-    };
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    } else if (password !== confirmedPassword) {
+      event.stopPropagation();
+      setValidated(true);
+      setErrorMessage("Password is doesn't match.");
+      return;
+    } else {
+      const formData = {
+        userApp: {
+          email: email,
+          password: password,
+          fullname: fullname,
+          address: address,
+          userRole: userRole,
+        },
+        partner: {
+          companyName: companyName,
+          companyAddress: companyAddress,
+        },
+        driver: {
+          carName: carName,
+        },
+        member: {
+          age: age,
+          reason: memberReason,
+        },
+        volunteer: {
+          status: volunteerStatus,
+          reason: volunteerReason,
+        },
+      };
 
-    registerAPI(formData, navigate);
+      registerAPI(formData, navigate);
+    }
+    setValidated(true);
   };
 
   useEffect(() => {
@@ -146,7 +161,8 @@ const RegisterPage = () => {
                     <span className="fs-6">General Information</span>
                   </h4>
 
-                  <Form onSubmit={handleSubmit}>
+                  <Form onSubmit={handleSubmit} noValidate validated={validated}>
+                    {validated && password !== confirmedPassword && <Alert variant="danger">{errorMessage}</Alert>}
                     <div className="row my-3">
                       <div className="col-md-6">
                         <Form.Group>
@@ -192,6 +208,11 @@ const RegisterPage = () => {
                     <Form.Group className="mb-3">
                       <Form.Label className="m-0">Password :</Form.Label>
                       <Form.Control type="password" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label className="m-0">Confirmed Password :</Form.Label>
+                      <Form.Control type="password" placeholder="Enter Confirmed Password......" value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)} required />
                     </Form.Group>
 
                     {partnerForm && (

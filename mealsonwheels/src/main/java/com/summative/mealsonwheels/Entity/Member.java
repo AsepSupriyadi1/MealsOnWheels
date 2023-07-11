@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
@@ -29,7 +32,7 @@ public class Member {
     private Integer age;
     private String reason;
     
-
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserApp user;

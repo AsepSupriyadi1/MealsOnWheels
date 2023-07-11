@@ -93,7 +93,8 @@ function App() {
             {currentUser.userRole === "MEMBER" && (
               <>
                 <Route path="/member" element={<MemberDashboard />} />
-                <Route path="/detail-meals" element={<DetailpakageMember />} />
+                
+        <Route path="/detail-meals" element={<DetailpakageMember />} />
                 <Route path="/feedback" element={<FeedbackMember />} />
               </>
             )}

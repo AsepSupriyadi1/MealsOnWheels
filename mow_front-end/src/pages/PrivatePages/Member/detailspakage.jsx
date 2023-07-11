@@ -8,10 +8,10 @@ const DetailpakageMember = () => {
         <div className="container">
             <div class="page-header">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-6 col-sm-6 d-none d-lg-block">
                         <h2 class="page-title">DETAIL PACKAGE</h2>
                     </div>
-                    <div class="col-md-6 col-sm-6 back-home">
+                    <div class="col-md-6 back-home">
                         <Link to="/member"><a className="btn primary-btn" style={{ marginRight: "10px" }}>View daily meals</a> </Link>
                         <Link to="/feedback"> <a className="btn primary-btn" >Feedback</a></Link>
                     </div>
@@ -21,7 +21,24 @@ const DetailpakageMember = () => {
         </div>
 
         <div className="container">
-            <div className="cause-single">
+        <div className="box-content p-0" style={{ backgroundImage: `url(${Member.membereat})`, backgroundSize:"cover" }}>
+  <div className="row">
+    <div className="col-md-5 p-5 text-dark shadow" style={{backgroundColor:"rgba(255, 255, 255, 0.7)"}}>
+      <p className="text-end text-danger"><i className="fa fa-calendar-o"></i> 24 April 2014 </p>
+      <h5 className="border-top pt-2 text-success">Meals Package Name</h5>
+      <p >Package A</p>
+      <h5 className="border-top pt-2 text-success">Category</h5>
+      <p>Makanan Utama, Menu Desert, Drink</p>
+      <h5 className="border-top pt-2 text-success">Descriptions</h5>
+      <p>This food is suitable for all ages and this food suitable for people who are allergic to peanuts</p>
+      <div className="btn-order">
+        <a href="#" className="btn btn-success shadow">Order Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+            </div>
+            {/* <div className="cause-single">
                 <div className="cause-image">
                     <img src={Member.membereat} alt="" />
                     <div class="cause-overlay hidden-xs">
@@ -36,9 +53,9 @@ const DetailpakageMember = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
-        </div>
+        
 
     </>);
 }

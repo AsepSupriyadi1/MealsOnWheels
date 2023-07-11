@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.summative.mealsonwheels.Entity.Driver;
 import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Entity.UserRole;
 import com.summative.mealsonwheels.Exception.UserNotActiveException;

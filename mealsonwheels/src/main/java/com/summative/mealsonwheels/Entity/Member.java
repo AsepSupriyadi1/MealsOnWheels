@@ -35,14 +35,12 @@ public class Member {
     private Integer age;
     private String reason;
     
-    @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserApp user;
+    @JoinColumn(name = "user_details_id")
+    private UserAppDetails userDetails;
 
-
-    // @JsonIgnore
-    // @OneToMany(mappedBy = "member")
-    // private List<Order> orders;
+    @JsonIgnore
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders;
 
 }

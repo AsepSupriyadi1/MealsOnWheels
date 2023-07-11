@@ -49,8 +49,8 @@ public class Order {
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserApp user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "partner_id")
@@ -64,6 +64,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
     private OrderStatus status;
+
+
+    private String feedback;
 
 
 

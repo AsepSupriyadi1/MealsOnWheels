@@ -1,5 +1,5 @@
 package com.summative.mealsonwheels.Entity.constrant;
 
 public enum OrderStatus {
-    PENDING, PREPARING, READY_TO_DELIVER, TAKEAWAY, ONTHEWAY, COMPLETED
+    PENDING, ASSIGNED, PROCESS, READY_TO_DELIVER, ON_THE_WAY, DELIVERED, COMPLETED
 }

@@ -44,8 +44,8 @@ public class Partner {
     private PartnerStatus partnerStatus;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserApp user;
+    @JoinColumn(name = "user_details_id")
+    private UserAppDetails userDetails;
 
     @JsonIgnore
     @OneToMany(mappedBy = "partner")

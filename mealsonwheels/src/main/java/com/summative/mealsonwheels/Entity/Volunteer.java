@@ -26,9 +26,9 @@ public class Volunteer {
     private Long volunteerId;
     private String reason;
     private String status;
-
+    
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserApp user;
+    @JoinColumn(name = "user_details_id")
+    private UserAppDetails userDetails;
 
 }

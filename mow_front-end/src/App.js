@@ -32,6 +32,7 @@ import "./pages/PrivatePages/Member/member.css";
 import Profile from "./pages/PrivatePages/Member/Profile";
 import OurDonor from "./pages/PrivatePages/Donor/OurDonor";
 import ManageInactiveUsers from "./pages/PrivatePages/Admin/ManageInactiveUsers";
+import OrderHistory from "./pages/PrivatePages/Member/OrderHistory";
 function App() {
   const { isLoggedIn, currentUser } = useContext(AuthContext);
 
@@ -46,12 +47,12 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
-            <Route path="/donate" element={<DonorForm />} />
-            {/* <Route path="/our-donor" element={<OurDonor />} /> */}
-            <Route path="/donationStatus" element={<DonationDetails />} />
-            <Route path="/thanks" element={<BankAddress />} />
-            <Route path="/profile" element={<Profile />} />
-        
+        <Route path="/donate" element={<DonorForm />} />
+        {/* <Route path="/our-donor" element={<OurDonor />} /> */}
+        <Route path="/donationStatus" element={<DonationDetails />} />
+        <Route path="/thanks" element={<BankAddress />} />
+        <Route path="/profile" element={<Profile />} />
+
         {!isLoggedIn && (
           <>
             <Route path="/login" element={<LoginPage />} />
@@ -65,12 +66,12 @@ function App() {
         {isLoggedIn && (
           <>
             {/* DONOR */}
-            
 
             {/* DRIVER */}
             {currentUser.userRole === "MEMBER" && (
               <>
                 <Route path="/meals" element={<MemberDashboard />} />
+                <Route path="/history" element={<OrderHistory />} />
               </>
             )}
 
@@ -83,8 +84,8 @@ function App() {
 
             {/* DRIVER */}
             {currentUser.userRole === "DRIVER" && (
-              <>   
-              <Route path="/driver" element={<DriverDashboard />} />
+              <>
+                <Route path="/driver" element={<DriverDashboard />} />
               </>
             )}
 

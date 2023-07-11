@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.summative.mealsonwheels.Dto.MessageResponse;
+import com.summative.mealsonwheels.Dto.EntityRequest.FeedbackRequest;
 import com.summative.mealsonwheels.Entity.Meals;
 import com.summative.mealsonwheels.Entity.Order;
+import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
 import com.summative.mealsonwheels.Services.MealsServices;
 import com.summative.mealsonwheels.Services.OrderServices;
@@ -48,22 +49,49 @@ public class MemberController {
     }
 
 
-    @GetMapping("/order/{mealsId}/create")
-    public MessageResponse memberOrder(@PathVariable(name = "mealsId") Long mealsId){
+    @PostMapping("/order/feedback")
+    public MessageResponse memberFeedback(@RequestBody FeedbackRequest request){
 
-        Meals meals = mealsServices.findMealsById(mealsId);
+        Order order = orderServices.findOrderById(request.getOrderId());
+    
+        order.setStatus(OrderStatus.COMPLETED);
+        order.setFeedback(request.getFeedback());
 
-        Order orderRequest = new Order();
-        orderRequest.setMeals(meals);
-        orderRequest.setDatetime(new Date());
-        orderRequest.setStatus(OrderStatus.PENDING);
-        orderRequest.setUser(userAppService.getCurrentUser());
-
-
-        orderServices.save(orderRequest);
+        orderServices.save(order);
 
         return new MessageResponse("You Have Successfully Requested an Order");
     }
+
+
+
+    @GetMapping("/all-orders")
+    public List<Order> getAllOrders(){
+        UserApp user = userAppService.getCurrentUser();
+        List<Order> listOrder = orderServices.findAllOrderByMember(user.getUserDetails().getMember());
+        return listOrder;
+    }
+
+
+
+    @GetMapping("/order/{mealId}/create")
+    public MessageResponse memberOrder(@PathVariable(name = "mealId") Long mealId){
+
+
+        Meals meals = mealsServices.findMealsById(mealId);
+        Order order = new Order();
+        order.setMeals(meals);
+        order.setMember(userAppService.getCurrentUser().getUserDetails().getMember());
+        order.setDatetime(new Date());
+        order.setStatus(OrderStatus.PENDING);
+       
+
+        orderServices.save(order);
+
+        return new MessageResponse("You Have Successfully Requested an Order");
+    }
+
+
+
 
 
     

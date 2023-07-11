@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.summative.mealsonwheels.Dto.FundRequest;
 import com.summative.mealsonwheels.Entity.Funds;
-import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Services.FundServices;
-import com.summative.mealsonwheels.Services.UserAppService;
 
 @RestController
 @RequestMapping("/api/v1/fund")
@@ -22,8 +20,6 @@ public class FundController {
     
     @Autowired
     private FundServices fundServices;
-
-    private UserAppService userAppService;
 
 
     @PostMapping("/save")

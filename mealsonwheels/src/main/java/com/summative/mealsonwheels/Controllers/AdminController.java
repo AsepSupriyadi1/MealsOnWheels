@@ -1,21 +1,22 @@
 package com.summative.mealsonwheels.Controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import com.summative.mealsonwheels.Dto.AssignRequest;
+import com.summative.mealsonwheels.Dto.DriverAvailableResponse;
 import com.summative.mealsonwheels.Dto.MessageResponse;
 import com.summative.mealsonwheels.Dto.EntityResponse.UserApproval;
 import com.summative.mealsonwheels.Dto.EntityResponse.UserRoleDetails;
@@ -25,18 +26,16 @@ import com.summative.mealsonwheels.Entity.Member;
 import com.summative.mealsonwheels.Entity.Order;
 import com.summative.mealsonwheels.Entity.Partner;
 import com.summative.mealsonwheels.Entity.UserApp;
-import com.summative.mealsonwheels.Entity.UserAppDetails;
 import com.summative.mealsonwheels.Entity.UserRole;
 import com.summative.mealsonwheels.Entity.Volunteer;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
 import com.summative.mealsonwheels.Repositories.DriverRepository;
-import com.summative.mealsonwheels.Repositories.MemberRepository;
 import com.summative.mealsonwheels.Repositories.PartnerRepository;
-import com.summative.mealsonwheels.Repositories.UserAppDetailsRepository;
-import com.summative.mealsonwheels.Repositories.VolunteerRepository;
 import com.summative.mealsonwheels.Services.MealsServices;
 import com.summative.mealsonwheels.Services.OrderServices;
 import com.summative.mealsonwheels.Services.UserAppService;
+
+
 
 @RestController
 @RequestMapping("/api/v1/admin")
@@ -55,25 +54,21 @@ public class AdminController {
     private MealsServices mealsServices;
 
     @Autowired
-    private MemberRepository memberRepo;
-
-    @Autowired
-    private UserAppDetailsRepository userAppDetailsRepository;
-
-
-    @Autowired
-    private VolunteerRepository volunteerRepo;
-
-
-    @Autowired
     private OrderServices orderServices;
 
     
     @PostMapping("/add-meals")
-    public MessageResponse addMeals(@RequestBody Meals meal){
-        mealsServices.addMeals(meal);
-        return new MessageResponse("success add menu with name: "+ meal.getMealsName());
+    public MessageResponse addMeals(@RequestBody Meals mealRequest) throws IOException{
+
+
+        Meals meals = new Meals();
+        meals.setMealsName(mealRequest.getMealsName());
+        meals.setActive(true);
+
+        mealsServices.addMeals(meals);
+        return new MessageResponse("success add menu with name: "+ meals.getMealsName());
     }
+
 
     @GetMapping("/all-meals")
     public List<Meals> allMeals(){
@@ -107,47 +102,45 @@ public class AdminController {
 
     @GetMapping("/all-orders")
     public List<Order> getAllOders(){
-       return orderServices.getAllOrders();
+
+        List<Order> orders = orderServices.getAllOrders();
+        // orderServices.getAllOrders().forEach(order -> {
+        //     OrderDto orderDto = OrderDto.builder()
+        //             .orderId(order.getOrderId())
+        //             .datetime(order.getDatetime())
+        //             .updated_at(order.getUpdated_at())
+        //             .orderStatus(order.getStatus().name())
+        //             .feedback(order.getFeedback())
+        //             .meals(order.getMeals())
+        //             .partner(order.getPartner().getUser().getUserDetails())
+        //             .driver(order.get.getUser().getUserDetails())
+        //             .member(order.getPartner().getUser().getUserDetails())
+        //             .build();
+        //     orders.add(orderDto);
+        // });
+
+
+
+        return orders;
     }
 
 
-    @GetMapping("/order/{orderId}/prepare/{partnerId}")
-    public MessageResponse assignDriver(@PathVariable("orderId") Long orderId, @PathVariable("partnerId") Long partnerId){
+    @PostMapping("/assign")
+    public MessageResponse assignOrder(@RequestBody AssignRequest assignRequest){
 
-        Order order = orderServices.findOrderById(orderId);
-        Partner partner = partnerRepository.findById(partnerId).get();
+        Order order = orderServices.findOrderById(assignRequest.getOrderId());
+        Driver driver = driverRepository.findById(assignRequest.getDriverId()).get();
+        Partner partner = partnerRepository.findById(assignRequest.getPartnerId()).get();
+        order.setStatus(OrderStatus.ASSIGNED);
+        order.setDriver(driver);
         order.setPartner(partner);
         order.setUpdated_at(new Date());
-    
-        orderServices.save(order);
-
-        return new MessageResponse(String.format("Order %d assign to partner %d", orderId, partnerId));
-
-    }
-
-
-
-    @GetMapping("/order/{orderId}/deliver/{driverId}")
-    public MessageResponse assignPartner(@PathVariable("orderId") Long orderId, @PathVariable("driverId") Long driverId){
-
-        Order order = orderServices.findOrderById(orderId);
-        Driver driver = driverRepository.findById(driverId).get();
-        order.setDriver(driver);
-        order.setUpdated_at(new Date());
 
         orderServices.save(order);
 
-        return new MessageResponse(String.format("Order %d assign to partner %d", orderId, driverId));
+        return new MessageResponse("Order %d assign to partner and driver");
 
     }
-
-
-
-
-
-
-
-
 
 
     // ACTIVATE USER BY THE ID
@@ -177,13 +170,13 @@ public class AdminController {
         String role = user.getUserRole().name(); 
 
         if(role.equals("DRIVER")){
-            userRoleDetails.setRoleDetails(user.getDriver());
+            userRoleDetails.setRoleDetails(user.getUserDetails().getDriver());
         } else if (role.equals("PARTNER")){
-           userRoleDetails.setRoleDetails(user.getPartner());
+           userRoleDetails.setRoleDetails(user.getUserDetails().getPartner());
         } else if (role.equals("MEMBER")){
-            userRoleDetails.setRoleDetails(user.getMember());
+            userRoleDetails.setRoleDetails(user.getUserDetails().getMember());
         } else if (role.equals("VOLUNTEER")){
-            userRoleDetails.setRoleDetails(user.getVolunteer());
+            userRoleDetails.setRoleDetails(user.getUserDetails().getVolunteer());
         } 
 
         userRoleDetails.setRole(user.getUserRole().name());
@@ -193,6 +186,25 @@ public class AdminController {
 
 
         return ResponseEntity.ok(userRoleDetails);
+    }
+
+
+
+
+    @GetMapping("/all-available-driver")
+    public ResponseEntity<List<DriverAvailableResponse>> getAllAvailableDriver() {
+    
+        List<DriverAvailableResponse> allDriver = new ArrayList<>();
+
+        driverRepository.getAllAvailableDriver().forEach(x -> allDriver.add(
+            DriverAvailableResponse.builder()
+            .driverId(x.getDriverId())
+            .driverName(x.getUserDetails().getFullname())
+            .build()
+        ));
+    
+    
+        return ResponseEntity.ok(allDriver);
     }
 
 
@@ -210,7 +222,7 @@ public class AdminController {
                     .email(userApp.getEmail())
                     .role(userApp.getUserRole().name())
                     .address(userApp.getUserDetails().getAddress())
-                    .roleDetails(userApp.getDriver())
+                    .roleDetails(userApp.getUserDetails().getDriver())
                     .build();
             allDriver.add(driverDetails);
         });
@@ -230,7 +242,7 @@ public class AdminController {
                     .email(userApp.getEmail())
                     .role(userApp.getUserRole().name())
                     .address(userApp.getUserDetails().getAddress())
-                    .roleDetails(userApp.getPartner())
+                    .roleDetails(userApp.getUserDetails().getPartner())
                     .build();
             allPartner.add(partnerDetails);
         });
@@ -251,7 +263,7 @@ public class AdminController {
                     .email(userApp.getEmail())
                     .role(userApp.getUserRole().name())
                     .address(userApp.getUserDetails().getAddress())
-                    .roleDetails(userApp.getMember())
+                    .roleDetails(userApp.getUserDetails().getMember())
                     .build();
             allMember.add(memberDetails);
         });
@@ -271,7 +283,7 @@ public class AdminController {
                     .email(userApp.getEmail())
                     .role(userApp.getUserRole().name())
                     .address(userApp.getUserDetails().getAddress())
-                    .roleDetails(userApp.getVolunteer())
+                    .roleDetails(userApp.getUserDetails().getVolunteer())
                     .build();
             allVolunteer.add(volunteerDetails);
         });

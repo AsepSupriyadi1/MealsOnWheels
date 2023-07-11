@@ -49,40 +49,19 @@ public class UserApp implements UserDetails {
     @Column(name = "user_role")
     private UserRole userRole;
 
-    @Column(name = "is_active")
-    private boolean isActive;
-
+    
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Tokens> tokens;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private List<Funds> funds;
 
-   @JsonIgnore
-   @OneToMany(mappedBy = "user")
-   private List<Order> orders;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private Partner partner;
+    @Column(name = "is_active")
+    private boolean isActive;
 
     @JsonIgnore
     @OneToOne(mappedBy = "user")
     private UserAppDetails userDetails;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private Volunteer volunteer;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private Member member;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "user")
-    private Driver driver;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

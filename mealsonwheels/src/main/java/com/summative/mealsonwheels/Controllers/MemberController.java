@@ -17,6 +17,7 @@ import com.summative.mealsonwheels.Dto.EntityRequest.FeedbackRequest;
 import com.summative.mealsonwheels.Entity.Meals;
 import com.summative.mealsonwheels.Entity.Order;
 import com.summative.mealsonwheels.Entity.UserApp;
+import com.summative.mealsonwheels.Entity.constrant.MealsStatus;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
 import com.summative.mealsonwheels.Services.MealsServices;
 import com.summative.mealsonwheels.Services.OrderServices;
@@ -80,6 +81,7 @@ public class MemberController {
         Meals meals = mealsServices.findMealsById(mealId);
         Order order = new Order();
         order.setMeals(meals);
+        order.setMealsStatus(MealsStatus.PENDING);
         order.setMember(userAppService.getCurrentUser().getUserDetails().getMember());
         order.setDatetime(new Date());
         order.setStatus(OrderStatus.PENDING);

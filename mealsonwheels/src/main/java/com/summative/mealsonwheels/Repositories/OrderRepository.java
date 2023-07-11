@@ -13,7 +13,15 @@ import com.summative.mealsonwheels.Entity.Partner;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     
     List<Order> findByMember(Member member);
-    List<Order> findByDriver(Driver member);
-    List<Order> findByPartner(Partner member);
+    List<Order> findByDriver(Driver driver);
+    List<Order> findByPartner(Partner partner);
+
+
+
+
+    Long countByDriver(Driver driver);
+    Long countByPartner(Partner driver);
+
+    
 
 }

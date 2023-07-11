@@ -7,5 +7,4 @@ import com.summative.mealsonwheels.Entity.Meals;
 public interface MealsRepository extends JpaRepository<Meals, Long> {
     
 
-
 }

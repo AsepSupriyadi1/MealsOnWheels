@@ -124,8 +124,16 @@ public class AuthController {
     
         try {
 
+            String userRole = registerRequest.getUserApp().getUserRole().name();
+
             if (registerRequest.getUserDetails() == null) {
                 throw new IllegalArgumentException("User details not provided");
+            }
+
+
+            // CHECK IF THE REGISTERED USER IS MEMBER / DONOR then activate the account
+            if (userRole.equals("DONOR")) {
+                registerRequest.getUserApp().setActive(true);
             }
 
 
@@ -136,13 +144,9 @@ public class AuthController {
             UserAppDetails details = registerRequest.getUserDetails();
             details.setUser(registerRequest.getUserApp());
             userDetailsRepository.save(details);
-            String userRole = registerRequest.getUserApp().getUserRole().name();
+          
     
-            // CHECK IF THE REGISTERED USER IS MEMBER / DONOR then activate the account
-            if (userRole.equals("DONOR")) {
-                registerRequest.getUserApp().setActive(true);
-            }
-
+       
 
              // CHECK IF THE THE REGISTERED NO ENTERING THE ROLE DETAILS
             if (

@@ -9,7 +9,7 @@ const FeedbackMember = () => {
             <div class="page-header">
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
-                        <h2 class="page-title">Evaluate/Feedback</h2>
+                        <h2 class="page-title d-none d-lg-block">Evaluate/Feedback</h2>
                     </div>
                     <div class="col-md-6 col-sm-6 back-home">
                     <Link to="/member"><a className="btn primary-btn" style={{ marginRight: "10px" }}>View daily meals</a> </Link>         

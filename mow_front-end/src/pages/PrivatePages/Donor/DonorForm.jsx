@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../../context/auth-context';
+import { slides } from '../../../assets/images/Images';
 
 
 const DonorForm = () => {
@@ -51,8 +52,8 @@ const DonorForm = () => {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-12">
-            <div className="box-content donate-form">
+          <div className="col-md-7">
+            <div className="box-content shadow donate-form">
               <h4 className="widget-title">
                 <span>Enter Sender's Information</span>
               </h4>
@@ -151,6 +152,40 @@ const DonorForm = () => {
                   </fieldset>
                 </div>
               </form>
+            </div>
+          </div>
+          <div className="col-md-5">
+            <div className="box-content p-1 shadow">
+            <div className="shadow rounded" id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel ">
+              <div class="carousel-inner rounded">
+                <div class="carousel-item active" data-bs-interval="2000">
+                  <img src={slides.slide1} className="d-block w-100" alt="..." />
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                  <img src={slides.slide2} class="d-block w-100" alt="..." />
+                </div>
+                <div class="carousel-item">
+                  <img src={slides.slide3} class="d-block w-100" alt="..." />
+                </div>
+              </div>
+              <div class="carousel-controls">
+                <button class="carousel-control-prev pull-button" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next pull-button" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+            <div className='p-4'>
+    <h4 className='text-success'>Bringing Hope, Building a Better Future</h4>
+    <p>Transform lives with your donation. Join us in creating positive change through compassion and collaboration. Together, we can make a difference and build a better world.</p>
+    
+    <blockquote className='m-0'>"The only way to true happiness is by making others happy." - Robert Green Ingersoll</blockquote>
+</div>
+
             </div>
           </div>
         </div>

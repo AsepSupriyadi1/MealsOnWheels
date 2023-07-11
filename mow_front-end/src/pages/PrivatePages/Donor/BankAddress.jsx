@@ -1,21 +1,36 @@
+import { faCheckCircle, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 const BankAddress = () => {
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h2 style={{ fontSize: '24px', marginBottom: '20px' }}>Thank You for Your Contribution!</h2>
-      <p style={{ fontSize: '18px', marginBottom: '20px' }}>
-        Please complete the payment of your donation amount via bank transfer to the following account:
-      </p>
-      <div style={{ fontSize: '18px', marginBottom: '20px' }}>
-        <p>Bank: CIMB Niaga</p>
-        <p>Account Number: 1234567890</p>
-        <p>Account Holder: Darren Farrell</p>
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="box-content p-1 col-md-6 text-center ">
+          <div className='img-success rounded p-5 bg-light text-success'>
+            <FontAwesomeIcon style={{ fontSize: "100px" }} icon={faCheckCircle} />
+          </div>
+          <div className='detail-donate p-5'>
+            <h4 className='text-success'>Thank You for Your Contribution!</h4>
+            <p>
+              Once the transfer is complete, your contribution will be acknowledged. Thank you for your support!
+            </p>
+            <div>
+              <p>Bank: CIMB Niaga</p>
+              <p>Account Number: 1234567890</p>
+              <p>Account Holder: Darren Farrell</p>
+            </div>
+            <div class="back-button">
+						<a href="/donate" className='btn btn-success'>Back to Dashboard</a>
+					</div>
+          </div>
+          
+
+
+        </div>
       </div>
-      <p style={{ fontSize: '18px' }}>
-        Once the transfer is complete, your contribution will be acknowledged. Thank you for your support!
-      </p>
     </div>
+
   );
 };
 

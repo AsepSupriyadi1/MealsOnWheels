@@ -82,9 +82,9 @@ function App() {
             )}
 
             {/* DRIVER */}
-            {currentUser.userRole === "PARTNER" && (
-              <>
-                <Route path="/driver" element={<DriverDashboard />} />
+            {currentUser.userRole === "DRIVER" && (
+              <>   
+              <Route path="/driver" element={<DriverDashboard />} />
               </>
             )}
 

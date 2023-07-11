@@ -13,9 +13,8 @@ const DriverDashboard = () => {
               <div className="row head_container">
                 <div class="col-md-4 col-sm-12">
                   <div className="head_desc text-md-start text-center">
-                    <h4 className="m-0">Driver's Dashboard</h4>
+                    <h3 className="m-0 text-success">Driver's Dashboard</h3>
                     <p>Meals on Wheels Driver</p>
-                    <button className="btn btn-warning">Read Your Role !</button>
                   </div>
                 </div>
                 <div className="col-md-8 col-sm-12">
@@ -56,16 +55,20 @@ const DriverDashboard = () => {
                 <table>
                   <tr>
                     <td>Name :</td>
-                    <td className="text-end">Asep Supriyadi</td>
+                    <td className="text-end">Abdul Rahman</td>
                   </tr>
                   <tr>
                     <td>Role :</td>
                     <td className="text-end">Volunteer (Driver)</td>
                   </tr>
                   <tr>
+                    <td>Vehicle :</td>
+                    <td className="text-end">Honda Jazz</td>
+                  </tr>
+                  <tr>
                     <td>Status :</td>
                     <td className="text-end">
-                      <Badge bg="primary">Available</Badge>
+                      <Badge bg="success">Available</Badge>
                     </td>
                   </tr>
                 </table>

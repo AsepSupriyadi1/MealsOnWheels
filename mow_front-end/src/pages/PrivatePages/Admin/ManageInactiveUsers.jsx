@@ -46,7 +46,9 @@ const ManageInactiveUsers = () => {
         activateUser(userCtx.token, id)
           .then((response) => {
             Swal.fire("User Activated Successfully !", "Driver's account has been approved.", "success");
-            window.location.reload(false);
+            getAllUsers(userCtx.token).then((response) => {
+              setUsersRequest(response.data);
+            });
           })
           .catch((err) => {
             console.log(err);
@@ -121,38 +123,39 @@ const ManageInactiveUsers = () => {
           <Modal.Body>
             <ListGroup>
               <p className="fw-bold my-3">User Information : </p>
-              <ListGroup.Item>Email : {userDetails.user.email}</ListGroup.Item>
-              <ListGroup.Item>Full Name : {userDetails.user.fullname}</ListGroup.Item>
-              <ListGroup.Item>Address : {userDetails.user.address}</ListGroup.Item>
+              <ListGroup.Item>Full Name : {userDetails.fullname}</ListGroup.Item>
+              <ListGroup.Item>Email : {userDetails.email}</ListGroup.Item>
+              <ListGroup.Item>Address : {userDetails.address}</ListGroup.Item>
+              <ListGroup.Item>Role : {userDetails.role}</ListGroup.Item>
 
-              {userDetails.user.userRole === "DRIVER" && (
+              {userDetails.role === "DRIVER" && (
                 <>
                   <p className="fw-bold my-3">Drivers Information : </p>
-                  <ListGroup.Item>Car Name : {userDetails.carName}</ListGroup.Item>
+                  <ListGroup.Item>Car Name : {userDetails.roleDetails.carName}</ListGroup.Item>
                 </>
               )}
 
-              {userDetails.user.userRole === "PARTNER" && (
+              {userDetails.role === "PARTNER" && (
                 <>
                   <p className="fw-bold my-3">Partner Information : </p>
-                  <ListGroup.Item> Organization Name : {userDetails.companyName}</ListGroup.Item>
-                  <ListGroup.Item> Organization Address : {userDetails.companyAddress}</ListGroup.Item>
+                  <ListGroup.Item> Organization Name : {userDetails.roleDetails.companyName}</ListGroup.Item>
+                  <ListGroup.Item> Organization Address : {userDetails.roleDetails.companyAddress}</ListGroup.Item>
                 </>
               )}
 
-              {userDetails.user.userRole === "MEMBER" && (
+              {userDetails.role === "MEMBER" && (
                 <>
                   <p className="fw-bold my-3">Member Information : </p>
-                  <ListGroup.Item> Age : {userDetails.age}</ListGroup.Item>
-                  <ListGroup.Item> Reason : {userDetails.reason}</ListGroup.Item>
+                  <ListGroup.Item> Age : {userDetails.roleDetails.age}</ListGroup.Item>
+                  <ListGroup.Item> Reason : {userDetails.roleDetails.reason}</ListGroup.Item>
                 </>
               )}
 
-              {userDetails.user.userRole === "VOLUNTEER" && (
+              {userDetails.role === "VOLUNTEER" && (
                 <>
                   <p className="fw-bold my-3">Partner Information : </p>
-                  <ListGroup.Item> Status : {userDetails.status}</ListGroup.Item>
-                  <ListGroup.Item> Reason : {userDetails.reason}</ListGroup.Item>
+                  <ListGroup.Item> Status : {userDetails.roleDetails.status}</ListGroup.Item>
+                  <ListGroup.Item> Reason : {userDetails.roleDetails.reason}</ListGroup.Item>
                 </>
               )}
             </ListGroup>

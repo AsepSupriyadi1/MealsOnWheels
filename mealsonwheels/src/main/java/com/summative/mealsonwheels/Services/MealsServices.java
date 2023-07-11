@@ -31,4 +31,9 @@ public class MealsServices {
     }
 
 
+    public Meals findMealsById(Long mealsId){
+       return mealsRepository.findById(mealsId).get();
+    }
+
+
 }

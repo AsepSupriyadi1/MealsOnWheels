@@ -1,8 +1,22 @@
 import { faCheck, faCircle, faDotCircle, faEye, faPencil, faPiggyBank, faPlus, faProcedures, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext, useEffect, useState } from "react";
 import { Badge } from "react-bootstrap";
+import { AuthContext } from "../../../context/auth-context";
+import { getAllOrders } from "../../../api/admin";
 
 const ManageOrders = () => {
+  const userCtx = useContext(AuthContext);
+  const [listOrders, setListOrders] = useState(null);
+
+  useEffect(() => {
+    getAllOrders(userCtx.token).then((response) => {
+      setListOrders(response.data);
+    });
+  }, []);
+
+  if (!listOrders) return null;
+
   return (
     <>
       <div className="container">
@@ -32,92 +46,33 @@ const ManageOrders = () => {
                     <tr>
                       <th>No</th>
                       <th>Meals Name</th>
-                      <th>Description</th>
+                      <th>Member Email</th>
                       <th>Status</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Tumis Tumila</td>
-                      <td>ABC Pentil</td>
-                      <td>
-                        <h5>
-                          <Badge bg="secondary">new</Badge>
-                        </h5>
-                      </td>
-                      <td>
-                        <a className="btn btn-primary m-1 rounded">
-                          Details
-                          <FontAwesomeIcon icon={faEye} className="ps-3" />
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Tumis Tumila</td>
-                      <td>ABC Pentil</td>
-                      <td>
-                        <h5>
-                          <Badge bg="warning">process</Badge>
-                        </h5>
-                      </td>
-                      <td>
-                        <a className="btn btn-primary m-1 rounded">
-                          Details
-                          <FontAwesomeIcon icon={faEye} className="ps-3" />
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Tumis Tumila</td>
-                      <td>ABC Pentil</td>
-                      <td>
-                        <h5>
-                          <Badge bg="warning">pickup</Badge>
-                        </h5>
-                      </td>
-                      <td>
-                        <a className="btn btn-primary m-1 rounded">
-                          Details
-                          <FontAwesomeIcon icon={faEye} className="ps-3" />
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Tumis Tumila</td>
-                      <td>ABC Pentil</td>
-                      <td>
-                        <h5>
-                          <Badge bg="warning">on the way</Badge>
-                        </h5>
-                      </td>
-                      <td>
-                        <a className="btn btn-primary m-1 rounded">
-                          Details
-                          <FontAwesomeIcon icon={faEye} className="ps-3" />
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Tumis Tumila</td>
-                      <td>ABC Pentil</td>
-                      <td>
-                        <h5>
-                          <Badge bg="success">complete</Badge>
-                        </h5>
-                      </td>
-                      <td>
-                        <a className="btn btn-primary m-1 rounded">
-                          Details
-                          <FontAwesomeIcon icon={faEye} className="ps-3" />
-                        </a>
-                      </td>
-                    </tr>
+                    {console.log(listOrders)}
+                    {listOrders.map((value, index) => (
+                      <>
+                        <tr>
+                          <td>1</td>
+                          <td>{value.meals.mealsName}</td>
+                          <td>{value.user.email}</td>
+                          <td>
+                            <h5>
+                              <Badge bg="secondary">{value.status}</Badge>
+                            </h5>
+                          </td>
+                          <td>
+                            <a className="btn btn-primary m-1 rounded">
+                              Details
+                              <FontAwesomeIcon icon={faEye} className="ps-3" />
+                            </a>
+                          </td>
+                        </tr>
+                      </>
+                    ))}
                   </tbody>
                 </table>
               </div>

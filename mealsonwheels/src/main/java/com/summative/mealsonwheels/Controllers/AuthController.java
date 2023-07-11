@@ -21,10 +21,12 @@ import com.summative.mealsonwheels.Dto.ResponseData;
 import com.summative.mealsonwheels.Dto.UserResponse;
 import com.summative.mealsonwheels.Entity.Tokens;
 import com.summative.mealsonwheels.Entity.UserApp;
+import com.summative.mealsonwheels.Entity.UserAppDetails;
 import com.summative.mealsonwheels.Entity.constrant.TokenType;
 import com.summative.mealsonwheels.Exception.UserNotActiveException;
 import com.summative.mealsonwheels.Repositories.MemberRepository;
 import com.summative.mealsonwheels.Repositories.TokensRepository;
+import com.summative.mealsonwheels.Repositories.UserAppDetailsRepository;
 import com.summative.mealsonwheels.Repositories.VolunteerRepository;
 import com.summative.mealsonwheels.Services.DriverServices;
 import com.summative.mealsonwheels.Services.PartnerService;
@@ -65,6 +67,9 @@ public class AuthController {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private UserAppDetailsRepository userDetailsRepository;
 
 
 
@@ -109,68 +114,85 @@ public class AuthController {
 
     } 
 
-
     @PostMapping(value = "/register")
-	public ResponseEntity<ResponseData<RegisterRequest>> registerUser(@RequestBody RegisterRequest registerRequest) {
-
-		ResponseData<RegisterRequest> responseData = new ResponseData<RegisterRequest>();
+    public ResponseEntity<ResponseData<RegisterRequest>> registerUser(@RequestBody RegisterRequest registerRequest) {
     
-		try {
-            String userRole = registerRequest.getUserApp().getUserRole().name();
+        ResponseData<RegisterRequest> responseData = new ResponseData<>();
+    
+      
+    
+        try {
 
-             // CHECK IF THE REGISTER USER IS MEMBER / DONOR then activated the account
-            if(userRole.equals("DONOR")){  
-                registerRequest.getUserApp().setActive(true);
-             }
-
-
-            // SAVE THE USERS
-            userAppService.save(registerRequest.getUserApp());
-         
-
-            // CEK IF THE REGISTER USER IS PARTNER
-            if(userRole.equals("PARTNER")){   
-                registerRequest.getPartner().setUser(registerRequest.getUserApp());
-                partnerService.save(registerRequest.getPartner());
+            if (registerRequest.getUserDetails() == null) {
+                throw new IllegalArgumentException("User details not provided");
             }
 
 
-            // CEK IF THE REGISTER USER IS DRIVER
-            if(userRole.equals("DRIVER")){  
+            String userRole = registerRequest.getUserApp().getUserRole().name();
+    
+            // CHECK IF THE REGISTERED USER IS MEMBER / DONOR then activate the account
+            if (userRole.equals("DONOR")) {
+                registerRequest.getUserApp().setActive(true);
+            }
+
+
+             // CHECK IF THE THE REGISTERED NO ENTERING THE ROLE DETAILS
+            if (
+                userRole.equals("PARTNER") &&  registerRequest.getPartner() == null  || 
+                userRole.equals("VOLUNTEER") &&  registerRequest.getVolunteer() == null  || 
+                userRole.equals("DRIVER") &&  registerRequest.getDriver() == null  ||
+                userRole.equals("MEMBER") &&  registerRequest.getMember() == null 
+            ) {
+                throw new IllegalArgumentException("User Role details not provided");
+            }
+
+            
+            // SAVE THE USERS
+            userAppService.save(registerRequest.getUserApp());
+    
+            // CHECK IF THE REGISTERED USER IS PARTNER
+            if (userRole.equals("PARTNER")) {
+                registerRequest.getPartner().setUser(registerRequest.getUserApp());
+                partnerService.save(registerRequest.getPartner());
+            }
+    
+            // CHECK IF THE REGISTERED USER IS DRIVER
+            if (userRole.equals("DRIVER")) {
                 registerRequest.getDriver().setUser(registerRequest.getUserApp());
                 driverServices.save(registerRequest.getDriver());
-             }
-
-
-             // CEK IF THE REGISTER USER IS DRIVER
-            if(userRole.equals("MEMBER")){  
+            }
+    
+            // CHECK IF THE REGISTERED USER IS MEMBER
+            if (userRole.equals("MEMBER")) {
                 registerRequest.getMember().setUser(registerRequest.getUserApp());
                 memberRepository.save(registerRequest.getMember());
-             }
-
-
-             // CEK IF THE REGISTER USER IS DRIVER
-            if(userRole.equals("VOLUNTEER")){  
+            }
+    
+            // CHECK IF THE REGISTERED USER IS VOLUNTEER
+            if (userRole.equals("VOLUNTEER")) {
                 registerRequest.getVolunteer().setUser(registerRequest.getUserApp());
                 volunteerRepository.save(registerRequest.getVolunteer());
-             }
-
-
-			responseData.setPayload(registerRequest);
-            
-		} catch (Exception e) {
-			responseData.setStatus(false);
-			responseData.setMessages(e.getMessage());
-			responseData.setPayload(null);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
-		}
-        
-        responseData.setMessages("User Registered Successfully !");
-		responseData.setStatus(true);
-		return ResponseEntity.ok(responseData);
-
-	}
-
+            }
+    
+    
+            // SAVE THE USER DETAILS
+            UserAppDetails details = registerRequest.getUserDetails();
+            details.setUser(registerRequest.getUserApp());
+            userDetailsRepository.save(details);
+    
+            responseData.setPayload(registerRequest);
+    
+        } catch (Exception e) {
+            responseData.setStatus(false);
+            responseData.setMessages(e.getMessage());
+            responseData.setPayload(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
+        }
+    
+        responseData.setMessages("User Registered Successfully!");
+        responseData.setStatus(true);
+        return ResponseEntity.ok(responseData);
+    }
 
 
 
@@ -189,15 +211,15 @@ public class AuthController {
             String username = jwtService.extractUsername(token);
             UserApp user =  userAppService.findUserByEmail(username);
             userResponse.setUserId(user.getUserId());
-            userResponse.setFullname(user.getFullname());
+            userResponse.setFullname(user.getUserDetails().getFullname());
             userResponse.setEmail(user.getEmail());
-            userResponse.setAddress(user.getAddress());
+            userResponse.setAddress(user.getUserDetails().getAddress());
             userResponse.setUserRole(user.getUserRole().name());
-
+            
             return ResponseEntity.ok(userResponse);
         }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("TOKEN NOT FOUND");
     } 
 
 

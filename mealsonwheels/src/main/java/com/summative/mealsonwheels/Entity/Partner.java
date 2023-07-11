@@ -1,5 +1,8 @@
 package com.summative.mealsonwheels.Entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.summative.mealsonwheels.Entity.constrant.PartnerStatus;
 
 import jakarta.persistence.Column;
@@ -10,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -43,6 +47,9 @@ public class Partner {
     @JoinColumn(name = "user_id")
     private UserApp user;
 
-    
+    @JsonIgnore
+    @OneToMany(mappedBy = "partner")
+    private List<Order> orders;
 
+    
 }

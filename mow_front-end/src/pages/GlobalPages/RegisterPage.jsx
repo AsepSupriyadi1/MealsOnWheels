@@ -52,9 +52,11 @@ const RegisterPage = () => {
         userApp: {
           email: email,
           password: password,
+          userRole: userRole,
+        },
+        userDetails: {
           fullname: fullname,
           address: address,
-          userRole: userRole,
         },
         partner: {
           companyName: companyName,

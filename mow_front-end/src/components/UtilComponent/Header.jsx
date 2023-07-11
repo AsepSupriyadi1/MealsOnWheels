@@ -147,6 +147,16 @@ function Header() {
                                 All User Request
                               </Nav.Link>
                             </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6" href="/all-meals">
+                                Meals
+                              </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6" href="/orders">
+                                Order
+                              </Nav.Link>
+                            </Nav.Item>
                           </>
                         )}
 

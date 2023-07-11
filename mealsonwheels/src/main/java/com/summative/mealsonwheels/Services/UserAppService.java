@@ -3,6 +3,7 @@ package com.summative.mealsonwheels.Services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.summative.mealsonwheels.Entity.Driver;
 import com.summative.mealsonwheels.Entity.UserApp;
+import com.summative.mealsonwheels.Entity.UserRole;
 import com.summative.mealsonwheels.Exception.UserNotActiveException;
 import com.summative.mealsonwheels.Repositories.UserAppRepository;
 
@@ -73,13 +75,20 @@ public class UserAppService implements UserDetailsService {
 		return userAppRepo.getAllInactiveUsers();
 	}
 
-	public List<UserApp> findAllActiveUsers(){
-		return userAppRepo.getAllActiveUsers();
+	public List<UserApp> findAllActiveUsers(UserRole role){
+		return userAppRepo.getAllActiveUsers(role);
 	}
 
     public UserApp findUserByEmail(String email) throws UsernameNotFoundException {
         UserApp user = userAppRepo.findByEmail(email).get();
 		return user;
+    }
+
+
+	public UserApp getCurrentUser() {
+        String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println("currentuser: " + currentUserEmail);
+        return userAppRepo.findByEmail(currentUserEmail).orElseThrow(()-> new UsernameNotFoundException("current user not found"));
     }
 
 }

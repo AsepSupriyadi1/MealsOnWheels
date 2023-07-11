@@ -9,3 +9,9 @@ export const getAllActiveMeals = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+export const requestMeals = async (token, id) => {
+  return await axios.get(`${MEMBER_URL}/order/` + id + `/create`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

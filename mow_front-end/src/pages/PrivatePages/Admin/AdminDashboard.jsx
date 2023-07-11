@@ -5,12 +5,50 @@ import { faArrowAltCircleRight, faBuilding, faCar, faCartPlus, faDollar, faDrive
 import "./admin.css";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../../context/auth-context";
+import { getAllActiveDrivers, getAllActiveMembers, getAllActivePartners, getAllActiveVolunteer } from "../../../api/admin";
 
 const AdminDashboard = () => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const userCtx = useContext(AuthContext);
+
+  const [memberShow, setMemberShow] = useState(false);
+  const [partnerShow, setPartnerShow] = useState(false);
+  const [volunteerShow, setVolunteerShow] = useState(false);
+  const [driverShow, setDriverShow] = useState(false);
+
+  const [listMember, setListMember] = useState(null);
+  const [listPartner, setListPartner] = useState(null);
+  const [listVolunteer, setListVolunteer] = useState(null);
+  const [listDriver, setListDriver] = useState(null);
+
+  const handleShowMember = () => {
+    getAllActiveMembers(userCtx.token).then((response) => {
+      setListMember(response.data);
+      setMemberShow(true);
+    });
+  };
+
+  const handleShowPartner = () => {
+    getAllActivePartners(userCtx.token).then((response) => {
+      setListPartner(response.data);
+      setPartnerShow(true);
+    });
+  };
+
+  const handleShowVolunteer = () => {
+    getAllActiveVolunteer(userCtx.token).then((response) => {
+      setListVolunteer(response.data);
+      setVolunteerShow(true);
+    });
+  };
+
+  const handleShowDriver = () => {
+    getAllActiveDrivers(userCtx.token).then((response) => {
+      setListDriver(response.data);
+      setDriverShow(true);
+    });
+  };
 
   return (
     <>
@@ -42,9 +80,9 @@ const AdminDashboard = () => {
               </div>
 
               <div className="admin__status_links bg-light rounded">
-                <a href="all-meals">
+                <button className="btn btn-light" onClick={handleShowVolunteer}>
                   View details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -60,9 +98,9 @@ const AdminDashboard = () => {
               </div>
 
               <div className="admin__status_links bg-light rounded">
-                <a href="all-members">
+                <button className="btn btn-light" onClick={handleShowMember}>
                   View details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -78,9 +116,9 @@ const AdminDashboard = () => {
               </div>
 
               <div className="admin__status_links bg-light rounded">
-                <a href="all-partners">
-                  View Details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
-                </a>
+                <button className="btn btn-light" onClick={handleShowPartner}>
+                  View details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
+                </button>
               </div>
             </div>
           </div>
@@ -96,9 +134,9 @@ const AdminDashboard = () => {
               </div>
 
               <div className="admin__status_links bg-light rounded">
-                <a href="all-drivers">
-                  View Details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
-                </a>
+                <button className="btn btn-light" onClick={handleShowDriver}>
+                  View details <FontAwesomeIcon icon={faArrowAltCircleRight} className="ps-2" />
+                </button>
               </div>
             </div>
           </div>
@@ -129,18 +167,6 @@ const AdminDashboard = () => {
                       <td>$ 250,000</td>
                       <td>12/June/2023</td>
                     </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Mencium Ketek</td>
-                      <td>$ 250,000</td>
-                      <td>12/June/2023</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Tai Kejora</td>
-                      <td>$ 250,000</td>
-                      <td>12/June/2023</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -161,24 +187,205 @@ const AdminDashboard = () => {
       </div>
       {/* END CONTAINER */}
 
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
+      {listMember && (
+        <>
+          <Modal show={memberShow} onHide={() => setMemberShow(false)} size="lg">
+            <Modal.Header closeButton>
+              <Modal.Title>All Driver</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <table className="table table-striped">
+                <thead className="table-dark">
+                  <tr>
+                    <th>No</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listMember.length ? (
+                    listMember.length > 0 &&
+                    listMember.map((value, index) => (
+                      <>
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{value.fullname}</td>
+                          <td>{value.email}</td>
+                          <td>{value.address}</td>
+                          <td>{value.role}</td>
+                        </tr>
+                      </>
+                    ))
+                  ) : (
+                    <>
+                      <tr className="text-center">
+                        <td colSpan={5}>There is no Active Member</td>
+                      </tr>
+                    </>
+                  )}
+                </tbody>
+              </table>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setMemberShow(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )}
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {listPartner && (
+        <>
+          <Modal show={partnerShow} onHide={() => setPartnerShow(false)} size="lg">
+            <Modal.Header closeButton>
+              <Modal.Title>All Active Partner</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <table className="table table-striped">
+                <thead className="table-dark">
+                  <tr>
+                    <th>No</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listPartner.length ? (
+                    listPartner.length > 0 &&
+                    listPartner.map((value, index) => (
+                      <>
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{value.fullname}</td>
+                          <td>{value.email}</td>
+                          <td>{value.address}</td>
+                          <td>{value.role}</td>
+                        </tr>
+                      </>
+                    ))
+                  ) : (
+                    <>
+                      <tr className="text-center">
+                        <td colSpan={5}>There is no Active Partner</td>
+                      </tr>
+                    </>
+                  )}
+                </tbody>
+              </table>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setPartnerShow(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )}
+
+      {listDriver && (
+        <>
+          <Modal show={driverShow} onHide={() => setDriverShow(false)} size="lg">
+            <Modal.Header closeButton>
+              <Modal.Title>All Active Driver</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <table className="table table-striped">
+                <thead className="table-dark">
+                  <tr>
+                    <th>No</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listDriver.length ? (
+                    listDriver.length > 0 &&
+                    listDriver.map((value, index) => (
+                      <>
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{value.fullname}</td>
+                          <td>{value.email}</td>
+                          <td>{value.address}</td>
+                          <td>{value.role}</td>
+                        </tr>
+                      </>
+                    ))
+                  ) : (
+                    <>
+                      <tr className="text-center">
+                        <td colSpan={5}>There is no Active Driver</td>
+                      </tr>
+                    </>
+                  )}
+                </tbody>
+              </table>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setDriverShow(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )}
+
+      {listVolunteer && (
+        <>
+          <Modal show={volunteerShow} onHide={() => setVolunteerShow(false)} size="lg">
+            <Modal.Header closeButton>
+              <Modal.Title>All Active Driver</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <table className="table table-striped">
+                <thead className="table-dark">
+                  <tr>
+                    <th>No</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listVolunteer.length ? (
+                    listVolunteer.length > 0 &&
+                    listVolunteer.map((value, index) => (
+                      <>
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{value.fullname}</td>
+                          <td>{value.email}</td>
+                          <td>{value.address}</td>
+                          <td>{value.role}</td>
+                        </tr>
+                      </>
+                    ))
+                  ) : (
+                    <>
+                      <tr className="text-center">
+                        <td colSpan={5}>There is no Active Volunteer</td>
+                      </tr>
+                    </>
+                  )}
+                </tbody>
+              </table>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setVolunteerShow(false)}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )}
     </>
   );
 };

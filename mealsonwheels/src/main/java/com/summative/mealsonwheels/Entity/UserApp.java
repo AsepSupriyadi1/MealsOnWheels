@@ -45,12 +45,6 @@ public class UserApp implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, name = "full_name")
-    private String fullname;
-
-    @Column(nullable = false, name = "address")
-    private String address;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
     private UserRole userRole;
@@ -66,10 +60,17 @@ public class UserApp implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Funds> funds;
 
+   @JsonIgnore
+   @OneToMany(mappedBy = "user")
+   private List<Order> orders;
 
     @JsonIgnore
     @OneToOne(mappedBy = "user")
     private Partner partner;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    private UserAppDetails userDetails;
 
     @JsonIgnore
     @OneToOne(mappedBy = "user")

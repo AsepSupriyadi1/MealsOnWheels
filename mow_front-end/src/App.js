@@ -66,6 +66,12 @@ function App() {
         {isLoggedIn && (
           <>
             {/* DONOR */}
+            <Route path="/donor" element={<DonorDashboard />} />
+            <Route path="/donate" element={<DonorForm />} />
+            <Route path="/our-donor" element={<OurDonor />} />
+            <Route path="/donationStatus" element={<DonationDetails />} />
+            <Route path="/thanks" element={<BankAddress />} />
+            <Route path="/profile" element={<Profile />} />
 
             {/* DRIVER */}
             {currentUser.userRole === "MEMBER" && (
@@ -93,6 +99,7 @@ function App() {
             {currentUser.userRole === "MEMBER" && (
               <>
                 <Route path="/member" element={<MemberDashboard />} />
+
                 <Route path="/detail-meals" element={<DetailpakageMember />} />
                 <Route path="/feedback" element={<FeedbackMember />} />
               </>

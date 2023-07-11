@@ -35,7 +35,7 @@ const DonorDashboard = () => {
         <div class="page-header">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <h2 class="page-title">Donator</h2>
+              <h2 class="page-title d-none d-lg-block">Donator</h2>
             </div>
             <div class="col-md-6 col-sm-6 hidden-xs back-home">
               <a href="/home">&larr; Go back Home</a>

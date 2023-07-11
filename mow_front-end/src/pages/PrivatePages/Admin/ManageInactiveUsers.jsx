@@ -66,7 +66,7 @@ const ManageInactiveUsers = () => {
         <div class="page-header">
           <div class="row">
             <div class="col-md-6 col-sm-6">
-              <h2 class="page-title">Manage all User Request</h2>
+              <h2 class="page-title d-none d-lg-block">Manage all User Request</h2>
             </div>
             <div class="col-md-6 col-sm-6 hidden-xs back-home">
               <a href="index.html">&larr; Go back Home</a>

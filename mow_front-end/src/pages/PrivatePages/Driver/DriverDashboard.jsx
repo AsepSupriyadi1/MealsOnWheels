@@ -36,6 +36,9 @@ const DriverDashboard = () => {
         getAllDriverTask(userCtx.token).then((response) => {
           setListDriverTask(response.data);
         });
+        getDriverProfileAPI(userCtx.token).then((response) => {
+          setDriver(response.data);
+        });
         setShow(false);
       })
       .catch((err) => {

@@ -33,8 +33,8 @@ function Header() {
                       </a>
                     </li>
                     <li>
-                      <a href="mailto:youremail@info.com">
-                        <i className="fa fa-envelope-o"></i>youremail@info.com
+                      <a href="mailto:group7@info.com">
+                        <i className="fa fa-envelope-o"></i>group7@info.com
                       </a>
                     </li>
                   </ul>

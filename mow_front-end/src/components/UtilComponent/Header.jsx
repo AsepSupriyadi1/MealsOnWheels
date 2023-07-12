@@ -134,11 +134,7 @@ function Header() {
                             Contact Us
                           </Nav.Link>
                         </Nav.Item>
-                        <Nav.Item>
-                          <Nav.Link className="fs-6" href="/our-donor">
-                            Our donor
-                          </Nav.Link>
-                        </Nav.Item>
+
                         {currentUser.userRole == "ADMIN" && (
                           <>
                             <Nav.Item>
@@ -179,21 +175,20 @@ function Header() {
                           </>
                         )}
 
-{currentUser.userRole === "DONOR" && (
-  <>
-      <Nav.Item>
-        <Nav.Link className="fs-6" href="/donor">
-          Dashboard
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link className="fs-6" href="/donate">
-          Donate
-        </Nav.Link>
-      </Nav.Item>
-      </>
-      
-    )}
+                        {currentUser.userRole === "DONOR" && (
+                          <>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6" href="/donor">
+                                Dashboard
+                              </Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6" href="/donate">
+                                Donate
+                              </Nav.Link>
+                            </Nav.Item>
+                          </>
+                        )}
                       </Nav>
                     </div>
 

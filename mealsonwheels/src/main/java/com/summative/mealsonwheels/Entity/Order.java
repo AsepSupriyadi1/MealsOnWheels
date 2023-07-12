@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import com.summative.mealsonwheels.Entity.constrant.DeliveryStatus;
 import com.summative.mealsonwheels.Entity.constrant.MealsStatus;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
 
@@ -70,6 +71,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "meals_status")
     private MealsStatus mealsStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "delivery_status")
+    private DeliveryStatus deliveryStatus;
 
 
     private String feedback;

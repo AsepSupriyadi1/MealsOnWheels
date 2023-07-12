@@ -7,10 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.summative.mealsonwheels.Dto.MessageResponse;
 import com.summative.mealsonwheels.Entity.Driver;
 import com.summative.mealsonwheels.Entity.Order;
+import com.summative.mealsonwheels.Entity.constrant.DeliveryStatus;
 import com.summative.mealsonwheels.Entity.constrant.DriverStatus;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
 import com.summative.mealsonwheels.Repositories.OrderRepository;
@@ -39,52 +41,69 @@ public class DriverController {
 
 
 
-    @GetMapping("/order/{id}/take")
-    public ResponseEntity<MessageResponse> proceedMeals(@PathVariable Long id) {
+    @GetMapping("/order/{id}/update")
+    public ResponseEntity<MessageResponse> proceedMeals(@PathVariable Long id, @RequestParam("deliveryStatus") String deliveryStatus) {
         Order order = orderServices.findOrderById(id);
-
+        Driver driver = userAppService.getCurrentUser().getUserDetails().getDriver();
         MessageResponse response = new MessageResponse();
 
-        if(order.getStatus().name().equals("PROCESS")){
-            response.setMessage("MEALS STILL UNDER PREPARATION");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
-
-        order.setStatus(OrderStatus.ON_THE_WAY);
       
 
+        
+        if(deliveryStatus.equals("TAKE_MEALS") && order.getDeliveryStatus().name().equals("PENDING")){
 
-        Driver driver = userAppService.getCurrentUser().getUserDetails().getDriver();
-        driver.setDriverStatus(DriverStatus.UNAVAILABLE);
 
+            driver.setDriverStatus(DriverStatus.UNAVAILABLE);
+            order.setDeliveryStatus(DeliveryStatus.TAKE_MEALS);
+
+
+        } else if (deliveryStatus.equals("ON_THE_WAY") && order.getDeliveryStatus().name().equals("TAKE_MEALS")){
+
+            if(order.getStatus().name().equals("PROCESS") && order.getMealsStatus().name().equals("PROCESS")){
+                response.setMessage("MEALS STILL UNDER PREPARATION");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            }
+
+            order.setStatus(OrderStatus.ON_THE_WAY);
+            order.setDeliveryStatus(DeliveryStatus.ON_THE_WAY);
+
+
+        } else if (deliveryStatus.equals("DELIVERED") && order.getDeliveryStatus().name().equals("ON_THE_WAY")){
+
+            order.setStatus(OrderStatus.DELIVERED);
+            order.setDeliveryStatus(DeliveryStatus.DELIVERED);
+            driver.setDriverStatus(DriverStatus.AVAILABLE);
+            
+        } else {
+            response.setMessage("NOT FOUND");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        }
         
         orderServices.save(order);
         driverServices.save(driver);
-
-
         response.setMessage("Meals took by driver with id " + order.getDriver().getDriverId());
         return ResponseEntity.ok(response);
     }
 
 
-    @GetMapping("/order/{id}/delivered")
-    public ResponseEntity<MessageResponse> deliver(@PathVariable Long id) {
-        Order order = orderServices.findOrderById(id);
+    // @GetMapping("/order/{id}/delivered")
+    // public ResponseEntity<MessageResponse> deliver(@PathVariable Long id) {
+    //     Order order = orderServices.findOrderById(id);
 
-        MessageResponse response = new MessageResponse();
+    //     MessageResponse response = new MessageResponse();
 
-        order.setStatus(OrderStatus.DELIVERED);
+    //     order.setStatus(OrderStatus.DELIVERED);
       
 
-        Driver driver = userAppService.getCurrentUser().getUserDetails().getDriver();
-        driver.setDriverStatus(DriverStatus.AVAILABLE);
+    //     Driver driver = userAppService.getCurrentUser().getUserDetails().getDriver();
+    //     driver.setDriverStatus(DriverStatus.AVAILABLE);
 
-        orderServices.save(order);
-        driverServices.save(driver);
+    //     orderServices.save(order);
+    //     driverServices.save(driver);
 
-        response.setMessage("Meals delivered by driver with id " + order.getDriver().getDriverId());
-        return ResponseEntity.ok(response);
-    }
+    //     response.setMessage("Meals delivered by driver with id " + order.getDriver().getDriverId());
+    //     return ResponseEntity.ok(response);
+    // }
 
 
 
@@ -107,6 +126,14 @@ public class DriverController {
     public ResponseEntity<List<Order>> getAllDriverTask() {
         List<Order> listDriverTask = orderRepository.findByDriver(userAppService.getCurrentUser().getUserDetails().getDriver());
         return ResponseEntity.ok(listDriverTask);
+    }
+
+
+
+    @GetMapping("/delivery-details/{orderId}")
+    public ResponseEntity<Order> getDeliveryDetailsById(@PathVariable("orderId") Long orderId) {
+        Order order = orderRepository.findById(orderId).get();
+        return ResponseEntity.ok(order);
     }
 
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import com.summative.mealsonwheels.Entity.constrant.MealsStatus;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
 
 import jakarta.persistence.Column;
@@ -49,8 +50,8 @@ public class Order {
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserApp user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "partner_id")
@@ -64,6 +65,14 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
     private OrderStatus status;
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "meals_status")
+    private MealsStatus mealsStatus;
+
+
+    private String feedback;
 
 
 

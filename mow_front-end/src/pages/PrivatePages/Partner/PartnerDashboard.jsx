@@ -2,8 +2,47 @@ import { faHamburger, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DashHeader } from "../../../assets/images/Images";
 import { Badge, ListGroup } from "react-bootstrap";
+import { AuthContext } from "../../../context/auth-context";
+import { useContext, useEffect, useState } from "react";
+import { countMealsAPI, countPartnerTaskAPI, getAllMealsAPI, getAllPartnerTaskAPI, updateMealsStatusAPI } from "../../../api/partner";
+import Swal from "sweetalert2";
 
 const PartnerDashboard = () => {
+  const userCtx = useContext(AuthContext);
+  const [countPartnerTask, setCountPartnerTask] = useState(0);
+  const [countMeals, setCountMeals] = useState(0);
+  const [listMeals, setListMeals] = useState(null);
+  const [listPartnerTask, setListPartnerTask] = useState(null);
+
+  useEffect(() => {
+    countPartnerTaskAPI(userCtx.token).then((response) => {
+      setCountPartnerTask(response.data);
+    });
+    countMealsAPI(userCtx.token).then((response) => {
+      setCountMeals(response.data);
+    });
+    getAllMealsAPI(userCtx.token).then((response) => {
+      setListMeals(response.data);
+    });
+    getAllPartnerTaskAPI(userCtx.token).then((response) => {
+      setListPartnerTask(response.data);
+    });
+  }, []);
+
+  const handleUpdateStatus = (id, status) => {
+    updateMealsStatusAPI(userCtx.token, id, status).then(() => {
+      Swal.fire("Success !", "Meals Request Status Updated.", "success");
+      getAllPartnerTaskAPI(userCtx.token).then((response) => {
+        setListPartnerTask(response.data);
+      });
+    });
+  };
+
+  if (!countPartnerTask) return null;
+  if (!countMeals) return null;
+  if (!listMeals) return null;
+  if (!listPartnerTask) return null;
+
   return (
     <>
       <div className="container">
@@ -23,7 +62,7 @@ const PartnerDashboard = () => {
                     <div class="col-md-6">
                       <div class="head_status_card rounded-sm m-2">
                         <div>
-                          <h2>85</h2>
+                          <h2>{countPartnerTask}</h2>
                           <h5>Uncompleted Task</h5>
                         </div>
                         <FontAwesomeIcon className="head_status_icon" icon={faUsers} />
@@ -32,7 +71,7 @@ const PartnerDashboard = () => {
                     <div class="col-md-6">
                       <div class="head_status_card rounded-sm m-2">
                         <div>
-                          <h2>85</h2>
+                          <h2>{countMeals}</h2>
                           <h5>Meals</h5>
                         </div>
                         <FontAwesomeIcon className="head_status_icon" icon={faUsers} />
@@ -48,7 +87,7 @@ const PartnerDashboard = () => {
 
       <div className="container">
         <div className="row">
-          <div className="col-md-7">
+          <div className="col-md-9">
             <div className="box-content rounded shadow">
               <h4 class="widget-title">
                 <span>all meal requests</span>
@@ -59,48 +98,40 @@ const PartnerDashboard = () => {
                     <tr>
                       <th>No</th>
                       <th>Member Name</th>
-                      <th>Meal's Menu</th>
-                      <th>Status</th>
+                      <th>Member Age</th>
+                      <th>Menu</th>
+                      <th>Meals Status</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Kencal Total</td>
-                      <td>Meals Package B</td>
+                    {console.log(listPartnerTask)}
+                    {listPartnerTask &&
+                      listPartnerTask.map((value, index) => (
+                        <>
+                          <tr>
+                            <td>{index + 1}</td>
+                            <td>{value.member.userDetails.fullname}</td>
+                            <td>{value.member.age}</td>
+                            <td>{value.meals.mealsName}</td>
+                            <td>{value.mealsStatus}</td>
 
-                      <td style={{ width: "min-content" }}>
-                        <select name="" id="" className="form-control">
-                          <option value=""> Status ▼</option>
-                          <option value="">pickup</option>
-                          <option value="">on the way</option>
-                          <option value="">complete</option>
-                        </select>
-                      </td>
-
-                      <td>
-                        <button className="btn btn-info">Detail</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Kencal Total</td>
-                      <td>Meals Package B</td>
-
-                      <td style={{ width: "min-content" }}>
-                        <select name="" id="" className="form-control">
-                          <option value=""> Status ▼</option>
-                          <option value="">pickup</option>
-                          <option value="">on the way</option>
-                          <option value="">complete</option>
-                        </select>
-                      </td>
-
-                      <td>
-                        <button className="btn btn-info">Detail</button>
-                      </td>
-                    </tr>
+                            <td style={{ width: "min-content" }}>
+                              {value.mealsStatus === "PENDING" && (
+                                <button className="btn btn-warning" onClick={() => handleUpdateStatus(value.orderId, "PROCESS")}>
+                                  Prepare Meals
+                                </button>
+                              )}
+                              {value.mealsStatus === "PROCESS" && (
+                                <button className="btn btn-primary" onClick={() => handleUpdateStatus(value.orderId, "READY_TO_DELIVER")}>
+                                  Completed ?
+                                </button>
+                              )}
+                              {value.mealsStatus === "READY_TO_DELIVER" && <Badge bg="success">Completed</Badge>}
+                            </td>
+                          </tr>
+                        </>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -114,42 +145,17 @@ const PartnerDashboard = () => {
 
               <div className="meals_menu_container">
                 <ListGroup>
-                  <ListGroup.Item>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <p className="m-0">Nasi Padang</p>
-                      <button className="btn btn-light border">Details Menu</button>
-                    </div>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <p className="m-0">Nasi Padang</p>
-                      <button className="btn btn-light border">Details Menu</button>
-                    </div>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <p className="m-0">Nasi Padang</p>
-                      <button className="btn btn-light border">Details Menu</button>
-                    </div>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <p className="m-0">Nasi Padang</p>
-                      <button className="btn btn-light border">Details Menu</button>
-                    </div>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <p className="m-0">Nasi Padang</p>
-                      <button className="btn btn-light border">Details Menu</button>
-                    </div>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <p className="m-0">Nasi Padang</p>
-                      <button className="btn btn-light border">Details Menu</button>
-                    </div>
-                  </ListGroup.Item>
+                  {listMeals &&
+                    listMeals.map((value, index) => (
+                      <>
+                        <ListGroup.Item>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <p className="m-0">{value.mealsName}</p>
+                            {/* <button className="btn btn-light border">Details Menu</button> */}
+                          </div>
+                        </ListGroup.Item>
+                      </>
+                    ))}
                 </ListGroup>
               </div>
             </div>

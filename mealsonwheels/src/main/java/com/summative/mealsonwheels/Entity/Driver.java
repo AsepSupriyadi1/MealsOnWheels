@@ -42,8 +42,8 @@ public class Driver {
     private DriverStatus driverStatus;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserApp user;
+    @JoinColumn(name = "user_details_id")
+    private UserAppDetails userDetails;
 
 
     @JsonIgnore

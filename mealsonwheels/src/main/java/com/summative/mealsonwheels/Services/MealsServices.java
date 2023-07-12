@@ -1,12 +1,9 @@
 package com.summative.mealsonwheels.Services;
 
 import jakarta.transaction.Transactional;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.summative.mealsonwheels.Entity.Meals;
 import com.summative.mealsonwheels.Repositories.MealsRepository;
 
@@ -16,6 +13,8 @@ public class MealsServices {
     
     @Autowired
     private MealsRepository mealsRepository;
+
+
 
     public Meals addMeals(Meals meal){
        return mealsRepository.save(meal);
@@ -34,6 +33,10 @@ public class MealsServices {
     public Meals findMealsById(Long mealsId){
        return mealsRepository.findById(mealsId).get();
     }
+
+
+
+
 
 
 }

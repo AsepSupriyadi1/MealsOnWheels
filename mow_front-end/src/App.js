@@ -30,6 +30,7 @@ import { AuthContext } from "./context/auth-context";
 import "./pages/PrivatePages/Member/member.css";
 import Profile from "./pages/PrivatePages/Member/Profile";
 import ManageInactiveUsers from "./pages/PrivatePages/Admin/ManageInactiveUsers";
+import OrderHistory from "./pages/PrivatePages/Member/OrderHistory";
 function App() {
   const { isLoggedIn, currentUser } = useContext(AuthContext);
 
@@ -66,6 +67,7 @@ function App() {
             {currentUser.userRole === "MEMBER" && (
               <>
                 <Route path="/meals" element={<MemberDashboard />} />
+                <Route path="/history" element={<OrderHistory />} />
               </>
             )}
 
@@ -78,8 +80,8 @@ function App() {
 
             {/* DRIVER */}
             {currentUser.userRole === "DRIVER" && (
-              <>   
-              <Route path="/driver" element={<DriverDashboard />} />
+              <>
+                <Route path="/driver" element={<DriverDashboard />} />
               </>
             )}
 
@@ -87,8 +89,8 @@ function App() {
             {currentUser.userRole === "MEMBER" && (
               <>
                 <Route path="/member" element={<MemberDashboard />} />
-                
-        <Route path="/detail-meals" element={<DetailpakageMember />} />
+
+                <Route path="/detail-meals" element={<DetailpakageMember />} />
                 <Route path="/feedback" element={<FeedbackMember />} />
               </>
             )}

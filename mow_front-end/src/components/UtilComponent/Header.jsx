@@ -171,6 +171,11 @@ function Header() {
                                 Daily Meals
                               </Nav.Link>
                             </Nav.Item>
+                            <Nav.Item>
+                              <Nav.Link className="fs-6 border-start-secondary" href="/history">
+                                Order History
+                              </Nav.Link>
+                            </Nav.Item>
                           </>
                         )}
 

@@ -87,3 +87,18 @@ export const getAllOrders = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// -=-=-=-=-= MEALS -=-=-=-=-=
+export const getAllAvalailableDriver = async (token) => {
+  return await axios.get(`${BASE_URL}/admin/all-available-driver`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+// REGISTER
+export const assignPartnerAndDriver = async (token, data) => {
+  // mengembalikan alert success / alert gagal untuk prosess registrasi
+  return axios.post(`${BASE_URL}/admin/assign`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

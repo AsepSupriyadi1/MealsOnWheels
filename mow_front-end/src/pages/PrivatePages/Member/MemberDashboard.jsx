@@ -16,6 +16,7 @@ const MemberDashboard = () => {
   useEffect(() => {
     getAllActiveMeals(userCtx.token).then((response) => {
       setListActiveMeals(response.data);
+      // const blob = new Blob([response.data.], { type: "image/jpeg" });
     });
   }, []);
 

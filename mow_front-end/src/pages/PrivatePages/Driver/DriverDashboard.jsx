@@ -2,6 +2,7 @@ import { DashHeader, Testimonial, gallery, resources } from "../../../assets/ima
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleDown, faCar, faDollar, faHamburger, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { Badge, Table } from "react-bootstrap";
+import { useEffect, useState } from "react";
 
 const DriverDashboard = () => {
   return (
@@ -19,16 +20,7 @@ const DriverDashboard = () => {
                 </div>
                 <div className="col-md-8 col-sm-12">
                   <div class="row">
-                    <div class="col-md-6">
-                      <div class="head_status_card rounded-sm m-2">
-                        <div>
-                          <h2>85</h2>
-                          <h5>Task</h5>
-                        </div>
-                        <FontAwesomeIcon className="head_status_icon" icon={faHamburger} />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md">
                       <div class="head_status_card rounded-sm m-2">
                         <div>
                           <h2>85</h2>

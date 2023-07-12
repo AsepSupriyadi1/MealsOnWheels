@@ -22,6 +22,7 @@ import com.summative.mealsonwheels.Dto.UserResponse;
 import com.summative.mealsonwheels.Entity.Tokens;
 import com.summative.mealsonwheels.Entity.UserApp;
 import com.summative.mealsonwheels.Entity.UserAppDetails;
+import com.summative.mealsonwheels.Entity.constrant.DriverStatus;
 import com.summative.mealsonwheels.Entity.constrant.TokenType;
 import com.summative.mealsonwheels.Exception.UserNotActiveException;
 import com.summative.mealsonwheels.Repositories.MemberRepository;
@@ -123,18 +124,29 @@ public class AuthController {
     
         try {
 
+            String userRole = registerRequest.getUserApp().getUserRole().name();
+
             if (registerRequest.getUserDetails() == null) {
                 throw new IllegalArgumentException("User details not provided");
             }
 
 
-            String userRole = registerRequest.getUserApp().getUserRole().name();
-    
             // CHECK IF THE REGISTERED USER IS MEMBER / DONOR then activate the account
             if (userRole.equals("DONOR")) {
                 registerRequest.getUserApp().setActive(true);
             }
 
+
+             // SAVE THE USERS
+            userAppService.save(registerRequest.getUserApp());
+
+             // SAVE THE USER DETAILS
+            UserAppDetails details = registerRequest.getUserDetails();
+            details.setUser(registerRequest.getUserApp());
+            userDetailsRepository.save(details);
+          
+    
+       
 
              // CHECK IF THE THE REGISTERED NO ENTERING THE ROLE DETAILS
             if (
@@ -147,38 +159,35 @@ public class AuthController {
             }
 
             
-            // SAVE THE USERS
-            userAppService.save(registerRequest.getUserApp());
+           
     
             // CHECK IF THE REGISTERED USER IS PARTNER
             if (userRole.equals("PARTNER")) {
-                registerRequest.getPartner().setUser(registerRequest.getUserApp());
+                registerRequest.getPartner().setUserDetails(registerRequest.getUserDetails());
                 partnerService.save(registerRequest.getPartner());
             }
     
             // CHECK IF THE REGISTERED USER IS DRIVER
             if (userRole.equals("DRIVER")) {
-                registerRequest.getDriver().setUser(registerRequest.getUserApp());
+                registerRequest.getDriver().setUserDetails(registerRequest.getUserDetails());
+                registerRequest.getDriver().setDriverStatus(DriverStatus.AVAILABLE);
                 driverServices.save(registerRequest.getDriver());
             }
     
             // CHECK IF THE REGISTERED USER IS MEMBER
             if (userRole.equals("MEMBER")) {
-                registerRequest.getMember().setUser(registerRequest.getUserApp());
+                registerRequest.getMember().setUserDetails(registerRequest.getUserDetails());
                 memberRepository.save(registerRequest.getMember());
             }
     
             // CHECK IF THE REGISTERED USER IS VOLUNTEER
             if (userRole.equals("VOLUNTEER")) {
-                registerRequest.getVolunteer().setUser(registerRequest.getUserApp());
+                registerRequest.getVolunteer().setUserDetails(registerRequest.getUserDetails());
                 volunteerRepository.save(registerRequest.getVolunteer());
             }
     
     
-            // SAVE THE USER DETAILS
-            UserAppDetails details = registerRequest.getUserDetails();
-            details.setUser(registerRequest.getUserApp());
-            userDetailsRepository.save(details);
+           
     
             responseData.setPayload(registerRequest);
     

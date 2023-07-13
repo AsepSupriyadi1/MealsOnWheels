@@ -45,6 +45,9 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
+        
+        <Route path="/profile" element={<Profile />} />
+
         {!isLoggedIn && (
           <>
             <Route path="/login" element={<LoginPage />} />
@@ -61,7 +64,6 @@ function App() {
             <Route path="/donate" element={<DonorForm />} />
             <Route path="/donationStatus" element={<DonationDetails />} />
             <Route path="/thanks" element={<BankAddress />} />
-            <Route path="/profile" element={<Profile />} />
 
             {/* DRIVER */}
             {currentUser.userRole === "MEMBER" && (

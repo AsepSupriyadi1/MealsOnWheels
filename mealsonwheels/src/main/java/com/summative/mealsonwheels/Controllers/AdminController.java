@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.summative.mealsonwheels.Dto.AssignRequest;
-import com.summative.mealsonwheels.Dto.DriverAvailableResponse;
+import com.summative.mealsonwheels.Dto.EntityRequest.AssignRequest;
+import com.summative.mealsonwheels.Dto.EntityResponse.DriverAvailableResponse;
 import com.summative.mealsonwheels.Dto.MessageResponse;
 import com.summative.mealsonwheels.Dto.EntityResponse.UserApproval;
 import com.summative.mealsonwheels.Dto.EntityResponse.UserRoleDetails;
@@ -26,7 +26,7 @@ import com.summative.mealsonwheels.Entity.Member;
 import com.summative.mealsonwheels.Entity.Order;
 import com.summative.mealsonwheels.Entity.Partner;
 import com.summative.mealsonwheels.Entity.UserApp;
-import com.summative.mealsonwheels.Entity.UserRole;
+import com.summative.mealsonwheels.Entity.constrant.UserRole;
 import com.summative.mealsonwheels.Entity.Volunteer;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
 import com.summative.mealsonwheels.Repositories.DriverRepository;

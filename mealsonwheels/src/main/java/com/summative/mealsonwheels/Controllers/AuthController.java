@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.summative.mealsonwheels.Config.JwtService;
-import com.summative.mealsonwheels.Dto.AuthenticationRequest;
-import com.summative.mealsonwheels.Dto.AuthenticationResponse;
-import com.summative.mealsonwheels.Dto.RegisterRequest;
+import com.summative.mealsonwheels.Dto.EntityRequest.AuthenticationRequest;
+import com.summative.mealsonwheels.Dto.EntityResponse.AuthenticationResponse;
+import com.summative.mealsonwheels.Dto.EntityRequest.RegisterRequest;
 import com.summative.mealsonwheels.Dto.ResponseData;
 import com.summative.mealsonwheels.Dto.UserResponse;
 import com.summative.mealsonwheels.Entity.Tokens;

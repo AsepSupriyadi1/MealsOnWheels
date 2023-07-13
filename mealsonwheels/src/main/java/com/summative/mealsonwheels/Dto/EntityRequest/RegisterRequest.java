@@ -1,4 +1,4 @@
-package com.summative.mealsonwheels.Dto;
+package com.summative.mealsonwheels.Dto.EntityRequest;
 
 import com.summative.mealsonwheels.Entity.Driver;
 import com.summative.mealsonwheels.Entity.Member;

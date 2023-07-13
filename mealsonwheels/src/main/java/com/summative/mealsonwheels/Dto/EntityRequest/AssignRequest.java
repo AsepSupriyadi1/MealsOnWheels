@@ -1,5 +1,4 @@
-package com.summative.mealsonwheels.Dto;
-
+package com.summative.mealsonwheels.Dto.EntityRequest;
 
 
 import lombok.AllArgsConstructor;
@@ -11,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DriverAvailableResponse {    
+public class AssignRequest {
+    private Long partnerId;
     private Long driverId;
-    private String driverName;
+    private Long orderId;
 }

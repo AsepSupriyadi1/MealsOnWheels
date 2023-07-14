@@ -1,5 +1,7 @@
-import { Member } from "../../../assets/images/Images";
+import { food, Member } from "../../../assets/images/Images";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStore } from "@fortawesome/free-solid-svg-icons";
 
 const DetailpakageMember = () => {
     return (<>
@@ -21,24 +23,27 @@ const DetailpakageMember = () => {
         </div>
 
         <div className="container">
-        <div className="box-content p-0" style={{ backgroundImage: `url(${Member.membereat})`, backgroundSize:"cover" }}>
-  <div className="row">
-    <div className="col-md-5 p-5 text-dark shadow" style={{backgroundColor:"rgba(255, 255, 255, 0.7)"}}>
-      <p className="text-end text-danger"><i className="fa fa-calendar-o"></i> 24 April 2014 </p>
-      <h5 className="border-top pt-2 text-success">Meals Package Name</h5>
-      <p >Package A</p>
-      <h5 className="border-top pt-2 text-success">Category</h5>
-      <p>Makanan Utama, Menu Desert, Drink</p>
-      <h5 className="border-top pt-2 text-success">Descriptions</h5>
-      <p>This food is suitable for all ages and this food suitable for people who are allergic to peanuts</p>
-      <div className="btn-order">
-        <a href="#" className="btn btn-success shadow">Order Now</a>
-      </div>
-    </div>
-  </div>
-</div>
+            <div className="box-content shadow rounded p-0">
+                <div className="row">
+                    <div className="col-md-6 p-5 text-dark">
+                        <p className="text-success rounded"><FontAwesomeIcon icon={faStore}/> MoW Kitchen </p>
+                        <h3 className="text-success">Oseng Pentil</h3>
+                        <h5 className="border-top pt-2 text-success">Categories</h5>
+                        <p>Food, danger</p>
+                      
+                        <h5 className="border-top pt-2 text-success">Descriptions</h5>
+                        <p>This food is suitable for all ages and this food suitable for people who are allergic to peanuts</p>
+                        <div className="btn-order">
+                            <a href="#" className="btn btn-success rounded">Order Now</a>
+                        </div>
+                    </div>
+                    <div className="col-md-6 p-5">
+                        <img src={food.food1} className="rounded img-fluid" alt="" />
+                    </div>
+                </div>
             </div>
-            {/* <div className="cause-single">
+        </div>
+        {/* <div className="cause-single">
                 <div className="cause-image">
                     <img src={Member.membereat} alt="" />
                     <div class="cause-overlay hidden-xs">
@@ -55,7 +60,7 @@ const DetailpakageMember = () => {
                 </div>
             </div> */}
 
-        
+
 
     </>);
 }

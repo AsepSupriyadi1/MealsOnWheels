@@ -85,19 +85,23 @@ const MemberDashboard = () => {
             </h4>
             <div className="row overflow-auto flex-nowrap">
               {listActiveMeals.map((value) => (
+
+
+                
                 <>
+               
                   <div className="col-md-3 col-sm-6">
-                    <div className="card-meal">
-                      <img src={`data:image/png;base64,${value.picture.imageData}`} className="card-image rounded-2" alt="" />
+                    <div className="card-meal mb-3" style={{height:350 + "px" }}>
+                      <img src={`data:image/png;base64,${value.picture.imageData}`} className="card-image rounded-2 h-50 w-100 "  alt="" />
                       <div className="detail-card my-3">
                         <p className="text-success">
                           <FontAwesomeIcon icon={faStore} /> {value.partner.companyName}
                         </p>
-                        <h3>{value.mealsName}</h3>
+                        <h4 className="fs-5"> {(value.mealsName.length >= 12) ? value.mealsName.slice(0, 12) + "..." : value.mealsName}</h4>
                         <p className="text-secondary">Kategory: Food</p>
-                        <button className="btn btn-success rounded-1" onClick={() => handleRequestMeals(value.id_meals)}>
-                          Request Meals
-                        </button>
+                        <a className="btn btn-success rounded-1" href="/detail-meals">
+                          View Details
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -112,3 +116,4 @@ const MemberDashboard = () => {
 };
 
 export default MemberDashboard;
+// onClick={() => handleRequestMeals(value.id_meals)}

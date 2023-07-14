@@ -15,10 +15,13 @@ import thumb33 from "./placehold/events/thumb(3).jpg";
 import slide1 from "./placehold/slides/slide1.jpg";
 import slide2 from "./placehold/slides/slide2.jpg";
 import slide3 from "./placehold/slides/slide3.jpg";
+import foodd1 from "./placehold/food/foodd1.jpg";
+import foodd2 from "./placehold/food/foodd2.jpg";
+import foodd3 from "./placehold/food/foodd3.jpg";
+import food4 from "./placehold/food/food4.jpg";
 import food1 from "./placehold/food/food1.jpg";
 import food2 from "./placehold/food/food2.jpg";
 import food3 from "./placehold/food/food3.jpg";
-import food4 from "./placehold/food/food4.jpg";
 import testi4 from "./placehold/testimonials/testi4.jpg";
 import driver from "./placehold/gallery/driver.jpg";
 import imgtesti from "./placehold/testimonials/giver.png";
@@ -91,6 +94,9 @@ export const food = {
   food2,
   food3,
   food4,
+  foodd1,
+  foodd2,
+  foodd3,
 };
 
 export const Member = {

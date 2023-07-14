@@ -3,23 +3,32 @@ import React, { useEffect } from "react";
 import { Testimonial } from "../../assets/images/Images";
 
 const HomePage = () => {
-  const options = {
-    method: "GET",
-    url: "https://trueway-geocoding.p.rapidapi.com/Geocode",
-    params: {
-      address: "Pameungpeuk, Bandung Regency, Indonesia",
-      language: "en",
-    },
-    headers: {
-      "X-RapidAPI-Key": "408a68ad23mshba80c18df800604p11fe66jsn16ecedb0c9d3",
-      "X-RapidAPI-Host": "trueway-geocoding.p.rapidapi.com",
-    },
-  };
+  // const options = {
+  //   method: "GET",
+  //   url: "https://trueway-geocoding.p.rapidapi.com/Geocode",
+  //   params: {
+  //     address: "Pameungpeuk, Bandung Regency, Indonesia",
+  //     language: "en",
+  //   },
+  //   headers: {
+  //     "X-RapidAPI-Key": "408a68ad23mshba80c18df800604p11fe66jsn16ecedb0c9d3",
+  //     "X-RapidAPI-Host": "trueway-geocoding.p.rapidapi.com",
+  //   },
+  // };
 
   useEffect(() => {
-    axios.request(options).then((response) => {
-      console.log(response.data);
-    });
+    // axios.request(options).then((response) => {
+    //   console.log(response.data);
+    // });
+
+    axios
+      .get("http://api.positionstack.com/v1/forward?access_key=ea2a9b8fdf6ea0036a4b100813971ca3&query=Pameungpeuk Bandung Regency Indonesia")
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (

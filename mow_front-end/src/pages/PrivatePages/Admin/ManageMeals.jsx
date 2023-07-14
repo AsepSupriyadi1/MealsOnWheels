@@ -5,14 +5,14 @@ import DoughnutChart from "../../../components/ChartComponent/DougnutChart";
 import { dummyData } from "../../../components/ChartComponent/DummyData";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/auth-context";
-import { addMealsAPI, getAllMealsAPI } from "../../../api/admin";
+import { addMealsAPI, getAllActivePartners, getAllMealsAPI } from "../../../api/admin";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { anjay } from "../../../assets/images/Images";
 
 const ManageMeals = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const userCtx = useContext(AuthContext);
   const [listMeals, setListMeals] = useState(null);
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ const ManageMeals = () => {
   const [partner, setPartner] = useState(null);
   const [stock, setStock] = useState(null);
   const [picture, setPicture] = useState(null);
+  const [listPartner, setListPartner] = useState(null);
 
   const formData = new FormData();
 
@@ -30,8 +31,6 @@ const ManageMeals = () => {
     formData.append("partnerId", parseInt(partner));
     formData.append("stock", parseInt(stock));
     formData.append("picture", picture);
-
-    // console.log(formData.getAll);
 
     addMealsAPI(formData, userCtx.token)
       .then((response) => {
@@ -61,6 +60,13 @@ const ManageMeals = () => {
       },
     ],
   });
+
+  const handleShow = () => {
+    getAllActivePartners(userCtx.token).then((response) => {
+      setListPartner(response.data);
+    });
+    setShow(true);
+  };
 
   useEffect(() => {
     getAllMealsAPI(userCtx.token).then((response) => {
@@ -106,25 +112,26 @@ const ManageMeals = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {listMeals.map((value, index) => (
-                      <>
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>{value.mealsName}</td>
+                    {listMeals !== null &&
+                      listMeals.map((value, index) => (
+                        <>
+                          <tr>
+                            <td>{index + 1}</td>
+                            <td>{value.mealsName}</td>
 
-                          <td>
-                            <div className="d-md-flex align-items-center">
-                              <a className="btn btn-danger m-1">
-                                <FontAwesomeIcon icon={faTrashAlt} />
-                              </a>
-                              <a className="btn btn-secondary">
-                                <FontAwesomeIcon icon={faPencil} />
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-                      </>
-                    ))}
+                            <td>
+                              <div className="d-md-flex align-items-center">
+                                <a className="btn btn-danger m-1">
+                                  <FontAwesomeIcon icon={faTrashAlt} />
+                                </a>
+                                <a className="btn btn-secondary">
+                                  <FontAwesomeIcon icon={faPencil} />
+                                </a>
+                              </div>
+                            </td>
+                          </tr>
+                        </>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -155,7 +162,14 @@ const ManageMeals = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Partner</Form.Label>
-              <Form.Control type="number" placeholder="Enter Meals Stock ..." name="partner" value={partner} onChange={(e) => setPartner(e.target.value)} />
+              <Form.Select aria-label="Default select example" name="partner" onChange={(e) => setPartner(e.target.value)}>
+                {listPartner !== null &&
+                  listPartner.map((value, index) => (
+                    <>
+                      <option value={value.roleDetails.partnerId}>{value.roleDetails.companyName}</option>
+                    </>
+                  ))}
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="file">
               <Form.Label>Meals Name</Form.Label>

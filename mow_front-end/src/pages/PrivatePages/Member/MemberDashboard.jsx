@@ -42,8 +42,6 @@ const MemberDashboard = () => {
     });
   };
 
-  if (!listActiveMeals) return null;
-
   return (
     <>
       {/* page header */}
@@ -84,25 +82,26 @@ const MemberDashboard = () => {
               <span>Food option</span>
             </h4>
             <div className="row overflow-auto flex-nowrap">
-              {listActiveMeals.map((value) => (
-                <>
-                  <div className="col-md-3 col-sm-6">
-                    <div className="card-meal">
-                      <img src={`data:image/png;base64,${value.picture.imageData}`} className="card-image rounded-2" alt="" />
-                      <div className="detail-card my-3">
-                        <p className="text-success">
-                          <FontAwesomeIcon icon={faStore} /> {value.partner.companyName}
-                        </p>
-                        <h3>{value.mealsName}</h3>
-                        <p className="text-secondary">Kategory: Food</p>
-                        <button className="btn btn-success rounded-1" onClick={() => handleRequestMeals(value.id_meals)}>
-                          Request Meals
-                        </button>
+              {listActiveMeals !== null &&
+                listActiveMeals.map((value) => (
+                  <>
+                    <div className="col-md-3 col-sm-6">
+                      <div className="card-meal">
+                        <img src={`data:image/png;base64,${value.picture.imageData}`} className="card-image rounded-2" alt="" />
+                        <div className="detail-card my-3">
+                          <p className="text-success">
+                            <FontAwesomeIcon icon={faStore} /> {value.partner.companyName}
+                          </p>
+                          <h3>{value.mealsName}</h3>
+                          <p className="text-secondary">Kategory: Food</p>
+                          <button className="btn btn-success rounded-1" onClick={() => handleRequestMeals(value.mealsId)}>
+                            Request Meals
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </>
-              ))}
+                  </>
+                ))}
             </div>
           </div>
         </div>

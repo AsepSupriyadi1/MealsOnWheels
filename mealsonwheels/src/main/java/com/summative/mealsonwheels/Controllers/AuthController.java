@@ -148,7 +148,7 @@ public class AuthController {
             details.setUser(registerRequest.getUserApp());
             userDetailsRepository.save(details);
 
-            // CHECK IF THE THE REGISTERED NO ENTERING THE ROLE DETAILS
+            // CHECK IF THE REGISTERED NO ENTERING THE ROLE DETAILS
             if (
                     userRole.equals("PARTNER") &&  registerRequest.getPartner() == null  ||
                             userRole.equals("VOLUNTEER") &&  registerRequest.getVolunteer() == null  ||

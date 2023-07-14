@@ -28,9 +28,9 @@ import { useContext } from "react";
 import ErrorPage from "./pages/GlobalPages/ErrorPage";
 import { AuthContext } from "./context/auth-context";
 import "./pages/PrivatePages/Member/member.css";
-import Profile from "./pages/PrivatePages/Member/Profile";
 import ManageInactiveUsers from "./pages/PrivatePages/Admin/ManageInactiveUsers";
 import OrderHistory from "./pages/PrivatePages/Member/OrderHistory";
+import Profile from "./pages/PrivatePages/Profile";
 function App() {
   const { isLoggedIn, currentUser } = useContext(AuthContext);
 
@@ -45,12 +45,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
 
-        
-        <Route path="/profile" element={<Profile />} />
-
-
         <Route path="/member" element={<MemberDashboard />} />
-        
+
         {!isLoggedIn && (
           <>
             <Route path="/login" element={<LoginPage />} />
@@ -67,6 +63,7 @@ function App() {
             <Route path="/donate" element={<DonorForm />} />
             <Route path="/donationStatus" element={<DonationDetails />} />
             <Route path="/thanks" element={<BankAddress />} />
+            <Route path="/profile" element={<Profile />} />
 
             {/* DRIVER */}
             {currentUser.userRole === "MEMBER" && (

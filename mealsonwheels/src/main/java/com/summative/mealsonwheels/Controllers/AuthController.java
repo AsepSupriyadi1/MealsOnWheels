@@ -117,11 +117,11 @@ public class AuthController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<ResponseData<RegisterRequest>> registerUser(@RequestBody RegisterRequest registerRequest) {
-    
+
         ResponseData<RegisterRequest> responseData = new ResponseData<>();
-    
-      
-    
+
+
+
         try {
 
             String userRole = registerRequest.getUserApp().getUserRole().name();
@@ -138,66 +138,68 @@ public class AuthController {
 
 
              // SAVE THE USERS
+            UserApp user = registerRequest.getUserApp();
+            user.setPassword(registerRequest.getUserApp().getPassword());
             userAppService.save(registerRequest.getUserApp());
 
              // SAVE THE USER DETAILS
             UserAppDetails details = registerRequest.getUserDetails();
             details.setUser(registerRequest.getUserApp());
             userDetailsRepository.save(details);
-          
-    
-       
+
+
+
 
              // CHECK IF THE THE REGISTERED NO ENTERING THE ROLE DETAILS
             if (
-                userRole.equals("PARTNER") &&  registerRequest.getPartner() == null  || 
-                userRole.equals("VOLUNTEER") &&  registerRequest.getVolunteer() == null  || 
+                userRole.equals("PARTNER") &&  registerRequest.getPartner() == null  ||
+                userRole.equals("VOLUNTEER") &&  registerRequest.getVolunteer() == null  ||
                 userRole.equals("DRIVER") &&  registerRequest.getDriver() == null  ||
-                userRole.equals("MEMBER") &&  registerRequest.getMember() == null 
+                userRole.equals("MEMBER") &&  registerRequest.getMember() == null
             ) {
                 throw new IllegalArgumentException("User Role details not provided");
             }
 
-            
-           
-    
+
+
+
             // CHECK IF THE REGISTERED USER IS PARTNER
             if (userRole.equals("PARTNER")) {
                 registerRequest.getPartner().setUserDetails(registerRequest.getUserDetails());
                 partnerService.save(registerRequest.getPartner());
             }
-    
+
             // CHECK IF THE REGISTERED USER IS DRIVER
             if (userRole.equals("DRIVER")) {
                 registerRequest.getDriver().setUserDetails(registerRequest.getUserDetails());
                 registerRequest.getDriver().setDriverStatus(DriverStatus.AVAILABLE);
                 driverServices.save(registerRequest.getDriver());
             }
-    
+
             // CHECK IF THE REGISTERED USER IS MEMBER
             if (userRole.equals("MEMBER")) {
                 registerRequest.getMember().setUserDetails(registerRequest.getUserDetails());
                 memberRepository.save(registerRequest.getMember());
             }
-    
+
             // CHECK IF THE REGISTERED USER IS VOLUNTEER
             if (userRole.equals("VOLUNTEER")) {
                 registerRequest.getVolunteer().setUserDetails(registerRequest.getUserDetails());
                 volunteerRepository.save(registerRequest.getVolunteer());
             }
-    
-    
-           
-    
+
+
+
+
             responseData.setPayload(registerRequest);
-    
+
         } catch (Exception e) {
             responseData.setStatus(false);
             responseData.setMessages(e.getMessage());
             responseData.setPayload(null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
         }
-    
+
         responseData.setMessages("User Registered Successfully!");
         responseData.setStatus(true);
         return ResponseEntity.ok(responseData);

@@ -44,7 +44,7 @@ public class UserApp implements UserDetails {
     private String email;
 
 
-    @JsonIgnore
+
     @Column(nullable = false)
     private String password;
 

@@ -48,6 +48,9 @@ function App() {
         
         <Route path="/profile" element={<Profile />} />
 
+
+        <Route path="/member" element={<MemberDashboard />} />
+        
         {!isLoggedIn && (
           <>
             <Route path="/login" element={<LoginPage />} />

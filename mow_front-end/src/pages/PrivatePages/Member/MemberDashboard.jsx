@@ -94,7 +94,7 @@ const MemberDashboard = () => {
                           <FontAwesomeIcon icon={faStore} /> {value.partner.companyName}
                         </p>
                         <h3>{value.mealsName}</h3>
-                        <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                        <p className="text-secondary">Kategory: Food</p>
                         <button className="btn btn-success rounded-1" onClick={() => handleRequestMeals(value.id_meals)}>
                           Request Meals
                         </button>

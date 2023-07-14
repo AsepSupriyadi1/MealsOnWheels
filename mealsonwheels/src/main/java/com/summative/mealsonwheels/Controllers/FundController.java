@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.summative.mealsonwheels.Dto.FundRequest;
+import com.summative.mealsonwheels.Dto.EntityRequest.FundRequest;
 import com.summative.mealsonwheels.Entity.Funds;
 import com.summative.mealsonwheels.Services.FundServices;
 

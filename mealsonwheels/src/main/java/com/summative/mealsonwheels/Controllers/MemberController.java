@@ -41,13 +41,12 @@ public class MemberController {
 
     @GetMapping("/all-active-meals")
     public List<Meals> getAllActiveMeals(){
-        List<Meals> meals = mealsServices.getAllMeals();
 
-        List<Meals> ActiveMealsList = meals.stream()
-            .filter(Meals::isActive) 
-            .collect(Collectors.toList());
+//        List<Meals> ActiveMealsList = meals.stream()
+//            .filter(Meals::isActive)
+//            .collect(Collectors.toList());
 
-        return ActiveMealsList;
+        return mealsServices.getAllMeals();
     }
 
 

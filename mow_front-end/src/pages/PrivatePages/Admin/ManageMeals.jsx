@@ -17,13 +17,23 @@ const ManageMeals = () => {
   const [listMeals, setListMeals] = useState(null);
   const navigate = useNavigate();
 
-  const [mealsForm, setMealsForm] = useState({
-    mealsName: "",
-  });
+  const [mealsName, setMealsName] = useState(null);
+  const [partner, setPartner] = useState(null);
+  const [stock, setStock] = useState(null);
+  const [picture, setPicture] = useState(null);
+
+  const formData = new FormData();
 
   const handleMealsForm = (event) => {
     event.preventDefault();
-    addMealsAPI(mealsForm, userCtx.token)
+    formData.append("mealsName", mealsName);
+    formData.append("partnerId", parseInt(partner));
+    formData.append("stock", parseInt(stock));
+    formData.append("picture", picture);
+
+    // console.log(formData.getAll);
+
+    addMealsAPI(formData, userCtx.token)
       .then((response) => {
         Swal.fire({
           position: "center",
@@ -41,12 +51,7 @@ const ManageMeals = () => {
       });
   };
 
-  const handleMealsChange = (event) => {
-    setMealsForm({
-      ...mealsForm,
-      [event.target.name]: event.target.value,
-    });
-  };
+  const udin = (event) => {};
 
   const [data, setData] = useState({
     labels: dummyData.map((data) => data.mealsName),
@@ -144,7 +149,19 @@ const ManageMeals = () => {
           <Modal.Body>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Meals Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter Meals Package Name ..." name="mealsName" value={mealsForm.mealsName} onChange={handleMealsChange} />
+              <Form.Control type="text" placeholder="Enter Meals Package Name ..." name="mealsName" value={mealsName} onChange={(e) => setMealsName(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Stock</Form.Label>
+              <Form.Control type="number" placeholder="Enter Meals Stock ..." name="stock" value={stock} onChange={(e) => setStock(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Partner</Form.Label>
+              <Form.Control type="number" placeholder="Enter Meals Stock ..." name="partner" value={partner} onChange={(e) => setPartner(e.target.value)} />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="file">
+              <Form.Label>Meals Name</Form.Label>
+              <Form.Control type="file" name="picture" onChange={(e) => setPicture(e.target.files[0])} />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>

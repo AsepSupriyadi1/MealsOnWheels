@@ -35,3 +35,20 @@ const BankAddress = () => {
 };
 
 export default BankAddress;
+
+// from page OurDonor
+
+// const [donations, setDonations] = useState([]);
+
+//   useEffect(() => {
+//     fetchDonations();
+//   }, []);
+
+//   const fetchDonations = async () => {
+//     try {
+//       const response = await axios.get('/api/v1/fund/funds');
+//       setDonations(response.data);
+//     } catch (error) {
+//       console.error('Error fetching donations:', error);
+//     }
+//   };

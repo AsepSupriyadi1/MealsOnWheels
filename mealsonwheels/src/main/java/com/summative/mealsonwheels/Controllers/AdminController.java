@@ -5,36 +5,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.summative.mealsonwheels.Dto.EntityRequest.AddMealsRequest;
+import com.summative.mealsonwheels.Entity.*;
+import com.summative.mealsonwheels.Repositories.PictureRepository;
+import com.summative.mealsonwheels.Services.PartnerService;
+import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
-import com.summative.mealsonwheels.Dto.AssignRequest;
-import com.summative.mealsonwheels.Dto.DriverAvailableResponse;
+import com.summative.mealsonwheels.Dto.EntityRequest.AssignRequest;
+import com.summative.mealsonwheels.Dto.EntityResponse.DriverAvailableResponse;
 import com.summative.mealsonwheels.Dto.MessageResponse;
 import com.summative.mealsonwheels.Dto.EntityResponse.UserApproval;
 import com.summative.mealsonwheels.Dto.EntityResponse.UserRoleDetails;
-import com.summative.mealsonwheels.Entity.Driver;
-import com.summative.mealsonwheels.Entity.Meals;
-import com.summative.mealsonwheels.Entity.Member;
-import com.summative.mealsonwheels.Entity.Order;
-import com.summative.mealsonwheels.Entity.Partner;
-import com.summative.mealsonwheels.Entity.UserApp;
-import com.summative.mealsonwheels.Entity.UserRole;
-import com.summative.mealsonwheels.Entity.Volunteer;
+import com.summative.mealsonwheels.Entity.constrant.UserRole;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
 import com.summative.mealsonwheels.Repositories.DriverRepository;
 import com.summative.mealsonwheels.Repositories.PartnerRepository;
 import com.summative.mealsonwheels.Services.MealsServices;
 import com.summative.mealsonwheels.Services.OrderServices;
 import com.summative.mealsonwheels.Services.UserAppService;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -56,17 +49,32 @@ public class AdminController {
     @Autowired
     private OrderServices orderServices;
 
-    
-    @PostMapping("/add-meals")
-    public MessageResponse addMeals(@RequestBody Meals mealRequest) throws IOException{
 
+    @Autowired
+    private PictureRepository pictureRepository;
+
+
+    @PostMapping("/add-meals")
+    public Meals addMeals(AddMealsRequest mealsRequest) throws IOException{
+
+        Picture picture = new Picture();
+        picture.setImageData(mealsRequest.getPicture().getBytes());
+        picture.setImageName(mealsRequest.getPicture().getOriginalFilename());
+        pictureRepository.save(picture);
+
+
+
+        Partner partner = partnerRepository.findById(mealsRequest.getPartnerId()).get();
 
         Meals meals = new Meals();
-        meals.setMealsName(mealRequest.getMealsName());
-        meals.setActive(true);
-
+        meals.setMealsName(mealsRequest.getMealsName());
+        meals.setPicture(picture);
+        meals.setPartner(partner);
+        meals.setStock(mealsRequest.getStock());
         mealsServices.addMeals(meals);
-        return new MessageResponse("success add menu with name: "+ meals.getMealsName());
+
+        return meals;
+
     }
 
 

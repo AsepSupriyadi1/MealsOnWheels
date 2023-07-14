@@ -5,6 +5,7 @@ import { slides } from '../../../assets/images/Images';
 
 
 const DonorForm = () => {
+  
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -195,3 +196,28 @@ const DonorForm = () => {
 };
 
 export default DonorForm;
+
+// const [donations, setDonations] = useState([]);
+//   const { currentUser } = useContext(AuthContext);
+
+//   useEffect(() => {
+//     fetchDonations();
+//   }, []);
+
+//   const fetchDonations = async () => {
+//     try {
+//       const response = await axios.get('/api/v1/fund/funds');
+//       setDonations(response.data);
+//     } catch (error) {
+//       console.error('Error fetching donations:', error);
+//     }
+//   };
+
+//   const getStatusMessage = (status) => {
+//     if (status === 'p') {
+//       return 'Your payment is pending. If you have made your payment, please wait for our admin to verify it.';
+//     } else if (status === 'a') {
+// 		return 'We have received your payment. Thank you for your generous donation.';
+// 	}
+//     return '';
+//   };

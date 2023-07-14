@@ -1,5 +1,4 @@
-package com.summative.mealsonwheels.Dto;
-
+package com.summative.mealsonwheels.Dto.EntityRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AssignRequest {
-    private Long partnerId;
-    private Long driverId;
-    private Long orderId;
+public class AuthenticationRequest {
+    
+    private String email;
+    private String password;
+
 }

@@ -1,31 +1,43 @@
 package com.summative.mealsonwheels.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
+@Data
 @Entity
 @Table(name = "tb_picture")
 public class Picture {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "picture_id")
+    private Long pictureId;
 
     @Column(name = "image_name")
     private String imageName;
 
     @Lob
-    @Column(name = "image_data",  columnDefinition = "LONGBLOB")
+    @Basic(fetch = FetchType.LAZY) // Gunakan FetchType.LAZY untuk menghindari pengambilan gambar secara otomatis
+    @Column(name = "image_data", columnDefinition = "LONGBLOB")
     private byte[] imageData;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "picture", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Meals meals;
+
+
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "picture", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserAppDetails userAppDetails;
+
+    // Constructor, getter, setter, dan metode lainnya
 }

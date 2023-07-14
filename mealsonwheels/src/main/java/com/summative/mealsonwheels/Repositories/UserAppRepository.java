@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.summative.mealsonwheels.Entity.UserApp;
-import com.summative.mealsonwheels.Entity.UserRole;
+import com.summative.mealsonwheels.Entity.constrant.UserRole;
 
 
 public interface UserAppRepository extends JpaRepository<UserApp, Long> {

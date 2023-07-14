@@ -94,7 +94,7 @@ const MemberDashboard = () => {
                           <FontAwesomeIcon icon={faCheckCircle} /> Available
                         </p>
                         <h3>{value.mealsName}</h3>
-                        <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                        <p className="text-secondary">Kategory: Food</p>
                         <button className="btn btn-success rounded-1" onClick={() => handleRequestMeals(value.id_meals)}>
                           Request Meals
                         </button>
@@ -129,7 +129,7 @@ const MemberDashboard = () => {
                       <FontAwesomeIcon icon={faCheckCircle} /> Available
                     </p>
                     <h3>Makanan 2</h3>
-                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
+                    <p className="text-secondary">8: Makanan, minuman, desert</p>
                     <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
                   </div>
                 </div>

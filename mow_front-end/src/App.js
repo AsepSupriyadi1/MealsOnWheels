@@ -53,6 +53,9 @@ function App() {
         <Route path="/thanks" element={<BankAddress />} />
         <Route path="/profile" element={<Profile />} />
 
+
+        <Route path="/member" element={<MemberDashboard />} />
+        
         {!isLoggedIn && (
           <>
             <Route path="/login" element={<LoginPage />} />

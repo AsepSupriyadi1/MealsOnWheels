@@ -51,8 +51,6 @@ const ManageMeals = () => {
       });
   };
 
-  const udin = (event) => {};
-
   const [data, setData] = useState({
     labels: dummyData.map((data) => data.mealsName),
     datasets: [

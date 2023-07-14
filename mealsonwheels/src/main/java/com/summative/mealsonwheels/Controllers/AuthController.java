@@ -1,5 +1,6 @@
 package com.summative.mealsonwheels.Controllers;
 
+import com.summative.mealsonwheels.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +26,6 @@ import com.summative.mealsonwheels.Entity.UserAppDetails;
 import com.summative.mealsonwheels.Entity.constrant.DriverStatus;
 import com.summative.mealsonwheels.Entity.constrant.TokenType;
 import com.summative.mealsonwheels.Exception.UserNotActiveException;
-import com.summative.mealsonwheels.Repositories.MemberRepository;
-import com.summative.mealsonwheels.Repositories.TokensRepository;
-import com.summative.mealsonwheels.Repositories.UserAppDetailsRepository;
-import com.summative.mealsonwheels.Repositories.VolunteerRepository;
 import com.summative.mealsonwheels.Services.DriverServices;
 import com.summative.mealsonwheels.Services.PartnerService;
 import com.summative.mealsonwheels.Services.TokensService;
@@ -43,6 +40,9 @@ public class AuthController {
 
     @Autowired 
     private UserAppService userAppService;
+
+    @Autowired
+    private UserAppRepository userAppRepository;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -113,16 +113,19 @@ public class AuthController {
 
        
 
-    } 
+    }
 
     @PostMapping(value = "/register")
     public ResponseEntity<ResponseData<RegisterRequest>> registerUser(@RequestBody RegisterRequest registerRequest) {
 
         ResponseData<RegisterRequest> responseData = new ResponseData<>();
 
-
-
         try {
+            // Cek apakah email sudah digunakan oleh pengguna lain
+            boolean existingUser = userAppRepository.findByEmail(registerRequest.getUserApp().getEmail()).isPresent();
+            if (existingUser) {
+                throw new IllegalArgumentException("Email already exists");
+            }
 
             String userRole = registerRequest.getUserApp().getUserRole().name();
 
@@ -130,38 +133,30 @@ public class AuthController {
                 throw new IllegalArgumentException("User details not provided");
             }
 
-
             // CHECK IF THE REGISTERED USER IS MEMBER / DONOR then activate the account
             if (userRole.equals("DONOR")) {
                 registerRequest.getUserApp().setActive(true);
             }
 
-
-             // SAVE THE USERS
+            // SAVE THE USERS
             UserApp user = registerRequest.getUserApp();
             user.setPassword(registerRequest.getUserApp().getPassword());
             userAppService.save(registerRequest.getUserApp());
 
-             // SAVE THE USER DETAILS
+            // SAVE THE USER DETAILS
             UserAppDetails details = registerRequest.getUserDetails();
             details.setUser(registerRequest.getUserApp());
             userDetailsRepository.save(details);
 
-
-
-
-             // CHECK IF THE THE REGISTERED NO ENTERING THE ROLE DETAILS
+            // CHECK IF THE THE REGISTERED NO ENTERING THE ROLE DETAILS
             if (
-                userRole.equals("PARTNER") &&  registerRequest.getPartner() == null  ||
-                userRole.equals("VOLUNTEER") &&  registerRequest.getVolunteer() == null  ||
-                userRole.equals("DRIVER") &&  registerRequest.getDriver() == null  ||
-                userRole.equals("MEMBER") &&  registerRequest.getMember() == null
+                    userRole.equals("PARTNER") &&  registerRequest.getPartner() == null  ||
+                            userRole.equals("VOLUNTEER") &&  registerRequest.getVolunteer() == null  ||
+                            userRole.equals("DRIVER") &&  registerRequest.getDriver() == null  ||
+                            userRole.equals("MEMBER") &&  registerRequest.getMember() == null
             ) {
                 throw new IllegalArgumentException("User Role details not provided");
             }
-
-
-
 
             // CHECK IF THE REGISTERED USER IS PARTNER
             if (userRole.equals("PARTNER")) {
@@ -188,10 +183,10 @@ public class AuthController {
                 volunteerRepository.save(registerRequest.getVolunteer());
             }
 
-
-
-
             responseData.setPayload(registerRequest);
+            responseData.setMessages("User Registered Successfully!");
+            responseData.setStatus(true);
+            return ResponseEntity.ok(responseData);
 
         } catch (Exception e) {
             responseData.setStatus(false);
@@ -199,10 +194,6 @@ public class AuthController {
             responseData.setPayload(null);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseData);
         }
-
-        responseData.setMessages("User Registered Successfully!");
-        responseData.setStatus(true);
-        return ResponseEntity.ok(responseData);
     }
 
 

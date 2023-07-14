@@ -43,6 +43,8 @@ public class UserApp implements UserDetails {
     @Column(nullable = false)
     private String email;
 
+
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 

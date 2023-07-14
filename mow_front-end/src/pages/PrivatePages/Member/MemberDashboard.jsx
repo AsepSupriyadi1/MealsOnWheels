@@ -5,7 +5,7 @@ import { getAllActiveMeals, requestMeals } from "../../../api/member";
 import { AuthContext } from "../../../context/auth-context";
 import { Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faChevronCircleLeft, faStore } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 import Swal from "sweetalert2";
 const MemberDashboard = () => {
@@ -88,10 +88,10 @@ const MemberDashboard = () => {
                 <>
                   <div className="col-md-3 col-sm-6">
                     <div className="card-meal">
-                      <img src={food.food2} className="card-image rounded-2" alt="" />
+                      <img src={`data:image/png;base64,${value.picture.imageData}`} className="card-image rounded-2" alt="" />
                       <div className="detail-card my-3">
                         <p className="text-success">
-                          <FontAwesomeIcon icon={faCheckCircle} /> Available
+                          <FontAwesomeIcon icon={faStore} /> {value.partner.companyName}
                         </p>
                         <h3>{value.mealsName}</h3>
                         <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
@@ -104,63 +104,6 @@ const MemberDashboard = () => {
                 </>
               ))}
             </div>
-            {/* <h4 className="widget-title text-success fw-bold mt-5">
-              <span>MAKANAN BERAT</span>
-            </h4>
-            <div className="row overflow-auto flex-nowrap">
-              <div className="col-md-3 col-sm-6">
-                <div className="card-meal">
-                  <img src={food.food3} className="card-image rounded-2" alt="" />
-                  <div className="detail-card my-3">
-                    <p className="text-success">
-                      <FontAwesomeIcon icon={faCheckCircle} /> Available
-                    </p>
-                    <h3>Makanan 1</h3>
-                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
-                    <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3 col-sm-6">
-                <div className="card-meal">
-                  <img src={food.food3} className="card-image rounded-2" alt="" />
-                  <div className="detail-card my-3">
-                    <p className="text-success">
-                      <FontAwesomeIcon icon={faCheckCircle} /> Available
-                    </p>
-                    <h3>Makanan 2</h3>
-                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
-                    <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3 col-sm-6">
-                <div className="card-meal">
-                  <img src={food.food3} className="card-image rounded-2" alt="" />
-                  <div className="detail-card my-3">
-                    <p className="text-success">
-                      <FontAwesomeIcon icon={faCheckCircle} /> Available
-                    </p>
-                    <h3>Makanan 3</h3>
-                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
-                    <a className="btn btn-warning text-light rounded-1">Detail Meal</a>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-3 col-sm-6">
-                <div className="card-meal">
-                  <img src={food.food3} className="card-image rounded-2" alt="" />
-                  <div className="detail-card my-3">
-                    <p className="text-success">
-                      <FontAwesomeIcon icon={faCheckCircle} /> Available
-                    </p>
-                    <h3>Makanan 4</h3>
-                    <p className="text-secondary">Kategori: Makanan, minuman, desert</p>
-                    <a className="btn btn-warning text-light border-1">Detail Meal</a>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

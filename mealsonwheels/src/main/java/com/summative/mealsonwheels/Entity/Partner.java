@@ -51,5 +51,10 @@ public class Partner {
     @OneToMany(mappedBy = "partner")
     private List<Order> orders;
 
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "partner")
+    private List<Meals> meals;
+
     
 }

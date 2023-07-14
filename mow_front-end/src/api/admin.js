@@ -63,7 +63,10 @@ export const addMealsAPI = async (meals, token) => {
   // mengembalikan alert success / alert gagal untuk prosess registrasi
 
   return await axios.post(`${BASE_URL}/admin/add-meals`, meals, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
   });
 };
 

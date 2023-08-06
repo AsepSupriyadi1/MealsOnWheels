@@ -27,12 +27,18 @@ public class UserAppDetails {
     @Column(nullable = false, name = "full_name")
     private String fullname;
 
-    @Column(nullable = false, name = "address")
-    private String address;
+//    @Column(nullable = false, name = "address")
+//    private String address;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private UserApp user;
+
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private UserAppAddress userAppAddress;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "userDetails")

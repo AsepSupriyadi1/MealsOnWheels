@@ -10,8 +10,15 @@ export const getAllActiveMeals = async (token) => {
   });
 };
 
-export const requestMeals = async (token, id) => {
-  return await axios.get(`${MEMBER_URL}/order/` + id + `/create`, {
+// GET Details MEals
+export const findMealsById = async (token, mealsId) => {
+  return await axios.get(`${MEMBER_URL}/meals/` + mealsId, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const requestMeals = async (token, mealId) => {
+  return await axios.get(`${MEMBER_URL}/order/` + mealId, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

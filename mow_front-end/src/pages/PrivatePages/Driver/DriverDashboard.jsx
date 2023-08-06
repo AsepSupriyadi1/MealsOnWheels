@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 const DriverDashboard = () => {
   const userCtx = useContext(AuthContext);
   const [totalDriverTask, setTotalDriverTask] = useState(0);
-  const [listDriverTask, setListDriverTask] = useState(0);
+  const [listDriverTask, setListDriverTask] = useState(null);
   const [detailsDelivery, setDetailsDelivery] = useState(null);
   const [driver, setDriver] = useState(null);
 
@@ -65,9 +65,7 @@ const DriverDashboard = () => {
     });
   }, []);
 
-  if (!totalDriverTask) return null;
   if (!driver) return null;
-  if (!listDriverTask) return null;
 
   return (
     <>
@@ -87,7 +85,7 @@ const DriverDashboard = () => {
                     <div class="col-md">
                       <div class="head_status_card rounded-sm m-2">
                         <div>
-                          <h2>{totalDriverTask}</h2>
+                          <h2>{totalDriverTask === null ? "0" : totalDriverTask}</h2>
                           <h5>Uncompleted Task</h5>
                         </div>
                         <FontAwesomeIcon className="head_status_icon" icon={faUsers} />
@@ -158,22 +156,30 @@ const DriverDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {listDriverTask.map((value, index) => (
-                      <>
-                        <tr>
-                          <td className="align-middle">{index + 1}</td>
-                          <td className="align-middle">{value.partner.companyName}</td>
-                          <td className="align-middle">{value.member.userDetails.fullname}</td>
-                          <td className="align-middle">{value.meals.mealsName}</td>
-                          <td className="align-middle">{value.deliveryStatus}</td>
-                          <td className="align-middle">
-                            <button className="btn btn-info m-1" onClick={() => handleDetailsDelivery(value.orderId)}>
-                              proceed
-                            </button>
-                          </td>
-                        </tr>
-                      </>
-                    ))}
+                    {listDriverTask !== null && listDriverTask.length > 0 ? (
+                      listDriverTask.map((value, index) => (
+                        <>
+                          <tr>
+                            <td className="align-middle">{index + 1}</td>
+                            <td className="align-middle">{value.partner.companyName}</td>
+                            <td className="align-middle">{value.member.userDetails.fullname}</td>
+                            <td className="align-middle">{value.meals.mealsName}</td>
+                            <td className="align-middle">{value.deliveryStatus}</td>
+                            <td className="align-middle">
+                              <button className="btn btn-info m-1" onClick={() => handleDetailsDelivery(value.orderId)}>
+                                proceed
+                              </button>
+                            </td>
+                          </tr>
+                        </>
+                      ))
+                    ) : (
+                      <tr>
+                        <td className="align-middle text-center" colSpan={6}>
+                          There is no delivery task for now
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

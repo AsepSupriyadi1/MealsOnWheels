@@ -1,10 +1,16 @@
 package com.summative.mealsonwheels.Controllers;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.summative.mealsonwheels.Dto.EntityRequest.OrderMealRequest;
+import com.summative.mealsonwheels.utils.HaversineDistanceCalculator;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +43,10 @@ public class MemberController {
 
     @Autowired
     private UserAppService userAppService;
+
+
+    @Autowired
+    private HaversineDistanceCalculator distanceCalculator;
 
 
     @GetMapping("/all-active-meals")
@@ -74,26 +84,62 @@ public class MemberController {
 
 
 
-    @GetMapping("/order/{mealId}/create")
-    public MessageResponse memberOrder(@PathVariable(name = "mealId") Long mealId){
+    @GetMapping("/order/{mealId}")
+    public MessageResponse memberOrder(@PathVariable("mealId") Long mealId){
 
-
+        UserApp user = userAppService.getCurrentUser();
+        Calendar calendar = Calendar.getInstance();
         Meals meals = mealsServices.findMealsById(mealId);
         Order order = new Order();
+
         order.setMeals(meals);
         order.setMealsStatus(MealsStatus.PENDING);
         order.setDeliveryStatus(DeliveryStatus.PENDING);
-        order.setMember(userAppService.getCurrentUser().getUserDetails().getMember());
         order.setDatetime(new Date());
+        order.setMember(user.getUserDetails().getMember());
         order.setStatus(OrderStatus.PENDING);
-       
 
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        if(dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY){
+            order.setFrozen(true);
+            orderServices.save(order);
+            return new MessageResponse("The meal's request has been sent successfully");
+        }
+
+        order.setFrozen(false);
         orderServices.save(order);
+        return new MessageResponse("The meal's request has been sent successfully");
 
-        return new MessageResponse("You Have Successfully Requested an Order");
     }
 
 
+
+
+    @GetMapping("/meals/{mealsId}")
+    public ResponseEntity<?> findMealsById(@PathVariable(name = "mealsId") Long mealsId ){
+
+        try {
+            Meals meals = mealsServices.findMealsById(mealsId);
+            return ResponseEntity.ok(meals);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Not Found");
+        }
+
+    }
+
+
+    @GetMapping("/order-details/{orderId}")
+    public ResponseEntity<?> findOrderById(@PathVariable(name = "orderId") Long orderId){
+
+        try {
+            Order order = orderServices.findOrderById(orderId);
+            return ResponseEntity.ok(order);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Not Found");
+        }
+
+    }
 
 
 

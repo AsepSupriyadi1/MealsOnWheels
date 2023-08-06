@@ -20,10 +20,12 @@ const ManageOrders = () => {
   const handleClose = () => setShow(false);
   const handleModal = (id) => {
     getAllAvalailableDriver(userCtx.token).then((response) => {
+      console.log(response.data);
       setListDriver(response.data);
     });
 
     getAllActivePartners(userCtx.token).then((response) => {
+      console.log(response.data);
       setListPartner(response.data);
     });
     setOrderId(id);
@@ -34,8 +36,8 @@ const ManageOrders = () => {
     event.preventDefault();
 
     const data = {
-      partnerId: parseInt(partnerId),
-      driverId: parseInt(driverId),
+      kitchenId: partnerId,
+      driverId: driverId,
       orderId: orderId,
     };
 
@@ -52,6 +54,7 @@ const ManageOrders = () => {
 
   useEffect(() => {
     getAllOrders(userCtx.token).then((response) => {
+      console.log(response.data);
       setListOrders(response.data);
     });
   }, []);
@@ -95,41 +98,47 @@ const ManageOrders = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {listOrders.map((value, index) => (
-                      <>
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>{value.meals.mealsName}</td>
-                          <td>{value.member.memberId}</td>
-                          <td>{value.partner !== null ? value.partner.partnerId : "NOT_ASSIGNED"}</td>
-                          <td>{value.driver !== null ? value.driver.driverId : "NOT_ASSIGNED"}</td>
+                    {listOrders.length > 0 ? (
+                      listOrders.map((value, index) => (
+                        <>
+                          <tr>
+                            <td class="align-middle">{index + 1}</td>
+                            <td class="align-middle">{value.meals.mealsName}</td>
+                            <td class="align-middle">{value.member.userDetails.fullname}</td>
+                            <td class="align-middle">{value.partner !== null ? value.partner.fullname : "NOT_ASSIGNED"}</td>
+                            <td class="align-middle">{value.driver !== null ? value.driver.fullname : "NOT_ASSIGNED"}</td>
 
-                          <td>
-                            <h5>
+                            <td class="align-middle">
                               <Badge bg="secondary">{value.status}</Badge>
-                            </h5>
-                          </td>
-                          <td>
-                            {value.status === "PENDING" && (
-                              <>
-                                <button className="btn btn-primary m-1 rounded" onClick={() => handleModal(value.orderId)}>
-                                  Assign Driver & Partner
-                                  <FontAwesomeIcon icon={faEye} className="ps-3" />
-                                </button>
-                              </>
-                            )}
+                            </td>
+                            <td class="align-middle">
+                              {value.status === "PENDING" && (
+                                <>
+                                  <button className="btn btn-primary m-1 rounded" onClick={() => handleModal(value.orderId)}>
+                                    Assign Driver & Partner
+                                    <FontAwesomeIcon icon={faPencil} className="ps-3" />
+                                  </button>
+                                </>
+                              )}
 
-                            {value.status === "ASSIGNED" && (
-                              <>
-                                <button disabled className="btn btn-secondary m-1 rounded">
-                                  Assigned
-                                </button>
-                              </>
-                            )}
-                          </td>
-                        </tr>
-                      </>
-                    ))}
+                              {value.status === "ASSIGNED" && (
+                                <>
+                                  <button className="btn btn-primary m-1 rounded fs-6">
+                                    <FontAwesomeIcon icon={faEye} /> View Details
+                                  </button>
+                                </>
+                              )}
+                            </td>
+                          </tr>
+                        </>
+                      ))
+                    ) : (
+                      <tr>
+                        <td className="text-center p-5" colSpan={7}>
+                          There is no Meal's request for now
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -154,7 +163,7 @@ const ManageOrders = () => {
                 {listDriver &&
                   listDriver.map((value, index) => (
                     <>
-                      <option value={value.driverId}>{value.driverName}</option>
+                      <option value={value.userId}>{value.driverName}</option>
                     </>
                   ))}
               </Form.Select>
@@ -168,7 +177,7 @@ const ManageOrders = () => {
                 {listPartner &&
                   listPartner.map((value, index) => (
                     <>
-                      <option value={value.roleDetails.partnerId}>{value.fullname}</option>
+                      <option value={value.roleDetails.userDetails.user.userId}>{value.fullname}</option>
                     </>
                   ))}
               </Form.Select>

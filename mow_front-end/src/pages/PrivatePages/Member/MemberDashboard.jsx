@@ -5,9 +5,10 @@ import { getAllActiveMeals, requestMeals } from "../../../api/member";
 import { AuthContext } from "../../../context/auth-context";
 import { Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faChevronCircleLeft, faStore } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faChevronCircleLeft, faClock, faDotCircle, faStore } from "@fortawesome/free-solid-svg-icons";
 import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 import Swal from "sweetalert2";
+import { calculateDistance } from "../../../api/map";
 const MemberDashboard = () => {
   const userCtx = useContext(AuthContext);
 
@@ -16,31 +17,8 @@ const MemberDashboard = () => {
   useEffect(() => {
     getAllActiveMeals(userCtx.token).then((response) => {
       setListActiveMeals(response.data);
-      // const blob = new Blob([response.data.], { type: "image/jpeg" });
     });
   }, []);
-
-  const handleRequestMeals = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "Are you sure want to request this meals",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        requestMeals(userCtx.token, id)
-          .then((response) => {
-            Swal.fire("Success !", "Meals Request has been sent.", "success");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    });
-  };
 
   return (
     <>
@@ -81,23 +59,33 @@ const MemberDashboard = () => {
             <h4 className="widget-title text-success fw-bold mt-5">
               <span>Food option</span>
             </h4>
-            <div className="row overflow-auto flex-nowrap">
+            <div className="row overflow-auto flex-nowrap gx-4">
               {listActiveMeals !== null &&
                 listActiveMeals.map((value) => (
                   <>
                     <div className="col-md-3 col-sm-6">
-                      <div className="card-meal mb-3" style={{ height: 350 + "px" }}>
+                      <div className="mb-3" style={{ height: 300 + "px", objectFit: "cover" }}>
                         <img src={`data:image/png;base64,${value.picture.imageData}`} className="card-image rounded-2 h-50 w-100 " alt="" />
-                        <div className="detail-card my-3">
-                          <p className="text-success">
-                            <FontAwesomeIcon icon={faStore} /> {value.partner.companyName}
-                          </p>
-                          <h4 className="fs-5"> {value.mealsName.length >= 12 ? value.mealsName.slice(0, 12) + "..." : value.mealsName}</h4>
-                          <p className="text-secondary">Kategory: Food</p>
-                          <a className="btn btn-success rounded-1" href="/detail-meals">
-                            View Details
-                          </a>
+                        <div className="detail-card mt-3 mb-2">
+                          <h4 className="fs-5 fw-bolder text-dark"> {value.mealsName.length >= 25 ? value.mealsName.slice(0, 25) + "..." : value.mealsName}</h4>
+
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div className="text-secondary fs-6">
+                              <small>
+                                <FontAwesomeIcon icon={faStore} className="pe-2" /> Meals On Wheels
+                              </small>
+                            </div>
+                            <div className="text-success fs-6">
+                              <small>
+                                Available <FontAwesomeIcon icon={faCheckCircle} className="pe-2" />
+                                {/* {calculateDistance(userCtx.currentUser.lan, userCtx.currentUser.lng, value.partner.userDetails.userAppAddress.latitude, value.partner.userDetails.userAppAddress.longitude) + " km"} */}
+                              </small>
+                            </div>
+                          </div>
                         </div>
+                        <a className="btn btn-success rounded-1 mt-2 w-100" href={"/detail-meals/" + value.mealsId}>
+                          View Details
+                        </a>
                       </div>
                     </div>
                   </>

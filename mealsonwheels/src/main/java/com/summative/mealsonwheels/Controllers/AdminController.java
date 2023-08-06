@@ -3,14 +3,16 @@ package com.summative.mealsonwheels.Controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import com.summative.mealsonwheels.Dto.EntityRequest.AddMealsRequest;
 import com.summative.mealsonwheels.Entity.*;
-import com.summative.mealsonwheels.Repositories.PictureRepository;
+import com.summative.mealsonwheels.Repositories.*;
 import com.summative.mealsonwheels.Services.PartnerService;
 import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +24,6 @@ import com.summative.mealsonwheels.Dto.EntityResponse.UserApproval;
 import com.summative.mealsonwheels.Dto.EntityResponse.UserRoleDetails;
 import com.summative.mealsonwheels.Entity.constrant.UserRole;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
-import com.summative.mealsonwheels.Repositories.DriverRepository;
-import com.summative.mealsonwheels.Repositories.PartnerRepository;
 import com.summative.mealsonwheels.Services.MealsServices;
 import com.summative.mealsonwheels.Services.OrderServices;
 import com.summative.mealsonwheels.Services.UserAppService;
@@ -33,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdminController {
-    
+
     @Autowired
     private UserAppService userAppService;
 
@@ -54,51 +54,59 @@ public class AdminController {
     private PictureRepository pictureRepository;
 
 
+    @Autowired
+    private VolunteerRepository volunteerRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private UserAppDetailsRepository userAppDetailsRepository;
+
+
     @PostMapping("/add-meals")
-    public Meals addMeals(AddMealsRequest mealsRequest) throws IOException{
+    public MessageResponse addMeals(AddMealsRequest mealsRequest) throws IOException {
+
+
+        MessageResponse response = new MessageResponse();
 
         Picture picture = new Picture();
         picture.setImageData(mealsRequest.getPicture().getBytes());
         picture.setImageName(mealsRequest.getPicture().getOriginalFilename());
         pictureRepository.save(picture);
 
-
-
-        Partner partner = partnerRepository.findById(mealsRequest.getPartnerId()).get();
-
         Meals meals = new Meals();
         meals.setMealsName(mealsRequest.getMealsName());
         meals.setPicture(picture);
-        meals.setPartner(partner);
         meals.setStock(mealsRequest.getStock());
         mealsServices.addMeals(meals);
 
-        return meals;
+        response.setMessage("Meals added successfully");
+        return response;
 
     }
 
 
     @GetMapping("/all-meals")
-    public List<Meals> allMeals(){
+    public List<Meals> allMeals() {
         return mealsServices.getAllMeals();
     }
 
 
-
     @GetMapping("/all-inactive-users")
-    public List<UserApproval> getAllInactiveUsers(){
+    public List<UserApproval> getAllInactiveUsers() {
 
 
         List<UserApproval> listUsers = new ArrayList<UserApproval>();
-        
-        
-         userAppService.getAllInactiveUser().forEach(x -> listUsers.add(
-            UserApproval.builder()
-            .userId(x.getUserId())
-            .fullname(x.getUserDetails().getFullname())
-            .email(x.getUsername())
-            .userRole(x.getUserRole().name())
-            .build()
+
+
+        userAppService.getAllInactiveUser().forEach(x -> listUsers.add(
+                UserApproval.builder()
+                        .userId(x.getUserId())
+                        .fullname(x.getUserDetails().getFullname())
+                        .email(x.getUsername())
+                        .userRole(x.getUserRole().name())
+                        .build()
         ));
 
         return listUsers;
@@ -106,10 +114,8 @@ public class AdminController {
     }
 
 
-
-
     @GetMapping("/all-orders")
-    public List<Order> getAllOders(){
+    public List<Order> getAllOders() {
 
         List<Order> orders = orderServices.getAllOrders();
         // orderServices.getAllOrders().forEach(order -> {
@@ -127,33 +133,50 @@ public class AdminController {
         //     orders.add(orderDto);
         // });
 
-
-
         return orders;
     }
 
 
-    @PostMapping("/assign")
-    public MessageResponse assignOrder(@RequestBody AssignRequest assignRequest){
+    @PostMapping("/order/assign")
+    public ResponseEntity<MessageResponse> assignOrder(@RequestBody AssignRequest assignRequest) {
+
 
         Order order = orderServices.findOrderById(assignRequest.getOrderId());
-        Driver driver = driverRepository.findById(assignRequest.getDriverId()).get();
-        Partner partner = partnerRepository.findById(assignRequest.getPartnerId()).get();
+        UserAppDetails driver = userAppDetailsRepository.findById(assignRequest.getDriverId()).get();
+        String driverRole = driver.getUser().getUserRole().name();
+
+        UserAppDetails kitchen = userAppDetailsRepository.findById(assignRequest.getKitchenId()).get();
+        String kitchenRole = kitchen.getUser().getUserRole().name();
+
+
+        if (driverRole.equals("DRIVER") || driverRole.equals("VOLUNTEER")) {
+            order.setDriver(driver);
+        } else {
+            System.out.println("Driver Not Found");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("Driver Not Found"));
+        }
+
+        if (kitchenRole.equals("PARTNER") || kitchenRole.equals("VOLUNTEER")) {
+            order.setPartner(kitchen);
+        } else {
+            System.out.println("Kitchen Not Found");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("Kitchen Not Found"));
+        }
+
+
         order.setStatus(OrderStatus.ASSIGNED);
-        order.setDriver(driver);
-        order.setPartner(partner);
         order.setUpdated_at(new Date());
 
         orderServices.save(order);
 
-        return new MessageResponse("Order %d assign to partner and driver");
+        return ResponseEntity.ok(new MessageResponse("Order assign to partner and driver"));
 
     }
 
 
     // ACTIVATE USER BY THE ID
     @GetMapping("/user/activate/{userId}")
-    public MessageResponse activateUser(@PathVariable Long userId){
+    public MessageResponse activateUser(@PathVariable Long userId) {
 
         UserApp user = userAppService.findUserById(userId);
         user.setActive(true);
@@ -168,28 +191,28 @@ public class AdminController {
 
     // GET USERS DETAILS BY USER ID
     @GetMapping("/users-details/{userId}")
-    public ResponseEntity<?> getUserDetails(@PathVariable(name = "userId") Long userId){
+    public ResponseEntity<?> getUserDetails(@PathVariable(name = "userId") Long userId) {
 
 
         UserApp user = userAppService.findUserById(userId);
         UserRoleDetails<Object> userRoleDetails = new UserRoleDetails<Object>();
-        
 
-        String role = user.getUserRole().name(); 
 
-        if(role.equals("DRIVER")){
+        String role = user.getUserRole().name();
+
+        if (role.equals("DRIVER")) {
             userRoleDetails.setRoleDetails(user.getUserDetails().getDriver());
-        } else if (role.equals("PARTNER")){
-           userRoleDetails.setRoleDetails(user.getUserDetails().getPartner());
-        } else if (role.equals("MEMBER")){
+        } else if (role.equals("PARTNER")) {
+            userRoleDetails.setRoleDetails(user.getUserDetails().getPartner());
+        } else if (role.equals("MEMBER")) {
             userRoleDetails.setRoleDetails(user.getUserDetails().getMember());
-        } else if (role.equals("VOLUNTEER")){
+        } else if (role.equals("VOLUNTEER")) {
             userRoleDetails.setRoleDetails(user.getUserDetails().getVolunteer());
-        } 
+        }
 
         userRoleDetails.setRole(user.getUserRole().name());
-        userRoleDetails.setAddress(user.getUserDetails().getAddress());
-        userRoleDetails.setEmail(user.getUserDetails().getAddress());
+        userRoleDetails.setAddress(user.getUserDetails().getUserAppAddress().getLabel());
+        userRoleDetails.setEmail(user.getEmail());
         userRoleDetails.setFullname(user.getUserDetails().getFullname());
 
 
@@ -197,108 +220,119 @@ public class AdminController {
     }
 
 
-
-
     @GetMapping("/all-available-driver")
     public ResponseEntity<List<DriverAvailableResponse>> getAllAvailableDriver() {
-    
+
         List<DriverAvailableResponse> allDriver = new ArrayList<>();
 
         driverRepository.getAllAvailableDriver().forEach(x -> allDriver.add(
-            DriverAvailableResponse.builder()
-            .driverId(x.getDriverId())
-            .driverName(x.getUserDetails().getFullname())
-            .build()
+                DriverAvailableResponse.builder()
+                        .driverId(x.getDriverId())
+                        .driverName(x.getUserDetails().getFullname())
+                        .userId(x.getUserDetails().getUserDetailsId())
+                        .build()
         ));
-    
-    
+
+
         return ResponseEntity.ok(allDriver);
     }
 
 
-
-
-
     @GetMapping("/all-active-driver")
     public ResponseEntity<List<UserRoleDetails<Driver>>> getAllActiveDriver() {
-    
+
         List<UserRoleDetails<Driver>> allDriver = new ArrayList<>();
-    
+
         userAppService.findAllActiveUsers(UserRole.DRIVER).forEach(userApp -> {
             UserRoleDetails<Driver> driverDetails = UserRoleDetails.<Driver>builder()
                     .fullname(userApp.getUserDetails().getFullname())
                     .email(userApp.getEmail())
                     .role(userApp.getUserRole().name())
-                    .address(userApp.getUserDetails().getAddress())
+                    .address(userApp.getUserDetails().getUserAppAddress().getLabel())
                     .roleDetails(userApp.getUserDetails().getDriver())
                     .build();
             allDriver.add(driverDetails);
         });
-    
+
         return ResponseEntity.ok(allDriver);
     }
 
 
     @GetMapping("/all-active-partner")
     public ResponseEntity<List<UserRoleDetails<Partner>>> getAllActivePartner() {
-    
+
         List<UserRoleDetails<Partner>> allPartner = new ArrayList<>();
-    
+
         userAppService.findAllActiveUsers(UserRole.PARTNER).forEach(userApp -> {
             UserRoleDetails<Partner> partnerDetails = UserRoleDetails.<Partner>builder()
                     .fullname(userApp.getUserDetails().getFullname())
                     .email(userApp.getEmail())
                     .role(userApp.getUserRole().name())
-                    .address(userApp.getUserDetails().getAddress())
+                    .address(userApp.getUserDetails().getUserAppAddress().getLabel())
                     .roleDetails(userApp.getUserDetails().getPartner())
                     .build();
             allPartner.add(partnerDetails);
         });
-    
+
         return ResponseEntity.ok(allPartner);
     }
-    
 
 
     @GetMapping("/all-active-member")
     public ResponseEntity<List<UserRoleDetails<Member>>> getAllActiveMember() {
-    
+
         List<UserRoleDetails<Member>> allMember = new ArrayList<>();
-    
+
         userAppService.findAllActiveUsers(UserRole.MEMBER).forEach(userApp -> {
             UserRoleDetails<Member> memberDetails = UserRoleDetails.<Member>builder()
                     .fullname(userApp.getUserDetails().getFullname())
                     .email(userApp.getEmail())
                     .role(userApp.getUserRole().name())
-                    .address(userApp.getUserDetails().getAddress())
+                    .address(userApp.getUserDetails().getUserAppAddress().getLabel())
                     .roleDetails(userApp.getUserDetails().getMember())
                     .build();
             allMember.add(memberDetails);
         });
-    
+
         return ResponseEntity.ok(allMember);
     }
 
 
     @GetMapping("/all-active-volunteer")
     public ResponseEntity<List<UserRoleDetails<Volunteer>>> getAllActiveVolunteer() {
-    
+
         List<UserRoleDetails<Volunteer>> allVolunteer = new ArrayList<>();
-    
+
         userAppService.findAllActiveUsers(UserRole.VOLUNTEER).forEach(userApp -> {
             UserRoleDetails<Volunteer> volunteerDetails = UserRoleDetails.<Volunteer>builder()
                     .fullname(userApp.getUserDetails().getFullname())
                     .email(userApp.getEmail())
                     .role(userApp.getUserRole().name())
-                    .address(userApp.getUserDetails().getAddress())
+                    .address(userApp.getUserDetails().getUserAppAddress().getLabel())
                     .roleDetails(userApp.getUserDetails().getVolunteer())
                     .build();
             allVolunteer.add(volunteerDetails);
         });
-    
+
         return ResponseEntity.ok(allVolunteer);
     }
 
+
+    @GetMapping("/count-active-role")
+    public ResponseEntity<HashMap<String, Long>> countAllActiveUserRole() {
+
+
+        HashMap<String, Long> listCount = new HashMap<String, Long>();
+
+        listCount.put("totalActiveDriver", driverRepository.countActiveDriver());
+        listCount.put("totalActivePartner", partnerRepository.countActivePartner());
+        listCount.put("totalActiveMember", memberRepository.countActiveMember());
+        listCount.put("totalActiveVolunteer", volunteerRepository.countActiveVolunteer());
+
+
+        return ResponseEntity.ok(listCount);
+
+    }
 
 
 }

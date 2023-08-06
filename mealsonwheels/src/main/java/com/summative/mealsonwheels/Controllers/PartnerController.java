@@ -1,6 +1,7 @@
 package com.summative.mealsonwheels.Controllers;
 import java.util.List;
 
+import com.summative.mealsonwheels.Entity.Partner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +74,12 @@ public class PartnerController {
     // }
 
 
+    @GetMapping("/count-meals")
+    public ResponseEntity<Long> countMeals() {
+        Long total = mealsRepository.count();
+        return ResponseEntity.ok(total);
+    }
+
 
     @GetMapping("/count-partner-task")
     public ResponseEntity<Long> countPartnerTask() {
@@ -81,12 +88,6 @@ public class PartnerController {
     }
 
 
-    @GetMapping("/count-meals")
-    public ResponseEntity<Long> countMeals() {
-        Long total = mealsRepository.count();
-        return ResponseEntity.ok(total);
-    }
-
 
     @GetMapping("/all-partner-task")
     public ResponseEntity<List<Order>> getAllPartnerTask() {
@@ -94,11 +95,11 @@ public class PartnerController {
         return ResponseEntity.ok(listPartnerTask);
     }
 
-
     @GetMapping("/all-meals")
     public List<Meals> allMeals(){
         return mealsServices.getAllMeals();
     }
+
 
 
 }

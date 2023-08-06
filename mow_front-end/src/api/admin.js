@@ -101,7 +101,13 @@ export const getAllAvalailableDriver = async (token) => {
 // REGISTER
 export const assignPartnerAndDriver = async (token, data) => {
   // mengembalikan alert success / alert gagal untuk prosess registrasi
-  return axios.post(`${BASE_URL}/admin/assign`, data, {
+  return axios.post(`${BASE_URL}/admin/order/assign`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const countAllActiveUserRole = async (token) => {
+  return await axios.get(`${BASE_URL}/admin/count-active-role`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

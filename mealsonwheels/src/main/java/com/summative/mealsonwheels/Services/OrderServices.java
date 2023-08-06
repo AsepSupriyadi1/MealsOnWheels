@@ -4,13 +4,12 @@ package com.summative.mealsonwheels.Services;
 
 import java.util.List;
 
+import com.summative.mealsonwheels.Entity.*;
+import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.summative.mealsonwheels.Entity.Driver;
-import com.summative.mealsonwheels.Entity.Member;
-import com.summative.mealsonwheels.Entity.Order;
-import com.summative.mealsonwheels.Entity.Partner;
 import com.summative.mealsonwheels.Repositories.OrderRepository;
 
 @Service
@@ -27,7 +26,7 @@ public class OrderServices {
 
 
      public List<Order> getAllOrders(){
-        return orderRepository.findAll();
+        return orderRepository.findUncompletedMeals();
     }
 
 
@@ -39,12 +38,8 @@ public class OrderServices {
         return orderRepository.findByMember(member);
     }
 
-    public List<Order> findAllOrderByPartner(Partner partner){
-        return orderRepository.findByPartner(partner);
-    }
 
-    public List<Order> findAllOrderByDriver(Driver driver){
-        return orderRepository.findByDriver(driver);
-    }
+
+
 
 }

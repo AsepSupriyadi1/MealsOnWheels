@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Col, Form, InputGroup, ListGroup, Row } from "react-bootstrap";
+import { Alert, Button, Col, Form, InputGroup, ListGroup, Modal, Row } from "react-bootstrap";
 import { registerAPI } from "../../api/auth";
 import axios from "axios";
 import { foto } from "../../assets/images/Images";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { MapContainer as LeafletMap, TileLayer, Marker, Popup } from "react-leaflet";
+import Maps from "../../components/Maps";
 
 const RegisterPage = () => {
   // GENERAL USER INFORMATION
@@ -19,7 +21,7 @@ const RegisterPage = () => {
 
   // PARTNER INFORMATION
   const [companyName, setCompanyName] = useState("");
-  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyAddress, setCompanyAddress] = useState(null);
 
   // DRIVER INFORMATION
   const [carName, setCarName] = useState("");
@@ -36,6 +38,16 @@ const RegisterPage = () => {
   const [driverForm, setDriverForm] = useState(false);
   const [memberForm, setMemberForm] = useState(false);
   const [volunteerForm, setVolunteerForm] = useState(false);
+
+  // ADDRESS
+  const [address, setAddress] = useState(null);
+  const [county, setCounty] = useState(null);
+  const [state, setState] = useState(null);
+  const [village, setVillage] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [label, setLabel] = useState(null);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,7 +68,15 @@ const RegisterPage = () => {
         },
         userDetails: {
           fullname: fullname,
-          address: address,
+        },
+        address: {
+          village: village,
+          county: county,
+          state: state,
+          country: country,
+          label: label,
+          latitude: latitude,
+          longitude: longitude,
         },
         partner: {
           companyName: companyName,
@@ -107,73 +127,57 @@ const RegisterPage = () => {
       setMemberForm(false);
       setPartnerForm(false);
     }
-  }, [userRole]);
 
-  const [address, setAddress] = useState("");
-  const [results, setResults] = useState(null);
-
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setAddress(value);
-
-    if (value.length >= 5) {
-      fetchResults(value);
-    } else {
-      setResults([]);
+    if (address !== null) {
+      setCounty(address.address.county);
+      setState(address.address.state);
+      setVillage(address.address.village);
+      setCountry(address.address.country);
+      setLabel(address.display_name);
+      setLatitude(address.lat);
+      setLongitude(address.lon);
     }
-  };
+  }, [userRole, address]);
 
-  const fetchResults = async (value) => {
-    await axios.get(`https://nominatim.openstreetmap.org/search?format=json&limit=5&q=` + value).then((response) => {
-      setResults(response.data);
-      console.log(response.data);
-    });
+  const [show, setShow] = useState(false);
 
-    // fetch(apiUrl)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setResults(data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching results:", error);
-    //     setResults([]);
-    //   });
-  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <>
-      <div class="container">
-        <div class="page-header">
-          <div class="row">
-            <div class="col-md-6 col-sm-6">
-              <h2 class="page-title d-none d-lg-block">Registration</h2>
+      <div className="container">
+        <div className="page-header">
+          <div className="row">
+            <div className="col-md-6 col-sm-6">
+              <h2 className="page-title d-none d-lg-block">Registration</h2>
             </div>
-            <div class="col-md-6 col-sm-6 hidden-xs back-home">
+            <div className="col-md-6 col-sm-6 hidden-xs back-home">
               <a href="/">&larr; Go back Home</a>
             </div>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-12">
-            <div class="box-content rounded shadow">
-              <div className="row d-flex align-items-center">
-                <div className="col-md">
-                  <h4 class="widget-title">
-                    <span className="fs-6">General Information</span>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="box-content rounded shadow">
+              <div classNameName="row d-flex align-items-center">
+                <div classNameName="col-md">
+                  <h4 className="widget-title">
+                    <span classNameName="fs-6">General Information</span>
                   </h4>
 
                   <Form onSubmit={handleSubmit} noValidate validated={validated}>
                     {validated && password !== confirmedPassword && <Alert variant="danger">{errorMessage}</Alert>}
-                    <div className="row my-3">
-                      <div className="col-md-6">
+                    <div classNameName="row my-3">
+                      <div classNameName="col-md-6">
                         <Form.Group>
                           <Form.Label>Full Name :</Form.Label>
                           <Form.Control type="text" placeholder="Enter full name......" name="fullname" value={fullname} onChange={(e) => setFullname(e.target.value)} required />
                         </Form.Group>
                       </div>
 
-                      <div className="col-md-6">
+                      <div classNameName="col-md-6">
                         <Form.Group>
                           <Form.Label>Email :</Form.Label>
                           <Form.Control type="email" placeholder="Enter your email address......" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -181,8 +185,8 @@ const RegisterPage = () => {
                       </div>
                     </div>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label className="m-0">Join as :</Form.Label>
+                    <Form.Group classNameName="mb-3">
+                      <Form.Label classNameName="m-0">Join as :</Form.Label>
                       <Form.Select value={userRole} onChange={(e) => setUserRole(e.target.value)} required>
                         <option value="DONOR">Donor</option>
                         <option value="DRIVER">Rider</option>
@@ -192,40 +196,32 @@ const RegisterPage = () => {
                       </Form.Select>
                     </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label className="m-0">Address :</Form.Label>
-
-                      <Form.Control type="text" placeholder="Enter address......" value={address} onChange={(e) => setAddress(e.target.value)} required />
-
-                      {/* <Form.Select value={userRole} onChange={(e) => setAddress(e.target.value)} required>
-                        {results !== null &&
-                          results.map((value) => (
-                            <>
-                              <option value={value.display_name}>{value.display_name}</option>
-                            </>
-                          ))}
-                      </Form.Select> */}
+                    <Form.Group classNameName="mb-3">
+                      <Form.Label classNameName="m-0">Address :</Form.Label>
+                      <div onClick={handleShow}>
+                        <Form.Control type="text" placeholder="Enter address......" value={address === null ? "" : address.display_name} disabled required />
+                      </div>
                     </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label className="m-0">Password :</Form.Label>
+                    <Form.Group classNameName="mb-3">
+                      <Form.Label classNameName="m-0">Password :</Form.Label>
                       <Form.Control type="password" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </Form.Group>
 
-                    <Form.Group className="mb-3">
-                      <Form.Label className="m-0">Confirmed Password :</Form.Label>
+                    <Form.Group classNameName="mb-3">
+                      <Form.Label classNameName="m-0">Confirmed Password :</Form.Label>
                       <Form.Control type="password" placeholder="Enter Confirmed Password......" value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)} required />
                     </Form.Group>
 
                     {partnerForm && (
                       <>
-                        <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Company Name :</Form.Label>
+                        <Form.Group classNameName="mb-3">
+                          <Form.Label classNameName="m-0">Company Name :</Form.Label>
                           <Form.Control type="text" placeholder="Enter company name......" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
                         </Form.Group>
 
-                        <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Company address :</Form.Label>
+                        <Form.Group classNameName="mb-3">
+                          <Form.Label classNameName="m-0">Company address :</Form.Label>
                           <Form.Control type="text" placeholder="Enter company address......" value={companyAddress} onChange={(e) => setCompanyAddress(e.target.value)} />
                         </Form.Group>
                       </>
@@ -233,8 +229,8 @@ const RegisterPage = () => {
 
                     {driverForm && (
                       <>
-                        <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Car Name :</Form.Label>
+                        <Form.Group classNameName="mb-3">
+                          <Form.Label classNameName="m-0">Car Name :</Form.Label>
                           <Form.Control type="text" placeholder="Enter your car name......" value={carName} onChange={(e) => setCarName(e.target.value)} />
                         </Form.Group>
                       </>
@@ -242,12 +238,12 @@ const RegisterPage = () => {
 
                     {memberForm && (
                       <>
-                        <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Reason :</Form.Label>
+                        <Form.Group classNameName="mb-3">
+                          <Form.Label classNameName="m-0">Reason :</Form.Label>
                           <Form.Control type="text" placeholder="Enter your Reason for membership......" value={memberReason} onChange={(e) => setMemberReason(e.target.value)} />
                         </Form.Group>
-                        <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Age :</Form.Label>
+                        <Form.Group classNameName="mb-3">
+                          <Form.Label classNameName="m-0">Age :</Form.Label>
                           <Form.Control type="number" placeholder="Enter your age......" value={age} onChange={(e) => setAge(e.target.value)} />
                         </Form.Group>
                       </>
@@ -255,12 +251,12 @@ const RegisterPage = () => {
 
                     {volunteerForm && (
                       <>
-                        <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Reason :</Form.Label>
+                        <Form.Group classNameName="mb-3">
+                          <Form.Label classNameName="m-0">Reason :</Form.Label>
                           <Form.Control type="text" placeholder="Enter your Reason for being a volunteer......" value={volunteerReason} onChange={(e) => setVolunteerReason(e.target.value)} />
                         </Form.Group>
-                        <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Status :</Form.Label>
+                        <Form.Group classNameName="mb-3">
+                          <Form.Label classNameName="m-0">Status :</Form.Label>
                           <Form.Select value={volunteerStatus} onChange={(e) => setVolunteerStatus(e.target.value)} required>
                             <option value="Student">Student</option>
                             <option value="Freelancer">Freelancer</option>
@@ -270,7 +266,7 @@ const RegisterPage = () => {
                       </>
                     )}
 
-                    <Button type="submit" className="w-100" variant="secondary">
+                    <Button type="submit" classNameName="w-100" variant="secondary">
                       SUBMIT & NEXT
                     </Button>
                   </Form>
@@ -280,6 +276,23 @@ const RegisterPage = () => {
           </div>
         </div>
       </div>
+
+      <Modal show={show} onHide={handleClose} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Maps setter={setAddress} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          {/* <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

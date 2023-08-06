@@ -14,6 +14,9 @@ public class UserResponse {
   private String address;
   private String userRole;
 
+  private double lan;
+  private double lng;
+
 
   
 }

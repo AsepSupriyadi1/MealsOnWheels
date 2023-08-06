@@ -18,15 +18,12 @@ const PartnerDashboard = () => {
     countPartnerTaskAPI(userCtx.token).then((response) => {
       setCountPartnerTask(response.data);
     });
-    countMealsAPI(userCtx.token).then((response) => {
-      setCountMeals(response.data);
-    });
     getAllMealsAPI(userCtx.token).then((response) => {
       setListMeals(response.data);
     });
-    getAllPartnerTaskAPI(userCtx.token).then((response) => {
-      setListPartnerTask(response.data);
-    });
+    // getAllPartnerTaskAPI(userCtx.token).then((response) => {
+    //   setListPartnerTask(response.data);
+    // });
   }, []);
 
   const handleUpdateStatus = (id, status) => {
@@ -37,11 +34,6 @@ const PartnerDashboard = () => {
       });
     });
   };
-
-  if (!countPartnerTask) return null;
-  if (!countMeals) return null;
-  if (!listMeals) return null;
-  if (!listPartnerTask) return null;
 
   return (
     <>
@@ -62,7 +54,7 @@ const PartnerDashboard = () => {
                     <div class="col-md-6">
                       <div class="head_status_card rounded-sm m-2">
                         <div>
-                          <h2>{countPartnerTask}</h2>
+                          <h2>{countPartnerTask === null ? "0" : countPartnerTask}</h2>
                           <h5>Uncompleted Task</h5>
                         </div>
                         <FontAwesomeIcon className="head_status_icon" icon={faUsers} />
@@ -71,7 +63,7 @@ const PartnerDashboard = () => {
                     <div class="col-md-6">
                       <div class="head_status_card rounded-sm m-2">
                         <div>
-                          <h2>{countMeals}</h2>
+                          <h2>{countMeals === null ? "0" : countMeals}</h2>
                           <h5>Meals</h5>
                         </div>
                         <FontAwesomeIcon className="head_status_icon" icon={faUsers} />
@@ -105,8 +97,7 @@ const PartnerDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {console.log(listPartnerTask)}
-                    {listPartnerTask &&
+                    {listPartnerTask !== null && listPartnerTask.length > 0 ? (
                       listPartnerTask.map((value, index) => (
                         <>
                           <tr>
@@ -131,7 +122,16 @@ const PartnerDashboard = () => {
                             </td>
                           </tr>
                         </>
-                      ))}
+                      ))
+                    ) : (
+                      <>
+                        <tr>
+                          <td className="align-middle text-center" colSpan={6}>
+                            There is no task for now
+                          </td>
+                        </tr>
+                      </>
+                    )}
                   </tbody>
                 </table>
               </div>

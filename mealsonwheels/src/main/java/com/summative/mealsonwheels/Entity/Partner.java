@@ -47,14 +47,4 @@ public class Partner {
     @JoinColumn(name = "user_details_id")
     private UserAppDetails userDetails;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "partner")
-    private List<Order> orders;
-
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "partner")
-    private List<Meals> meals;
-
-    
 }

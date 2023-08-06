@@ -1,5 +1,6 @@
 package com.summative.mealsonwheels.Controllers;
 
+import com.summative.mealsonwheels.Entity.UserAppAddress;
 import com.summative.mealsonwheels.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.summative.mealsonwheels.Config.JwtService;
 import com.summative.mealsonwheels.Dto.EntityRequest.AuthenticationRequest;
 import com.summative.mealsonwheels.Dto.EntityResponse.AuthenticationResponse;
-import com.summative.mealsonwheels.Dto.EntityRequest.RegisterRequest;
+import com.summative.mealsonwheels.Dto.EntityRequest.UserAppDetailsDto;
 import com.summative.mealsonwheels.Dto.ResponseData;
 import com.summative.mealsonwheels.Dto.UserResponse;
 import com.summative.mealsonwheels.Entity.Tokens;
@@ -73,6 +74,10 @@ public class AuthController {
     private UserAppDetailsRepository userDetailsRepository;
 
 
+    @Autowired
+    private UserAppAddressRepository addressRepository;
+
+
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest loginRequest){
@@ -116,9 +121,9 @@ public class AuthController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<ResponseData<RegisterRequest>> registerUser(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<ResponseData<UserAppDetailsDto>> registerUser(@RequestBody UserAppDetailsDto registerRequest) {
 
-        ResponseData<RegisterRequest> responseData = new ResponseData<>();
+        ResponseData<UserAppDetailsDto> responseData = new ResponseData<>();
 
         try {
             // Cek apakah email sudah digunakan oleh pengguna lain
@@ -127,26 +132,34 @@ public class AuthController {
                 throw new IllegalArgumentException("Email already exists");
             }
 
-            String userRole = registerRequest.getUserApp().getUserRole().name();
-
-            if (registerRequest.getUserDetails() == null) {
-                throw new IllegalArgumentException("User details not provided");
+            if (registerRequest.getUserDetails() == null || registerRequest.getAddress() == null) {
+                throw new IllegalArgumentException("User details or address not provided");
             }
+
+
+            String userRole = registerRequest.getUserApp().getUserRole().name();
 
             // CHECK IF THE REGISTERED USER IS MEMBER / DONOR then activate the account
             if (userRole.equals("DONOR")) {
                 registerRequest.getUserApp().setActive(true);
             }
 
-            // SAVE THE USERS
+            // SAVE THE USERS and Address
             UserApp user = registerRequest.getUserApp();
-            user.setPassword(registerRequest.getUserApp().getPassword());
             userAppService.save(registerRequest.getUserApp());
+
+
+            UserAppAddress address = registerRequest.getAddress();
+            addressRepository.save(address);
+
 
             // SAVE THE USER DETAILS
             UserAppDetails details = registerRequest.getUserDetails();
             details.setUser(registerRequest.getUserApp());
+            details.setUserAppAddress(registerRequest.getAddress());
             userDetailsRepository.save(details);
+
+
 
             // CHECK IF THE REGISTERED NO ENTERING THE ROLE DETAILS
             if (
@@ -215,8 +228,10 @@ public class AuthController {
             userResponse.setUserId(user.getUserId());
             userResponse.setFullname(user.getUserDetails().getFullname());
             userResponse.setEmail(user.getEmail());
-            userResponse.setAddress(user.getUserDetails().getAddress());
+            userResponse.setAddress(user.getUserDetails().getUserAppAddress().getLabel());
             userResponse.setUserRole(user.getUserRole().name());
+            userResponse.setLan(user.getUserDetails().getUserAppAddress().getLatitude());
+            userResponse.setLng(user.getUserDetails().getUserAppAddress().getLongitude());
             
             return ResponseEntity.ok(userResponse);
         }

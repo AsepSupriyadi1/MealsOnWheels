@@ -57,6 +57,8 @@ export function AuthContextProvider(props) {
       email: user.email,
       address: user.address,
       userRole: user.userRole,
+      lan: user.lan,
+      lng: user.lng,
     },
     token: token,
     isLoggedIn: userIsLoggedIn,

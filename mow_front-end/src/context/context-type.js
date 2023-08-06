@@ -4,6 +4,8 @@ export const user_type = {
   fullname: "",
   address: "",
   userRole: "",
+  lan: 0,
+  lng: 0,
 };
 
 // USER CONTEXT

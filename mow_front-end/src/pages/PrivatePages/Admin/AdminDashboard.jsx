@@ -5,9 +5,9 @@ import { faArrowAltCircleRight, faBuilding, faCar, faCartPlus, faDollar, faDrive
 import "./admin.css";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/auth-context";
-import { getAllActiveDrivers, getAllActiveMembers, getAllActivePartners, getAllActiveVolunteer } from "../../../api/admin";
+import { countAllActiveUserRole, getAllActiveDrivers, getAllActiveMembers, getAllActivePartners, getAllActiveVolunteer } from "../../../api/admin";
 
 const AdminDashboard = () => {
   const userCtx = useContext(AuthContext);
@@ -21,6 +21,7 @@ const AdminDashboard = () => {
   const [listPartner, setListPartner] = useState(null);
   const [listVolunteer, setListVolunteer] = useState(null);
   const [listDriver, setListDriver] = useState(null);
+  const [countActiveUserRole, setCountActiveUserRole] = useState(null);
 
   const handleShowMember = () => {
     getAllActiveMembers(userCtx.token).then((response) => {
@@ -50,6 +51,17 @@ const AdminDashboard = () => {
     });
   };
 
+  useEffect(() => {
+    countAllActiveUserRole(userCtx.token)
+      .then((response) => {
+        setCountActiveUserRole(response.data);
+        // console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <>
       <div className="container">
@@ -73,7 +85,7 @@ const AdminDashboard = () => {
               <div className="d-flex justify-content-between align-items-center">
                 <div>
                   <h3 className="fs-6">Volunteers</h3>
-                  <h2 className="fs-1 fw-bold">85</h2>
+                  <h2 className="fs-1 fw-bold">{countActiveUserRole !== null && countActiveUserRole.totalActiveVolunteer}</h2>
                 </div>
 
                 <FontAwesomeIcon icon={faHandsHelping} className="admin__status_icon" />
@@ -91,7 +103,7 @@ const AdminDashboard = () => {
               <div className="d-flex justify-content-between align-items-center ">
                 <div>
                   <h3 className="fs-6">Members</h3>
-                  <h2 className="fs-1 fw-bold">85</h2>
+                  <h2 className="fs-1 fw-bold">{countActiveUserRole !== null && countActiveUserRole.totalActiveMember}</h2>
                 </div>
 
                 <FontAwesomeIcon icon={faUsers} className="admin__status_icon" />
@@ -109,7 +121,7 @@ const AdminDashboard = () => {
               <div className="d-flex justify-content-between align-items-center ">
                 <div>
                   <h3 className="fs-6">Partners</h3>
-                  <h2 className="fs-1 fw-bold">85</h2>
+                  <h2 className="fs-1 fw-bold">{countActiveUserRole !== null && countActiveUserRole.totalActivePartner}</h2>
                 </div>
 
                 <FontAwesomeIcon icon={faHandsHelping} className="admin__status_icon" />
@@ -127,7 +139,7 @@ const AdminDashboard = () => {
               <div className="d-flex justify-content-between align-items-center ">
                 <div>
                   <h3 className="fs-6">Drivers</h3>
-                  <h2 className="fs-1 fw-bold">85</h2>
+                  <h2 className="fs-1 fw-bold">{countActiveUserRole !== null && countActiveUserRole.totalActiveDriver}</h2>
                 </div>
 
                 <FontAwesomeIcon icon={faCar} className="admin__status_icon" />

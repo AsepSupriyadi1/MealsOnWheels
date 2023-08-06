@@ -89,24 +89,32 @@ const ManageInactiveUsers = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {usersRequest.map((value, index) => (
-                      <>
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>{value.fullname}</td>
-                          <td>{value.userRole}</td>
+                    {usersRequest.length > 0 ? (
+                      usersRequest.map((value, index) => (
+                        <>
+                          <tr>
+                            <td>{index + 1}</td>
+                            <td>{value.fullname}</td>
+                            <td>{value.userRole}</td>
 
-                          <td>
-                            <button className="btn btn-secondary rounded m-1" onClick={() => handleUserDetails(value.userId)}>
-                              Details <FontAwesomeIcon icon={faEye} className="ps-3" />
-                            </button>
-                            <button className="btn btn-success rounded m-1" onClick={() => handleApproveUser(value.userId)}>
-                              Approve User <FontAwesomeIcon icon={faCheck} className="ps-3" />
-                            </button>
-                          </td>
-                        </tr>
-                      </>
-                    ))}
+                            <td>
+                              <button className="btn btn-secondary rounded m-1" onClick={() => handleUserDetails(value.userId)}>
+                                Details <FontAwesomeIcon icon={faEye} className="ps-3" />
+                              </button>
+                              <button className="btn btn-success rounded m-1" onClick={() => handleApproveUser(value.userId)}>
+                                Approve User <FontAwesomeIcon icon={faCheck} className="ps-3" />
+                              </button>
+                            </td>
+                          </tr>
+                        </>
+                      ))
+                    ) : (
+                      <tr>
+                        <td className="text-center p-5" colSpan={4}>
+                          There is no user request for now
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

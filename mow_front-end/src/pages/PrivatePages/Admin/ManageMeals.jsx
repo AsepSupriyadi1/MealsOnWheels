@@ -62,9 +62,6 @@ const ManageMeals = () => {
   });
 
   const handleShow = () => {
-    getAllActivePartners(userCtx.token).then((response) => {
-      setListPartner(response.data);
-    });
     setShow(true);
   };
 
@@ -160,17 +157,7 @@ const ManageMeals = () => {
               <Form.Label>Stock</Form.Label>
               <Form.Control type="number" placeholder="Enter Meals Stock ..." name="stock" value={stock} onChange={(e) => setStock(e.target.value)} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Partner</Form.Label>
-              <Form.Select aria-label="Default select example" name="partner" onChange={(e) => setPartner(e.target.value)}>
-                {listPartner !== null &&
-                  listPartner.map((value, index) => (
-                    <>
-                      <option value={value.roleDetails.partnerId}>{value.roleDetails.companyName}</option>
-                    </>
-                  ))}
-              </Form.Select>
-            </Form.Group>
+
             <Form.Group className="mb-3" controlId="file">
               <Form.Label>Meals Name</Form.Label>
               <Form.Control type="file" name="picture" onChange={(e) => setPicture(e.target.files[0])} />

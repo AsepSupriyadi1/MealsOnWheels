@@ -13,4 +13,7 @@ public interface DriverRepository  extends JpaRepository<Driver, Long> {
     @Query("SELECT d FROM Driver d INNER JOIN d.userDetails ud WHERE ud.user.isActive = true AND d.driverStatus = AVAILABLE")
     List<Driver> getAllAvailableDriver();
 
+    @Query("SELECT COUNT(d) FROM Driver d INNER JOIN d.userDetails ud WHERE ud.user.isActive = true")
+    Long countActiveDriver();
+
 }

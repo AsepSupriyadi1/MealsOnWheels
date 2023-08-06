@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class AddMealsRequest {
 
     private String mealsName;
-    private Long partnerId;
     private Integer stock;
     private MultipartFile picture;
 

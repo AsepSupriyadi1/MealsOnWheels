@@ -44,24 +44,24 @@ public class Order {
 
     private Date updated_at;
 
+    private double distance;
 
     @ManyToOne
     @JoinColumn(name = "meals")
     private Meals meals;
 
-
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member")
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "partner_id")
-    private Partner partner;
-
+    @JoinColumn(name = "partner")
+    private UserAppDetails partner;
 
     @ManyToOne
-    @JoinColumn(name = "driver_id")
-    private Driver driver;
+    @JoinColumn(name = "driver")
+    private UserAppDetails driver;
+
 
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
@@ -77,7 +77,13 @@ public class Order {
     private DeliveryStatus deliveryStatus;
 
 
+    private boolean isFrozen;
+
+
     private String feedback;
+
+
+
 
 
 

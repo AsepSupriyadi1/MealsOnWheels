@@ -46,8 +46,8 @@ public class Driver {
     private UserAppDetails userDetails;
 
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "driver")
-    private List<Order> orders;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "driver")
+//    private List<Order> orders;
 
 }

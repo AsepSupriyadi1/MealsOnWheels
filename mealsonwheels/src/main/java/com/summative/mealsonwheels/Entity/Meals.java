@@ -20,17 +20,11 @@ public class Meals {
     @Column(nullable = false)
     private String mealsName;
 
-    @ManyToOne
-    @JoinColumn(name = "partner_id")
-    private Partner partner;
-
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "picture_id")
     private Picture picture;
 
 
     private Integer stock;
-
 
 }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AssignRequest {
-    private Long partnerId;
+    private Long kitchenId;
     private Long driverId;
     private Long orderId;
 }

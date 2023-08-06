@@ -40,27 +40,24 @@ public class DriverController {
 
 
 
-
     @GetMapping("/order/{id}/update")
-    public ResponseEntity<MessageResponse> proceedMeals(@PathVariable Long id, @RequestParam("deliveryStatus") String deliveryStatus) {
+    public ResponseEntity<MessageResponse> proceedMeals(@PathVariable Long id, @RequestParam("deliveryStatus") String requestStatus) {
         Order order = orderServices.findOrderById(id);
         Driver driver = userAppService.getCurrentUser().getUserDetails().getDriver();
         MessageResponse response = new MessageResponse();
 
-      
 
-        
-        if(deliveryStatus.equals("TAKE_MEALS") && order.getDeliveryStatus().name().equals("PENDING")){
+        String mealStatus = order.getMealsStatus().name();
+        String currentDeliveryStatus = order.getDeliveryStatus().name();
 
-
+        if(requestStatus.equals("TAKE_MEALS") && currentDeliveryStatus.equals("PENDING")){
             driver.setDriverStatus(DriverStatus.UNAVAILABLE);
             order.setDeliveryStatus(DeliveryStatus.TAKE_MEALS);
 
+        } else if (requestStatus.equals("ON_THE_WAY") && currentDeliveryStatus.equals("TAKE_MEALS")){
 
-        } else if (deliveryStatus.equals("ON_THE_WAY") && order.getDeliveryStatus().name().equals("TAKE_MEALS")){
-
-            if(order.getStatus().name().equals("PROCESS") && order.getMealsStatus().name().equals("PROCESS")){
-                response.setMessage("MEALS STILL UNDER PREPARATION");
+            if(!mealStatus.equals("READY_TO_DELIVER")){
+                response.setMessage("MEALS STILL UNDER PREPARATION !");
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
             }
 
@@ -68,7 +65,7 @@ public class DriverController {
             order.setDeliveryStatus(DeliveryStatus.ON_THE_WAY);
 
 
-        } else if (deliveryStatus.equals("DELIVERED") && order.getDeliveryStatus().name().equals("ON_THE_WAY")){
+        } else if (requestStatus.equals("DELIVERED") && currentDeliveryStatus.equals("ON_THE_WAY")){
 
             order.setStatus(OrderStatus.DELIVERED);
             order.setDeliveryStatus(DeliveryStatus.DELIVERED);
@@ -81,31 +78,9 @@ public class DriverController {
         
         orderServices.save(order);
         driverServices.save(driver);
-        response.setMessage("Meals took by driver with id " + order.getDriver().getDriverId());
+//        response.setMessage("Meals took by driver with id " + order.getDriver().getDriverId());
         return ResponseEntity.ok(response);
     }
-
-
-    // @GetMapping("/order/{id}/delivered")
-    // public ResponseEntity<MessageResponse> deliver(@PathVariable Long id) {
-    //     Order order = orderServices.findOrderById(id);
-
-    //     MessageResponse response = new MessageResponse();
-
-    //     order.setStatus(OrderStatus.DELIVERED);
-      
-
-    //     Driver driver = userAppService.getCurrentUser().getUserDetails().getDriver();
-    //     driver.setDriverStatus(DriverStatus.AVAILABLE);
-
-    //     orderServices.save(order);
-    //     driverServices.save(driver);
-
-    //     response.setMessage("Meals delivered by driver with id " + order.getDriver().getDriverId());
-    //     return ResponseEntity.ok(response);
-    // }
-
-
 
 
     @GetMapping("/driver-profile")
@@ -115,27 +90,11 @@ public class DriverController {
     }
 
 
-    @GetMapping("/count-driver-task")
-    public ResponseEntity<Long> countDriverTask() {
-        Long total = orderRepository.countByDriver(userAppService.getCurrentUser().getUserDetails().getDriver());
-        return ResponseEntity.ok(total);
-    }
-
-
-    @GetMapping("/all-driver-task")
-    public ResponseEntity<List<Order>> getAllDriverTask() {
-        List<Order> listDriverTask = orderRepository.findByDriver(userAppService.getCurrentUser().getUserDetails().getDriver());
-        return ResponseEntity.ok(listDriverTask);
-    }
-
-
-
     @GetMapping("/delivery-details/{orderId}")
     public ResponseEntity<Order> getDeliveryDetailsById(@PathVariable("orderId") Long orderId) {
         Order order = orderRepository.findById(orderId).get();
         return ResponseEntity.ok(order);
     }
-
 
 
 }

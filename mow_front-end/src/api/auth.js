@@ -44,6 +44,9 @@ export const loginAPI = async (user, userCtx, navigate, setError, setModalShow) 
         case "DONOR":
           redirectUrl = "/donate";
           break;
+        case "VOLUNTEER":
+          redirectUrl = "/volunteer";
+          break;
 
         default:
           navigate("/");

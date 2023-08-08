@@ -21,13 +21,18 @@ const PartnerDashboard = () => {
     getAllMealsAPI(userCtx.token).then((response) => {
       setListMeals(response.data);
     });
-    // getAllPartnerTaskAPI(userCtx.token).then((response) => {
-    //   setListPartnerTask(response.data);
-    // });
+    getAllPartnerTaskAPI(userCtx.token).then((response) => {
+      setListPartnerTask(response.data);
+    });
   }, []);
 
   const handleUpdateStatus = (id, status) => {
-    updateMealsStatusAPI(userCtx.token, id, status).then(() => {
+    const updateData = {
+      orderId: id,
+      mealStatus: status,
+    };
+
+    updateMealsStatusAPI(userCtx.token, updateData).then(() => {
       Swal.fire("Success !", "Meals Request Status Updated.", "success");
       getAllPartnerTaskAPI(userCtx.token).then((response) => {
         setListPartnerTask(response.data);

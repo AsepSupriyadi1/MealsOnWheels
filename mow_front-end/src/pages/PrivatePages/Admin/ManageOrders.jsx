@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
 import { Badge, Button, Form, Modal, Row } from "react-bootstrap";
 import { AuthContext } from "../../../context/auth-context";
-import { assignPartnerAndDriver, getAllActivePartners, getAllAvalailableDriver, getAllOrders } from "../../../api/admin";
+import { allDrivers, allKitchens, assignPartnerAndDriver, getAllActivePartners, getAllAvalailableDriver, getAllOrders } from "../../../api/admin";
 import Swal from "sweetalert2";
 
 const ManageOrders = () => {
@@ -16,16 +16,26 @@ const ManageOrders = () => {
   const [orderId, setOrderId] = useState(null);
   const [driverId, setDriverId] = useState(null);
   const [partnerId, setPartnerID] = useState(null);
+  const [distance, setDistance] = useState(null);
+
+  const handlePartnerChange = (selectedUserId) => {
+    const selectedPartner = listPartner.find((partner) => partner.userId == selectedUserId);
+    if (selectedPartner !== null) {
+      setPartnerID(selectedUserId);
+      setDistance(selectedPartner.distance);
+    } else {
+      setPartnerID(null);
+      setDistance(null);
+    }
+  };
 
   const handleClose = () => setShow(false);
   const handleModal = (id) => {
-    getAllAvalailableDriver(userCtx.token).then((response) => {
-      console.log(response.data);
+    allDrivers(userCtx.token).then((response) => {
       setListDriver(response.data);
     });
 
-    getAllActivePartners(userCtx.token).then((response) => {
-      console.log(response.data);
+    allKitchens(userCtx.token).then((response) => {
       setListPartner(response.data);
     });
     setOrderId(id);
@@ -39,6 +49,7 @@ const ManageOrders = () => {
       kitchenId: partnerId,
       driverId: driverId,
       orderId: orderId,
+      distance: distance,
     };
 
     assignPartnerAndDriver(userCtx.token, data).then(() => {
@@ -112,16 +123,16 @@ const ManageOrders = () => {
                               <Badge bg="secondary">{value.status}</Badge>
                             </td>
                             <td class="align-middle">
-                              {value.status === "PENDING" && (
+                              {value.status === "PENDING" ? (
                                 <>
-                                  <button className="btn btn-primary m-1 rounded" onClick={() => handleModal(value.orderId)}>
-                                    Assign Driver & Partner
-                                    <FontAwesomeIcon icon={faPencil} className="ps-3" />
-                                  </button>
+                                  <div>
+                                    <button className="btn btn-primary m-1 rounded" onClick={() => handleModal(value.orderId)}>
+                                      Assign Driver & Partner
+                                      <FontAwesomeIcon icon={faPencil} className="ps-3" />
+                                    </button>
+                                  </div>
                                 </>
-                              )}
-
-                              {value.status === "ASSIGNED" && (
+                              ) : (
                                 <>
                                   <button className="btn btn-primary m-1 rounded fs-6">
                                     <FontAwesomeIcon icon={faEye} /> View Details
@@ -163,21 +174,25 @@ const ManageOrders = () => {
                 {listDriver &&
                   listDriver.map((value, index) => (
                     <>
-                      <option value={value.userId}>{value.driverName}</option>
+                      <option value={value.userId}>
+                        {value.userName} ~ {value.distance + " Km"}
+                      </option>
                     </>
                   ))}
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Assign Partner</Form.Label>
-              <Form.Select aria-label="Default select example" onChange={(e) => setPartnerID(e.target.value)}>
+              <Form.Select aria-label="Default select example" onChange={(e) => handlePartnerChange(e.target.value)}>
                 <option seleted value={null}>
                   Choose Partner
                 </option>
                 {listPartner &&
                   listPartner.map((value, index) => (
                     <>
-                      <option value={value.roleDetails.userDetails.user.userId}>{value.fullname}</option>
+                      <option value={value.userId}>
+                        {value.userName} ~ {value.distance + " Km"}
+                      </option>
                     </>
                   ))}
               </Form.Select>

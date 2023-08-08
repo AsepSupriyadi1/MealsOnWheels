@@ -11,4 +11,5 @@ public interface UserAppDetailsRepository extends JpaRepository<UserAppDetails, 
     
     Optional<UserAppDetails> findByUser(UserApp user);
 
+
 }

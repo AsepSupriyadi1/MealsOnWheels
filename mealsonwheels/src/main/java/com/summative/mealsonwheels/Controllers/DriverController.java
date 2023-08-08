@@ -1,14 +1,15 @@
 package com.summative.mealsonwheels.Controllers;
+import java.util.HashMap;
 import java.util.List;
 
+import com.summative.mealsonwheels.Dto.Delivery;
+import com.summative.mealsonwheels.Entity.UserApp;
+import com.summative.mealsonwheels.Entity.constrant.VolunteerStatus;
+import com.summative.mealsonwheels.Repositories.VolunteerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.summative.mealsonwheels.Dto.MessageResponse;
 import com.summative.mealsonwheels.Entity.Driver;
 import com.summative.mealsonwheels.Entity.Order;
@@ -22,7 +23,7 @@ import com.summative.mealsonwheels.Services.UserAppService;
 
 
 @RestController
-@RequestMapping("/api/v1/driver")
+@RequestMapping(value = {"/api/v1/driver", "/api/v1/volunteer"})
 public class DriverController {
     
     
@@ -38,12 +39,17 @@ public class DriverController {
     @Autowired
     private DriverServices driverServices;
 
+    @Autowired
+    private VolunteerRepository volunteerRepository;
 
 
-    @GetMapping("/order/{id}/update")
-    public ResponseEntity<MessageResponse> proceedMeals(@PathVariable Long id, @RequestParam("deliveryStatus") String requestStatus) {
-        Order order = orderServices.findOrderById(id);
-        Driver driver = userAppService.getCurrentUser().getUserDetails().getDriver();
+
+    @PostMapping("/delivery/update")
+    public ResponseEntity<MessageResponse> proceedMeals(@RequestBody Delivery delivery) {
+        Order order = orderServices.findOrderById(delivery.getOrderId());
+        String requestStatus = delivery.getRequestStatus();
+
+        UserApp driver = userAppService.getCurrentUser();
         MessageResponse response = new MessageResponse();
 
 
@@ -51,7 +57,13 @@ public class DriverController {
         String currentDeliveryStatus = order.getDeliveryStatus().name();
 
         if(requestStatus.equals("TAKE_MEALS") && currentDeliveryStatus.equals("PENDING")){
-            driver.setDriverStatus(DriverStatus.UNAVAILABLE);
+
+            if(driver.getUserRole().name().equals("DRIVER")){
+                driver.getUserDetails().getDriver().setDriverStatus(DriverStatus.UNAVAILABLE);
+            } else if (driver.getUserRole().name().equals("VOLUNTEER")) {
+                driver.getUserDetails().getVolunteer().setVolunteerStatus(VolunteerStatus.UNAVAILABLE);
+            }
+
             order.setDeliveryStatus(DeliveryStatus.TAKE_MEALS);
 
         } else if (requestStatus.equals("ON_THE_WAY") && currentDeliveryStatus.equals("TAKE_MEALS")){
@@ -69,24 +81,40 @@ public class DriverController {
 
             order.setStatus(OrderStatus.DELIVERED);
             order.setDeliveryStatus(DeliveryStatus.DELIVERED);
-            driver.setDriverStatus(DriverStatus.AVAILABLE);
-            
+
+            if(driver.getUserRole().name().equals("DRIVER")){
+                driver.getUserDetails().getDriver().setDriverStatus(DriverStatus.AVAILABLE);
+            } else if (driver.getUserRole().name().equals("VOLUNTEER")){
+                driver.getUserDetails().getVolunteer().setVolunteerStatus(VolunteerStatus.AVAILABLE);
+            }
+
         } else {
             response.setMessage("NOT FOUND");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-        
+
         orderServices.save(order);
-        driverServices.save(driver);
-//        response.setMessage("Meals took by driver with id " + order.getDriver().getDriverId());
+
+        if(driver.getUserRole().name().equals("DRIVER")){
+           driverServices.save(driver.getUserDetails().getDriver());
+        } else if (driver.getUserRole().name().equals("VOLUNTEER")){
+            volunteerRepository.save(driver.getUserDetails().getVolunteer());
+        }
+
+        response.setMessage("Meals took by driver with id " + order.getDriver().getFullname());
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/driver-profile")
-    public ResponseEntity<Driver> getCurrentLoggedDriver() {
-        Driver order = userAppService.getCurrentUser().getUserDetails().getDriver();
-        return ResponseEntity.ok(order);
+    public ResponseEntity<?> getCurrentLoggedDriver() {
+
+        UserApp currentUser = userAppService.getCurrentUser();
+
+        if(currentUser.getUserRole().name().equals("DRIVER")){
+            return ResponseEntity.ok(currentUser.getUserDetails().getDriver());
+        }
+        return ResponseEntity.ok(currentUser.getUserDetails().getVolunteer());
     }
 
 
@@ -94,6 +122,20 @@ public class DriverController {
     public ResponseEntity<Order> getDeliveryDetailsById(@PathVariable("orderId") Long orderId) {
         Order order = orderRepository.findById(orderId).get();
         return ResponseEntity.ok(order);
+    }
+
+    @GetMapping("/all-driver-task")
+    public ResponseEntity<List<Order>> getAllDriverTask() {
+        List<Order> order = orderRepository.findByDriver(userAppService.getCurrentUser().getUserDetails().getUserDetailsId());
+        return ResponseEntity.ok(order);
+    }
+
+    @GetMapping("/count-driver-task")
+    public ResponseEntity<Long> countDriverTask() {
+
+
+        Long totalDriverTask = orderRepository.countByDriver(userAppService.getCurrentUser().getUserDetails().getUserDetailsId());
+        return ResponseEntity.ok(totalDriverTask);
     }
 
 

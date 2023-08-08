@@ -100,14 +100,13 @@ public class MemberController {
         order.setStatus(OrderStatus.PENDING);
 
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
         if(dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY){
-            order.setFrozen(true);
+            order.setWeekEnd(true);
             orderServices.save(order);
             return new MessageResponse("The meal's request has been sent successfully");
         }
 
-        order.setFrozen(false);
+        order.setWeekEnd(false);
         orderServices.save(order);
         return new MessageResponse("The meal's request has been sent successfully");
 

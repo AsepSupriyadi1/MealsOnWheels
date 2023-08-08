@@ -1,6 +1,7 @@
 package com.summative.mealsonwheels.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.summative.mealsonwheels.Entity.constrant.VolunteerStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +27,8 @@ public class Volunteer {
     @OneToOne
     @JoinColumn(name = "user_details_id")
     private UserAppDetails userDetails;
+
+    @Enumerated(EnumType.STRING)
+    VolunteerStatus volunteerStatus;
 
 }

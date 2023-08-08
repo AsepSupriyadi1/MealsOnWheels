@@ -111,3 +111,16 @@ export const countAllActiveUserRole = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// -=-=-=-=-= ASSIGN -=-=-=-=-=
+export const allDrivers = async (token) => {
+  return await axios.get(`${BASE_URL}/admin/all-drivers`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const allKitchens = async (token) => {
+  return await axios.get(`${BASE_URL}/admin/all-kitchens`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

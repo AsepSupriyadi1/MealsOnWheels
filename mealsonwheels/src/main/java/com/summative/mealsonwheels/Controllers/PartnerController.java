@@ -1,15 +1,12 @@
 package com.summative.mealsonwheels.Controllers;
 import java.util.List;
 
+import com.summative.mealsonwheels.Dto.MealsProcess;
 import com.summative.mealsonwheels.Entity.Partner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.summative.mealsonwheels.Dto.MessageResponse;
 import com.summative.mealsonwheels.Entity.Meals;
@@ -23,7 +20,7 @@ import com.summative.mealsonwheels.Services.OrderServices;
 import com.summative.mealsonwheels.Services.UserAppService;
 
 @RestController
-@RequestMapping("/api/v1/partner")
+@RequestMapping(value = {"/api/v1/partner", "/api/v1/volunteer"})
 public class PartnerController {
 
     
@@ -43,20 +40,22 @@ public class PartnerController {
     private MealsRepository mealsRepository;
 
 
-    @GetMapping("/order/{id}/update")
-    public ResponseEntity<MessageResponse> proceedMeals(@PathVariable Long id, @RequestParam("mealStatus") String mealsStatus) {
-        Order order = orderServices.findOrderById(id);
+    @PostMapping("/order/update")
+    public ResponseEntity<MessageResponse> proceedMeals(@RequestBody MealsProcess mealsProcess) {
 
+        Order order = orderServices.findOrderById(mealsProcess.getOrderId());
+        Long orderId = order.getOrderId();
+        String mealStatus = mealsProcess.getMealStatus();
 
-        if(mealsStatus.equals("PROCESS")){
+        if(order.getMealsStatus().name().equals("PENDING") && mealStatus.equals("PROCESS")){
             order.setStatus(OrderStatus.PROCESS);
             order.setMealsStatus(MealsStatus.PROCESS);
             orderServices.save(order);
-            return ResponseEntity.ok(new MessageResponse("preparing order_id: " + id));
-        } else if (mealsStatus.equals("READY_TO_DELIVER")){
+            return ResponseEntity.ok(new MessageResponse("preparing order_id: " + orderId));
+        } else if (mealStatus.equals("READY_TO_DELIVER") && order.getMealsStatus().name().equals("PROCESS")){
             order.setMealsStatus(MealsStatus.READY_TO_DELIVER);
             orderServices.save(order);
-            return ResponseEntity.ok(new MessageResponse("preparing order_id: " + id));
+            return ResponseEntity.ok(new MessageResponse("preparing order_id: " + orderId));
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Not Found"));
@@ -73,25 +72,21 @@ public class PartnerController {
     //     return new MessageResponse("order_id: " + id + "ready to delivered");
     // }
 
-
     @GetMapping("/count-meals")
     public ResponseEntity<Long> countMeals() {
         Long total = mealsRepository.count();
         return ResponseEntity.ok(total);
     }
 
-
     @GetMapping("/count-partner-task")
     public ResponseEntity<Long> countPartnerTask() {
-        Long total = orderRepository.countByPartner(userAppService.getCurrentUser().getUserDetails().getPartner());
+        Long total = orderRepository.countByPartner(userAppService.getCurrentUser().getUserDetails());
         return ResponseEntity.ok(total);
     }
 
-
-
     @GetMapping("/all-partner-task")
     public ResponseEntity<List<Order>> getAllPartnerTask() {
-        List<Order> listPartnerTask = orderRepository.findByPartner(userAppService.getCurrentUser().getUserDetails().getPartner());
+        List<Order> listPartnerTask = orderRepository.findByPartner(userAppService.getCurrentUser().getUserDetails());
         return ResponseEntity.ok(listPartnerTask);
     }
 

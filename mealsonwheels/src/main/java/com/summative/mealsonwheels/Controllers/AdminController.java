@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.summative.mealsonwheels.Dto.EntityRequest.AddMealsRequest;
+import com.summative.mealsonwheels.Dto.EntityResponse.AssignUser;
 import com.summative.mealsonwheels.Entity.*;
 import com.summative.mealsonwheels.Repositories.*;
 import com.summative.mealsonwheels.Services.PartnerService;
@@ -36,6 +38,9 @@ public class AdminController {
 
     @Autowired
     private UserAppService userAppService;
+
+    @Autowired
+    private UserAppRepository userAppRepository;
 
     @Autowired
     private PartnerRepository partnerRepository;
@@ -140,14 +145,12 @@ public class AdminController {
     @PostMapping("/order/assign")
     public ResponseEntity<MessageResponse> assignOrder(@RequestBody AssignRequest assignRequest) {
 
-
         Order order = orderServices.findOrderById(assignRequest.getOrderId());
         UserAppDetails driver = userAppDetailsRepository.findById(assignRequest.getDriverId()).get();
         String driverRole = driver.getUser().getUserRole().name();
 
         UserAppDetails kitchen = userAppDetailsRepository.findById(assignRequest.getKitchenId()).get();
         String kitchenRole = kitchen.getUser().getUserRole().name();
-
 
         if (driverRole.equals("DRIVER") || driverRole.equals("VOLUNTEER")) {
             order.setDriver(driver);
@@ -163,14 +166,17 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("Kitchen Not Found"));
         }
 
-
+        order.setFarFromPartner(assignRequest.getDistance() > 10d);
         order.setStatus(OrderStatus.ASSIGNED);
         order.setUpdated_at(new Date());
 
+        if(order.isWeekEnd()){
+            order.setFrozen(true);
+        } else order.setFrozen(!order.isWeekEnd() && order.isFarFromPartner());
+
+        order.setDistance(assignRequest.getDistance());
         orderServices.save(order);
-
         return ResponseEntity.ok(new MessageResponse("Order assign to partner and driver"));
-
     }
 
 
@@ -334,5 +340,17 @@ public class AdminController {
 
     }
 
+
+    @GetMapping("/all-drivers")
+    public ResponseEntity<List<AssignUser>> getMowDriver() {
+        List<AssignUser> allDriver = userAppService.getAllAvailableDriver();
+        return ResponseEntity.ok(allDriver);
+    }
+
+    @GetMapping("/all-kitchens")
+    public ResponseEntity<List<AssignUser>> getMowPartner() {
+        List<AssignUser> allKitchen = userAppService.getAllAvailableKitchen();
+        return ResponseEntity.ok(allKitchen);
+    }
 
 }

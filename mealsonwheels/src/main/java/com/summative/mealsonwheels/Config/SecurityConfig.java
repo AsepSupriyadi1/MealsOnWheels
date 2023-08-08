@@ -18,40 +18,43 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    
+
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.cors().and().csrf().disable()
-        .authorizeHttpRequests()
-        .requestMatchers("/api/v1/auth/**").permitAll()
-        .requestMatchers("/api/v1/fund/**").permitAll()
-        .requestMatchers("/api/v1/meal/testMeals").permitAll()
-        .requestMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN")
-        .requestMatchers("/api/v1/member/**").hasAnyAuthority("MEMBER")
-        .anyRequest()
-        .authenticated()
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .authenticationProvider(authenticationProvider)
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-        .logout()
-        .logoutUrl("/api/v1/auth/logout")
-        .addLogoutHandler(logoutHandler)
-        .logoutSuccessHandler(
-            (request, response, authentication) -> 
-            SecurityContextHolder.clearContext()
-        )
-    
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/fund/**").permitAll()
+                .requestMatchers("/api/v1/meal/testMeals").permitAll()
+                .requestMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN")
+                .requestMatchers("/api/v1/member/**").hasAnyAuthority("MEMBER")
+                .requestMatchers("/api/v1/partner/**").hasAnyAuthority("PARTNER")
+                .requestMatchers("/api/v1/driver/**").hasAnyAuthority("DRIVER")
+                .requestMatchers("/api/v1/volunteer/**").hasAnyAuthority("VOLUNTEER")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout()
+                .logoutUrl("/api/v1/auth/logout")
+                .addLogoutHandler(logoutHandler)
+                .logoutSuccessHandler(
+                        (request, response, authentication) ->
+                                SecurityContextHolder.clearContext()
+                )
+
         ;
         return http.build();
-  
+
     }
 
 }

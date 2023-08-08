@@ -31,6 +31,7 @@ import "./pages/PrivatePages/Member/member.css";
 import ManageInactiveUsers from "./pages/PrivatePages/Admin/ManageInactiveUsers";
 import OrderHistory from "./pages/PrivatePages/Member/OrderHistory";
 import Profile from "./pages/PrivatePages/Profile";
+import VolunteerDashboard from "./pages/PrivatePages/Volunteer/VolunteerDashboard";
 function App() {
   const { isLoggedIn, currentUser } = useContext(AuthContext);
 
@@ -104,6 +105,13 @@ function App() {
                 <Route path="/all-meals" element={<ManageMeals />} />
                 <Route path="/orders" element={<ManageOrders />} />
                 <Route path="/order-details" element={<DetailsDelivery />} />
+              </>
+            )}
+
+            {/* VOLUNTEER */}
+            {currentUser.userRole === "VOLUNTEER" && (
+              <>
+                <Route path="/volunteer" element={<VolunteerDashboard />} />
               </>
             )}
           </>

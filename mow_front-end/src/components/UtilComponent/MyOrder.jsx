@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { Badge, Button, Modal, Table } from "react-bootstrap";
 import { AuthContext } from "../../context/auth-context";
 import { getAllMemberOrder } from "../../api/member";
+import { calculateTime } from "../../api/map";
 
 function MyOrder() {
   const userCtx = useContext(AuthContext);
@@ -18,6 +19,7 @@ function MyOrder() {
   useEffect(() => {
     getAllMemberOrder(userCtx.token)
       .then((response) => {
+        console.log(response.data);
         setListOrder(response.data);
       })
       .catch((error) => {
@@ -111,6 +113,71 @@ function MyOrder() {
                     </div>
                   </div>
                 </div>
+
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title className="fs-6">Request Meals</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <div className="container p-2">
+                      <small className="d-block pb-2">Member Details : </small>
+                      <Table striped bordered hover className="">
+                        <tbody>
+                          <tr>
+                            <td>Member Name : </td>
+                            <td>{value.member.userDetails.fullname}</td>
+                          </tr>
+                          <tr>
+                            <td>Address : </td>
+                            <td>{value.member.userDetails.userAppAddress.label}</td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                      <small className="d-block pb-2">Order Details : </small>
+                      <Table striped bordered hover className="">
+                        <tbody>
+                          <tr>
+                            <td>Meals Name : </td>
+                            <td>{value.meals.mealsName}</td>
+                          </tr>
+                          <tr>
+                            <td>Order Status : </td>
+                            <td>{value.status}</td>
+                          </tr>
+
+                          {value.partner !== null && (
+                            <tr>
+                              <td>Partner : </td>
+                              <td>{value.partner.fullname}</td>
+                            </tr>
+                          )}
+
+                          {value.driver !== null && (
+                            <tr>
+                              <td>Partner : </td>
+                              <td>{value.driver.fullname}</td>
+                            </tr>
+                          )}
+
+                          {value.distance !== null && (
+                            <tr>
+                              <td>Duration Estimation : </td>
+                              <td>{value.distance}</td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </Table>
+                    </div>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                    <Button variant="primary" onClick={handleClose}>
+                      Submit
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </>
             ))
           ) : (
@@ -125,54 +192,6 @@ function MyOrder() {
           )}
         </div>
       </div>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title className="fs-6">Request Meals</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="container p-2">
-            <small className="d-block pb-2">Member Details : </small>
-            <Table striped bordered hover className="">
-              <tbody>
-                <tr>
-                  <td>Member Name : </td>
-                  <td>Asep Supriyadi</td>
-                </tr>
-                <tr>
-                  <td>Address : </td>
-                  <td>Bandung, Indonesia</td>
-                </tr>
-              </tbody>
-            </Table>
-            <small className="d-block pb-2">Order Details : </small>
-            <Table striped bordered hover className="">
-              <tbody>
-                <tr>
-                  <td>Meals Name : </td>
-                  <td>Oseng Pentil</td>
-                </tr>
-                <tr>
-                  <td>Partner : </td>
-                  <td>ABC PARTNER</td>
-                </tr>
-                <tr>
-                  <td>Distance : </td>
-                  <td>10km</td>
-                </tr>
-              </tbody>
-            </Table>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Submit
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }

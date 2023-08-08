@@ -14,4 +14,5 @@ public class AssignRequest {
     private Long kitchenId;
     private Long driverId;
     private Long orderId;
+    private double distance;
 }

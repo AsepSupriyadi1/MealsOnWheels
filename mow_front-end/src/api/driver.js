@@ -27,8 +27,8 @@ export const getDeliveryDetailsByID = async (token, orderId) => {
   });
 };
 
-export const updateDeliveryTask = async (token, orderId, status) => {
-  return await axios.get(`${DRIVER_URL}/order/` + orderId + `/update?deliveryStatus=` + status, {
+export const updateDeliveryTask = async (token, data) => {
+  return await axios.post(`${DRIVER_URL}/delivery/update`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

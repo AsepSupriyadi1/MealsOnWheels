@@ -1,6 +1,7 @@
 package com.summative.mealsonwheels.Controllers;
 
 import com.summative.mealsonwheels.Entity.UserAppAddress;
+import com.summative.mealsonwheels.Entity.constrant.VolunteerStatus;
 import com.summative.mealsonwheels.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,9 +38,9 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-    
 
-    @Autowired 
+
+    @Autowired
     private UserAppService userAppService;
 
     @Autowired
@@ -54,7 +55,7 @@ public class AuthController {
     @Autowired
     private TokensService tokensService;
 
-    @Autowired 
+    @Autowired
     private JwtService jwtService;
 
 
@@ -78,9 +79,8 @@ public class AuthController {
     private UserAppAddressRepository addressRepository;
 
 
-
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest loginRequest){
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest loginRequest) {
 
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
 
@@ -89,16 +89,16 @@ public class AuthController {
 
             UserDetails principals = userAppService.loadUserByUsername(loginRequest.getEmail());
             UserApp users = userAppService.findUserByEmail(principals.getUsername());
-            
+
             String token = jwtService.generateToken(principals);
-          
+
             Tokens jwtToken = Tokens.builder()
-                .user(users)
-                .token(token)
-                .tokenType(TokenType.BEARER)
-                .revoked(false)
-                .expired(false)
-                .build();
+                    .user(users)
+                    .token(token)
+                    .tokenType(TokenType.BEARER)
+                    .revoked(false)
+                    .expired(false)
+                    .build();
 
             tokensService.revokeAllUserTokens(users);
             tokensRepository.save(jwtToken);
@@ -106,17 +106,16 @@ public class AuthController {
             authenticationResponse.setRole(users.getUserRole().name());
             return ResponseEntity.ok(authenticationResponse);
 
-        } catch(BadCredentialsException e) {
+        } catch (BadCredentialsException e) {
             authenticationResponse.setErrorType("NOT_FOUND");
             authenticationResponse.setErrorMessage("Invalid username or password !");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticationResponse);
-        } catch (UserNotActiveException e){
+        } catch (UserNotActiveException e) {
             authenticationResponse.setErrorType("NOT_ACTIVE");
             authenticationResponse.setErrorMessage("Your account still awaiting for admin approval");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(authenticationResponse);
         }
 
-       
 
     }
 
@@ -160,13 +159,12 @@ public class AuthController {
             userDetailsRepository.save(details);
 
 
-
             // CHECK IF THE REGISTERED NO ENTERING THE ROLE DETAILS
             if (
-                    userRole.equals("PARTNER") &&  registerRequest.getPartner() == null  ||
-                            userRole.equals("VOLUNTEER") &&  registerRequest.getVolunteer() == null  ||
-                            userRole.equals("DRIVER") &&  registerRequest.getDriver() == null  ||
-                            userRole.equals("MEMBER") &&  registerRequest.getMember() == null
+                    userRole.equals("PARTNER") && registerRequest.getPartner() == null ||
+                            userRole.equals("VOLUNTEER") && registerRequest.getVolunteer() == null ||
+                            userRole.equals("DRIVER") && registerRequest.getDriver() == null ||
+                            userRole.equals("MEMBER") && registerRequest.getMember() == null
             ) {
                 throw new IllegalArgumentException("User Role details not provided");
             }
@@ -193,6 +191,7 @@ public class AuthController {
             // CHECK IF THE REGISTERED USER IS VOLUNTEER
             if (userRole.equals("VOLUNTEER")) {
                 registerRequest.getVolunteer().setUserDetails(registerRequest.getUserDetails());
+                registerRequest.getVolunteer().setVolunteerStatus(VolunteerStatus.AVAILABLE);
                 volunteerRepository.save(registerRequest.getVolunteer());
             }
 
@@ -210,21 +209,20 @@ public class AuthController {
     }
 
 
-
     @GetMapping(value = "/user")
     public ResponseEntity<?> getUserLogin(HttpServletRequest request) {
 
         UserResponse userResponse = new UserResponse();
-      
-        String token = jwtService.extractTokenFromRequest(request);
-       
-        boolean isTokenValid = tokensRepository.findByToken(token).map(t -> 
-                        !t.isExpired() && !t.isRevoked())
-                        .orElse(false);
 
-        if(isTokenValid){
+        String token = jwtService.extractTokenFromRequest(request);
+
+        boolean isTokenValid = tokensRepository.findByToken(token).map(t ->
+                        !t.isExpired() && !t.isRevoked())
+                .orElse(false);
+
+        if (isTokenValid) {
             String username = jwtService.extractUsername(token);
-            UserApp user =  userAppService.findUserByEmail(username);
+            UserApp user = userAppService.findUserByEmail(username);
             userResponse.setUserId(user.getUserId());
             userResponse.setFullname(user.getUserDetails().getFullname());
             userResponse.setEmail(user.getEmail());
@@ -232,12 +230,12 @@ public class AuthController {
             userResponse.setUserRole(user.getUserRole().name());
             userResponse.setLan(user.getUserDetails().getUserAppAddress().getLatitude());
             userResponse.setLng(user.getUserDetails().getUserAppAddress().getLongitude());
-            
+
             return ResponseEntity.ok(userResponse);
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("TOKEN NOT FOUND");
-    } 
+    }
 
 
 }

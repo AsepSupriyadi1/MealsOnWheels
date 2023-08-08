@@ -23,6 +23,7 @@ const DriverDashboard = () => {
   const handleDetailsDelivery = (orderId) => {
     getDeliveryDetailsByID(userCtx.token, orderId).then((response) => {
       setDetailsDelivery(response.data);
+      console.log(response.data);
     });
     setShow(true);
   };
@@ -30,7 +31,12 @@ const DriverDashboard = () => {
   const handleUpdateDelivery = (orderId, status) => {
     Swal.fire("User Activated Successfully !", "Driver's account has been approved.", "success");
 
-    updateDeliveryTask(userCtx.token, orderId, status)
+    const updateData = {
+      orderId: orderId,
+      requestStatus: status,
+    };
+
+    updateDeliveryTask(userCtx.token, updateData)
       .then((response) => {
         setDetailsDelivery(response.data);
         getAllDriverTask(userCtx.token).then((response) => {
@@ -61,6 +67,7 @@ const DriverDashboard = () => {
       setDriver(response.data);
     });
     getAllDriverTask(userCtx.token).then((response) => {
+      console.log(response.data);
       setListDriverTask(response.data);
     });
   }, []);
@@ -161,7 +168,7 @@ const DriverDashboard = () => {
                         <>
                           <tr>
                             <td className="align-middle">{index + 1}</td>
-                            <td className="align-middle">{value.partner.companyName}</td>
+                            <td className="align-middle">{value.partner.fullname}</td>
                             <td className="align-middle">{value.member.userDetails.fullname}</td>
                             <td className="align-middle">{value.meals.mealsName}</td>
                             <td className="align-middle">{value.deliveryStatus}</td>
@@ -199,17 +206,16 @@ const DriverDashboard = () => {
                 <>
                   <ListGroup className="mb-4">
                     <p className="d-flex justify-content-between align-items-center">
-                      Take Meals from partner :
+                      Driver ~ Partner :
                       {detailsDelivery.deliveryStatus !== "DELIVERED" && (
                         <button className="btn btn-primary " onClick={() => handleUpdateDelivery(detailsDelivery.orderId, "TAKE_MEALS")}>
-                          Take Meals From Partner
+                          Go to Partner
                         </button>
                       )}
                     </p>
-                    <ListGroup.Item>Partner Name : {detailsDelivery.partner.userDetails.fullname}</ListGroup.Item>
-                    <ListGroup.Item>Company Name : {detailsDelivery.partner.companyName}</ListGroup.Item>
                     <ListGroup.Item>Meals Name : {detailsDelivery.meals.mealsName}</ListGroup.Item>
-                    <ListGroup.Item>Company Address : {detailsDelivery.partner.companyAddress}</ListGroup.Item>
+                    <ListGroup.Item>Partner Name : {detailsDelivery.partner.fullname}</ListGroup.Item>
+                    <ListGroup.Item>Partner Address : {detailsDelivery.partner.userAppAddress.label}</ListGroup.Item>
                   </ListGroup>
                 </>
               )}
@@ -218,16 +224,16 @@ const DriverDashboard = () => {
                 <>
                   <ListGroup className="mb-4">
                     <p className="d-flex justify-content-between align-items-center">
-                      Deliver The meals :
+                      Driver ~ Meals :
                       {detailsDelivery.deliveryStatus !== "DELIVERED" && (
                         <button className="btn btn-primary " onClick={() => handleUpdateDelivery(detailsDelivery.orderId, "ON_THE_WAY")}>
-                          Deliver The Meals
+                          Take & Deliver The Meals
                         </button>
                       )}
                     </p>
-                    <ListGroup.Item>Member Name : {detailsDelivery.member.userDetails.fullname}</ListGroup.Item>
-                    <ListGroup.Item>Member Address : {detailsDelivery.member.userDetails.address}</ListGroup.Item>
                     <ListGroup.Item>Meals Name : {detailsDelivery.meals.mealsName}</ListGroup.Item>
+                    <ListGroup.Item>Member Name : {detailsDelivery.member.userDetails.fullname}</ListGroup.Item>
+                    <ListGroup.Item>Member Address : {detailsDelivery.member.userDetails.userAppAddress.label}</ListGroup.Item>
                   </ListGroup>
                 </>
               )}
@@ -243,7 +249,16 @@ const DriverDashboard = () => {
                         </button>
                       )}
                     </p>
-                    <ListGroup.Item>Completed at : {detailsDelivery.updated_at}</ListGroup.Item>
+
+                    {detailsDelivery.deliveryStatus === "ON_THE_WAY" && (
+                      <>
+                        <ListGroup.Item>Meals Name : {detailsDelivery.meals.mealsName}</ListGroup.Item>
+                        <ListGroup.Item>Member Name : {detailsDelivery.member.userDetails.fullname}</ListGroup.Item>
+                        <ListGroup.Item>Member Address : {detailsDelivery.member.userDetails.userAppAddress.label}</ListGroup.Item>
+                      </>
+                    )}
+
+                    <ListGroup.Item>Arrived at : {detailsDelivery.updated_at}</ListGroup.Item>
                   </ListGroup>
                 </>
               )}

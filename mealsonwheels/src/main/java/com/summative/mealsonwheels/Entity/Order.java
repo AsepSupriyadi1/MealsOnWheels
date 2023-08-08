@@ -44,7 +44,7 @@ public class Order {
 
     private Date updated_at;
 
-    private double distance;
+    private Double distance;
 
     @ManyToOne
     @JoinColumn(name = "meals")
@@ -79,6 +79,8 @@ public class Order {
 
     private boolean isFrozen;
 
+    private boolean isWeekEnd;
+    private boolean isFarFromPartner;
 
     private String feedback;
 

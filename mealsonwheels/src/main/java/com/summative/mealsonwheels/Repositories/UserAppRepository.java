@@ -21,4 +21,12 @@ public interface UserAppRepository extends JpaRepository<UserApp, Long> {
     List<UserApp> getAllActiveUsers(UserRole role);
 
 
+
+    @Query("SELECT u FROM UserApp u WHERE u.isActive = true AND (u.userRole = 'PARTNER' OR u.userRole = 'VOLUNTEER')")
+    List<UserApp> getAllAvailableKitchen();
+
+    @Query("SELECT u FROM UserApp u WHERE u.isActive = true AND (u.userRole = 'DRIVER' OR u.userRole = 'VOLUNTEER')")
+    List<UserApp> getAllAvailableDriver();
+
+
 }

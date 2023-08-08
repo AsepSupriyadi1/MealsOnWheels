@@ -27,8 +27,8 @@ export const getAllPartnerTaskAPI = async (token) => {
   });
 };
 
-export const updateMealsStatusAPI = async (token, id, status) => {
-  return await axios.get(`${PARTNER_URL}/order/` + id + `/update?mealStatus=` + status, {
+export const updateMealsStatusAPI = async (token, data) => {
+  return await axios.post(`${PARTNER_URL}/order/update`, data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

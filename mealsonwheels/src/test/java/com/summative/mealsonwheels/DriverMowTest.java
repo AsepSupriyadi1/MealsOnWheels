@@ -24,6 +24,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -233,6 +234,85 @@ public class DriverMowTest {
         orderServices.updateDeliveryStatus(order, userAppDetails, "ON_THE_WAY");
 
         assertEquals(DeliveryStatus.ON_THE_WAY, order.getDeliveryStatus());
+
+    }
+
+
+    @Test
+    public void testAvailable() {
+        // Setup
+        UserApp user = new UserApp();
+        user.setUserRole(UserRole.DRIVER);
+
+        Driver driver = new Driver();
+        UserAppDetails userAppDetails = new UserAppDetails();
+
+        driver.setDriverStatus(DriverStatus.UNAVAILABLE);
+        driver.setUserDetails(userAppDetails);
+
+
+        userAppDetails.setFullname("Driver MOw");
+        userAppDetails.setUser(user);
+        userAppDetails.setDriver(driver);
+
+
+        Order order = new Order();
+        order.setDeliveryStatus(DeliveryStatus.TAKE_MEALS);
+        order.setMealsStatus(MealsStatus.READY_TO_DELIVER);
+        order.setDriver(driver.getUserDetails());
+
+        Mockito.when(orderRepository.save(order)).thenReturn(order);
+        Mockito.when(driverServices.save(any())).thenReturn(driver.getUserDetails().getDriver());
+
+
+        orderServices.updateDeliveryStatus(order, userAppDetails, "ON_THE_WAY");
+
+        assertEquals(DeliveryStatus.ON_THE_WAY, order.getDeliveryStatus());
+
+    }
+
+    @Test
+    public void unavailableDriver() {
+
+        UserApp user = new UserApp();
+        user.setUserRole(UserRole.DRIVER);
+
+        Driver driver = new Driver();
+        UserAppDetails userAppDetails = new UserAppDetails();
+
+
+        driver.setUserDetails(userAppDetails);
+        userAppDetails.setDriver(driver);
+        userAppDetails.setUser(user);
+
+        UserAppDetails driverTask = orderServices.takeAndDeliverTheMeals(userAppDetails, "TAKE_MEALS");
+        Mockito.when(driverRepository.save(driverTask.getDriver())).thenReturn(driverTask.getDriver());
+
+        assertEquals(DriverStatus.UNAVAILABLE, driverTask.getDriver().getDriverStatus());
+
+
+    }
+
+
+    @Test
+    public void availableDriver() {
+
+        UserApp user = new UserApp();
+        user.setUserRole(UserRole.DRIVER);
+
+        Driver driver = new Driver();
+        UserAppDetails userAppDetails = new UserAppDetails();
+
+
+        driver.setUserDetails(userAppDetails);
+        userAppDetails.setDriver(driver);
+        userAppDetails.setUser(user);
+
+        UserAppDetails driverTask = orderServices.takeAndDeliverTheMeals(userAppDetails, "DELIVERED");
+        Mockito.when(driverRepository.save(driverTask.getDriver())).thenReturn(driverTask.getDriver());
+
+        assertEquals(DriverStatus.AVAILABLE, driverTask.getDriver().getDriverStatus());
+
 
     }
 

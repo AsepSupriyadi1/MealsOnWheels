@@ -171,6 +171,33 @@ public class OrderServices {
     }
 
 
+    public UserAppDetails takeAndDeliverTheMeals(UserAppDetails driver, String status){
+
+        String driverRole = driver.getUser().getUserRole().name();
+
+        if(driverRole.equals("DRIVER")){
+
+            if(status.equals("TAKE_MEALS")){
+                driver.getDriver().setDriverStatus(DriverStatus.UNAVAILABLE);
+            } else if(status.equals("DELIVERED")) {
+                driver.getDriver().setDriverStatus(DriverStatus.AVAILABLE);
+            }
+            return driver.getDriver().getUserDetails();
+
+        } else {
+
+            if(status.equals("TAKE_MEALS")){
+                driver.getVolunteer().setVolunteerStatus(VolunteerStatus.UNAVAILABLE);
+            } else if(status.equals("DELIVERED")) {
+                driver.getVolunteer().setVolunteerStatus(VolunteerStatus.AVAILABLE);
+            }
+
+            return driver.getVolunteer().getUserDetails();
+        }
+
+    }
+
+
 
 
 

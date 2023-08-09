@@ -25,15 +25,11 @@ public class MealsServices {
     private PictureRepository pictureRepository;
 
 
-    public Meals addMeals(Meals meals) throws IOException {
+    public Meals addMeals(Meals mealsRequest) throws IOException {
 
-        Picture picture = meals.getPicture();
+        Picture picture = mealsRequest.getPicture();
         pictureRepository.save(picture);
-
-        meals.setMealsName(meals.getMealsName());
-        meals.setPicture(picture);
-        meals.setStock(meals.getStock());
-        return mealsRepository.save(meals);
+        return mealsRepository.save(mealsRequest);
     }
 
 

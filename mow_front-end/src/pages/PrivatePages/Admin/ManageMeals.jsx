@@ -28,7 +28,6 @@ const ManageMeals = () => {
   const handleMealsForm = (event) => {
     event.preventDefault();
     formData.append("mealsName", mealsName);
-    formData.append("partnerId", parseInt(partner));
     formData.append("stock", parseInt(stock));
     formData.append("picture", picture);
 
@@ -46,7 +45,7 @@ const ManageMeals = () => {
         });
       })
       .catch((err) => {
-        alert("Errors Occured");
+        console.log(err);
       });
   };
 

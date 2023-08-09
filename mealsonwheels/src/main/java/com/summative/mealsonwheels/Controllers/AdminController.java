@@ -77,11 +77,13 @@ public class AdminController {
         MessageResponse response = new MessageResponse();
 
         Picture picture = new Picture();
-        picture.setImageData(mealsRequest.getPicture().getBytes());
         picture.setImageName(mealsRequest.getPicture().getOriginalFilename());
+        picture.setImageData(mealsRequest.getPicture().getBytes());
 
         Meals meals = new Meals();
         meals.setPicture(picture);
+        meals.setMealsName(mealsRequest.getMealsName());
+        meals.setStock(mealsRequest.getStock());
 
         mealsServices.addMeals(meals);
         response.setMessage("Meals added successfully");

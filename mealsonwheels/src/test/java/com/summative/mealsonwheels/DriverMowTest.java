@@ -157,7 +157,7 @@ public class DriverMowTest {
         Mockito.when(driverServices.save(any())).thenReturn(driver.getUserDetails().getDriver());
 
 
-        orderServices.updateDeliveryStatus(order, driver, "TAKE_MEALS");
+        orderServices.updateDeliveryStatus(order, userAppDetails, "TAKE_MEALS");
 
 
         assertEquals(DeliveryStatus.TAKE_MEALS, order.getDeliveryStatus());
@@ -194,7 +194,7 @@ public class DriverMowTest {
         MessageResponse messageResponse = new MessageResponse();
 
         try {
-            orderServices.updateDeliveryStatus(order, driver, "ON_THE_WAY");
+            orderServices.updateDeliveryStatus(order, userAppDetails, "ON_THE_WAY");
         } catch (Exception e) {
             assertEquals("MEALS STILL UNDER PREPARATION !", e.getMessage());
         }
@@ -230,7 +230,7 @@ public class DriverMowTest {
         Mockito.when(driverServices.save(any())).thenReturn(driver.getUserDetails().getDriver());
 
 
-        orderServices.updateDeliveryStatus(order, driver, "ON_THE_WAY");
+        orderServices.updateDeliveryStatus(order, userAppDetails, "ON_THE_WAY");
 
         assertEquals(DeliveryStatus.ON_THE_WAY, order.getDeliveryStatus());
 

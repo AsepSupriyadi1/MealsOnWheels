@@ -49,10 +49,18 @@ public class DriverController {
         Order order = orderServices.findOrderById(delivery.getOrderId());
         String requestStatus = delivery.getRequestStatus();
         UserApp driver = userAppService.getCurrentUser();
-        MessageResponse messageResponse;
+        MessageResponse messageResponse = new MessageResponse();
+        
+        
 
         try {
-            messageResponse = orderServices.updateDeliveryStatus(order, driver.getUserDetails().getDriver(), requestStatus);
+            
+            if(driver.getUserRole().name().equals("DRIVER")){
+                messageResponse = orderServices.updateDeliveryStatus(order, driver.getUserDetails(), requestStatus);
+            } else if(driver.getUserRole().name().equals("VOLUNTEER")) {
+                messageResponse = orderServices.updateDeliveryStatus(order, driver.getUserDetails(), requestStatus);
+            }
+            
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(e.getMessage()));
         }

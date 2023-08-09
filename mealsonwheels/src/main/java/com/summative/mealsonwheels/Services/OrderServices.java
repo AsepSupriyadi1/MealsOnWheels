@@ -113,19 +113,19 @@ public class OrderServices {
 
 
     // -=-=-=-=-=-=-=-=-=-=- DRIVER --=-=-=-=-=-=-=-=-=-=--==-=-=-=-=
-    public MessageResponse updateDeliveryStatus(Order order, Driver driver, String status){
+    public MessageResponse updateDeliveryStatus(Order order, UserAppDetails driver, String status){
 
         String mealStatus = order.getMealsStatus().name();
         String currentDeliveryStatus = order.getDeliveryStatus().name();
-        String driverRoles = driver.getUserDetails().getUser().getUserRole().name();
+        String driverRoles = driver.getUser().getUserRole().name();
         MessageResponse response = new MessageResponse();
 
         if(status.equals("TAKE_MEALS") && currentDeliveryStatus.equals("PENDING")){
 
             if(driverRoles.equals("DRIVER")){
-                driver.getUserDetails().getDriver().setDriverStatus(DriverStatus.UNAVAILABLE);
+                driver.getDriver().setDriverStatus(DriverStatus.UNAVAILABLE);
             } else if (driverRoles.equals("VOLUNTEER")) {
-                driver.getUserDetails().getVolunteer().setVolunteerStatus(VolunteerStatus.UNAVAILABLE);
+                driver.getVolunteer().setVolunteerStatus(VolunteerStatus.UNAVAILABLE);
             }
 
             order.setDeliveryStatus(DeliveryStatus.TAKE_MEALS);
@@ -147,9 +147,9 @@ public class OrderServices {
             order.setDeliveryStatus(DeliveryStatus.DELIVERED);
 
             if(driverRoles.equals("DRIVER")){
-                driver.getUserDetails().getDriver().setDriverStatus(DriverStatus.AVAILABLE);
+                driver.getDriver().setDriverStatus(DriverStatus.AVAILABLE);
             } else if (driverRoles.equals("VOLUNTEER")){
-                driver.getUserDetails().getVolunteer().setVolunteerStatus(VolunteerStatus.AVAILABLE);
+                driver.getVolunteer().setVolunteerStatus(VolunteerStatus.AVAILABLE);
             }
 
         } else {
@@ -160,9 +160,9 @@ public class OrderServices {
         orderRepository.save(order);
 
         if(driverRoles.equals("DRIVER")){
-            driverServices.save(driver.getUserDetails().getDriver());
+            driverServices.save(driver.getDriver());
         } else if (driverRoles.equals("VOLUNTEER")){
-            volunteerRepository.save(driver.getUserDetails().getVolunteer());
+            volunteerRepository.save(driver.getVolunteer());
         }
 
         response.setMessage("Meals took by driver with id " + order.getDriver().getFullname());

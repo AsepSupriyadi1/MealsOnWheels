@@ -57,7 +57,7 @@ public class PartnerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(e.getMessage()));
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageResponse);
+        return ResponseEntity.ok(messageResponse);
         
     }
 

@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/fund/**").permitAll()
                 .requestMatchers("/api/v1/meal/testMeals").permitAll()
                 .requestMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN")
+                .requestMatchers("/api/v1/donor/**").hasAnyAuthority("DONOR")
                 .requestMatchers("/api/v1/member/**").hasAnyAuthority("MEMBER")
                 .requestMatchers("/api/v1/partner/**").hasAnyAuthority("PARTNER")
                 .requestMatchers("/api/v1/driver/**").hasAnyAuthority("DRIVER")

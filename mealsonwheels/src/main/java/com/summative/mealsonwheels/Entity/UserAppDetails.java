@@ -27,6 +27,9 @@ public class UserAppDetails {
     @Column(nullable = false, name = "full_name")
     private String fullname;
 
+    private String phoneNumber;
+
+
 //    @Column(nullable = false, name = "address")
 //    private String address;
 

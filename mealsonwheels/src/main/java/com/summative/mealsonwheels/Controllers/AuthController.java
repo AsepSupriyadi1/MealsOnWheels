@@ -35,6 +35,8 @@ import com.summative.mealsonwheels.Services.UserAppService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Base64;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -228,6 +230,15 @@ public class AuthController {
             userResponse.setEmail(user.getEmail());
             userResponse.setAddress(user.getUserDetails().getUserAppAddress().getLabel());
             userResponse.setUserRole(user.getUserRole().name());
+
+            if(user.getUserDetails().getPicture() != null){
+                userResponse.setPictureData(Base64.getEncoder().encodeToString(user.getUserDetails().getPicture().getImageData()));
+            }
+
+            if(user.getUserDetails().getPicture() != null){
+                userResponse.setPhoneNumber(user.getUserDetails().getPhoneNumber());
+            }
+
             userResponse.setLan(user.getUserDetails().getUserAppAddress().getLatitude());
             userResponse.setLng(user.getUserDetails().getUserAppAddress().getLongitude());
 

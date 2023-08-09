@@ -1,9 +1,9 @@
 import { faCheck, faCircle, faDotCircle, faEye, faPencil, faPiggyBank, faPlus, faProcedures, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
-import { Badge, Button, Form, Modal, Row } from "react-bootstrap";
+import { Badge, Button, Form, ListGroup, Modal, Row } from "react-bootstrap";
 import { AuthContext } from "../../../context/auth-context";
-import { allDrivers, allKitchens, assignPartnerAndDriver, getAllActivePartners, getAllAvalailableDriver, getAllOrders } from "../../../api/admin";
+import { allDrivers, allKitchens, assignPartnerAndDriver, getAllActivePartners, getAllAvalailableDriver, getAllOrders, getOrderDetails } from "../../../api/admin";
 import Swal from "sweetalert2";
 
 const ManageOrders = () => {
@@ -11,7 +11,22 @@ const ManageOrders = () => {
   const [listOrders, setListOrders] = useState(null);
   const [listDriver, setListDriver] = useState(null);
   const [listPartner, setListPartner] = useState(null);
+  const [orderDetails, setOrderDetails] = useState(null);
   const [show, setShow] = useState(false);
+
+  const [orderModal, showOrderModal] = useState(false);
+  const handleCloseOrderModal = () => showOrderModal(false);
+  const handleShowOrderModal = (orderId) => {
+    showOrderModal(true);
+    getOrderDetails(userCtx.token, orderId)
+      .then((response) => {
+        setOrderDetails(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        alert("error occured");
+      });
+  };
 
   const [orderId, setOrderId] = useState(null);
   const [driverId, setDriverId] = useState(null);
@@ -123,7 +138,7 @@ const ManageOrders = () => {
                               <Badge bg="secondary">{value.status}</Badge>
                             </td>
                             <td class="align-middle">
-                              {value.status === "PENDING" ? (
+                              {value.status === "PENDING" && (
                                 <>
                                   <div>
                                     <button className="btn btn-primary m-1 rounded" onClick={() => handleModal(value.orderId)}>
@@ -132,9 +147,11 @@ const ManageOrders = () => {
                                     </button>
                                   </div>
                                 </>
-                              ) : (
+                              )}
+
+                              {value.status === "COMPLETED" && (
                                 <>
-                                  <button className="btn btn-primary m-1 rounded fs-6">
+                                  <button className="btn btn-primary m-1 rounded fs-6" onClick={() => handleShowOrderModal(value.orderId)}>
                                     <FontAwesomeIcon icon={faEye} /> View Details
                                   </button>
                                 </>
@@ -208,6 +225,34 @@ const ManageOrders = () => {
           </Modal.Footer>
         </Form>
       </Modal>
+
+      {orderDetails !== null && (
+        <>
+          <Modal show={orderModal} onHide={handleCloseOrderModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Order Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <h6 className="py-4">Order Details : </h6>
+              <ListGroup>
+                <ListGroup.Item>Member : {orderDetails.member.fullname}</ListGroup.Item>
+                <ListGroup.Item>Partner : {orderDetails.partner.fullname}</ListGroup.Item>
+                <ListGroup.Item>Driver : {orderDetails.driver.fullname}</ListGroup.Item>
+                <ListGroup.Item>Distance : {orderDetails.distance} Km</ListGroup.Item>
+              </ListGroup>
+              <h6 className="py-4">Feedback : </h6>
+              <textarea name="" disabled id="" cols="30" rows="10" className="form-control" style={{ height: "100px" }}>
+                {orderDetails.feedback}
+              </textarea>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseOrderModal}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )}
     </>
   );
 };

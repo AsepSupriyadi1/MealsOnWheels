@@ -81,6 +81,12 @@ public class UserAppService implements UserDetailsService {
 	}
 
 
+	public UserApp activateUser(UserApp userApp){
+		userApp.setActive(true);
+		return userAppRepo.save(userApp);
+	}
+
+
     
 	public UserApp findUserById(Long id) {
 		return userAppRepo.findById(id).get();

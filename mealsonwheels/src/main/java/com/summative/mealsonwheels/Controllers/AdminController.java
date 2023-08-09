@@ -11,7 +11,7 @@ import com.summative.mealsonwheels.Dto.EntityRequest.AddMealsRequest;
 import com.summative.mealsonwheels.Dto.EntityResponse.AssignUser;
 import com.summative.mealsonwheels.Entity.*;
 import com.summative.mealsonwheels.Repositories.*;
-import com.summative.mealsonwheels.Services.PartnerService;
+import com.summative.mealsonwheels.Services.*;
 import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,9 +26,6 @@ import com.summative.mealsonwheels.Dto.EntityResponse.UserApproval;
 import com.summative.mealsonwheels.Dto.EntityResponse.UserRoleDetails;
 import com.summative.mealsonwheels.Entity.constrant.UserRole;
 import com.summative.mealsonwheels.Entity.constrant.OrderStatus;
-import com.summative.mealsonwheels.Services.MealsServices;
-import com.summative.mealsonwheels.Services.OrderServices;
-import com.summative.mealsonwheels.Services.UserAppService;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -54,6 +51,12 @@ public class AdminController {
     @Autowired
     private OrderServices orderServices;
 
+    @Autowired
+    private UserAppDetailService userAppDetailService;
+
+    @Autowired
+    private FundServices fundServices;
+
 
     @Autowired
     private PictureRepository pictureRepository;
@@ -71,24 +74,18 @@ public class AdminController {
 
     @PostMapping("/add-meals")
     public MessageResponse addMeals(AddMealsRequest mealsRequest) throws IOException {
-
-
         MessageResponse response = new MessageResponse();
 
         Picture picture = new Picture();
         picture.setImageData(mealsRequest.getPicture().getBytes());
         picture.setImageName(mealsRequest.getPicture().getOriginalFilename());
-        pictureRepository.save(picture);
 
         Meals meals = new Meals();
-        meals.setMealsName(mealsRequest.getMealsName());
         meals.setPicture(picture);
-        meals.setStock(mealsRequest.getStock());
-        mealsServices.addMeals(meals);
 
+        mealsServices.addMeals(meals);
         response.setMessage("Meals added successfully");
         return response;
-
     }
 
 
@@ -121,107 +118,35 @@ public class AdminController {
 
     @GetMapping("/all-orders")
     public List<Order> getAllOders() {
-
-        List<Order> orders = orderServices.getAllOrders();
-        // orderServices.getAllOrders().forEach(order -> {
-        //     OrderDto orderDto = OrderDto.builder()
-        //             .orderId(order.getOrderId())
-        //             .datetime(order.getDatetime())
-        //             .updated_at(order.getUpdated_at())
-        //             .orderStatus(order.getStatus().name())
-        //             .feedback(order.getFeedback())
-        //             .meals(order.getMeals())
-        //             .partner(order.getPartner().getUser().getUserDetails())
-        //             .driver(order.get.getUser().getUserDetails())
-        //             .member(order.getPartner().getUser().getUserDetails())
-        //             .build();
-        //     orders.add(orderDto);
-        // });
-
-        return orders;
+        return orderServices.getAllOrders();
     }
 
 
     @PostMapping("/order/assign")
     public ResponseEntity<MessageResponse> assignOrder(@RequestBody AssignRequest assignRequest) {
-
-        Order order = orderServices.findOrderById(assignRequest.getOrderId());
-        UserAppDetails driver = userAppDetailsRepository.findById(assignRequest.getDriverId()).get();
-        String driverRole = driver.getUser().getUserRole().name();
-
-        UserAppDetails kitchen = userAppDetailsRepository.findById(assignRequest.getKitchenId()).get();
-        String kitchenRole = kitchen.getUser().getUserRole().name();
-
-        if (driverRole.equals("DRIVER") || driverRole.equals("VOLUNTEER")) {
-            order.setDriver(driver);
-        } else {
-            System.out.println("Driver Not Found");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("Driver Not Found"));
-        }
-
-        if (kitchenRole.equals("PARTNER") || kitchenRole.equals("VOLUNTEER")) {
-            order.setPartner(kitchen);
-        } else {
-            System.out.println("Kitchen Not Found");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("Kitchen Not Found"));
-        }
-
-        order.setFarFromPartner(assignRequest.getDistance() > 10d);
-        order.setStatus(OrderStatus.ASSIGNED);
-        order.setUpdated_at(new Date());
-
-        if(order.isWeekEnd()){
-            order.setFrozen(true);
-        } else order.setFrozen(!order.isWeekEnd() && order.isFarFromPartner());
-
-        order.setDistance(assignRequest.getDistance());
-        orderServices.save(order);
-        return ResponseEntity.ok(new MessageResponse("Order assign to partner and driver"));
+       try {
+           orderServices.assignPartner(assignRequest);
+       } catch (Exception e){
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(e.getMessage()));
+       }
+       return ResponseEntity.ok(new MessageResponse("Order assign to partner and driver"));
     }
 
 
     // ACTIVATE USER BY THE ID
     @GetMapping("/user/activate/{userId}")
     public MessageResponse activateUser(@PathVariable Long userId) {
-
         UserApp user = userAppService.findUserById(userId);
-        user.setActive(true);
-        userAppService.update(user);
-
-        MessageResponse response = new MessageResponse("User Activated Successfully");
-
-        return response;
-
+        userAppService.activateUser(user);
+        return new MessageResponse("User Activated Successfully");
     }
 
 
     // GET USERS DETAILS BY USER ID
     @GetMapping("/users-details/{userId}")
     public ResponseEntity<?> getUserDetails(@PathVariable(name = "userId") Long userId) {
-
-
         UserApp user = userAppService.findUserById(userId);
-        UserRoleDetails<Object> userRoleDetails = new UserRoleDetails<Object>();
-
-
-        String role = user.getUserRole().name();
-
-        if (role.equals("DRIVER")) {
-            userRoleDetails.setRoleDetails(user.getUserDetails().getDriver());
-        } else if (role.equals("PARTNER")) {
-            userRoleDetails.setRoleDetails(user.getUserDetails().getPartner());
-        } else if (role.equals("MEMBER")) {
-            userRoleDetails.setRoleDetails(user.getUserDetails().getMember());
-        } else if (role.equals("VOLUNTEER")) {
-            userRoleDetails.setRoleDetails(user.getUserDetails().getVolunteer());
-        }
-
-        userRoleDetails.setRole(user.getUserRole().name());
-        userRoleDetails.setAddress(user.getUserDetails().getUserAppAddress().getLabel());
-        userRoleDetails.setEmail(user.getEmail());
-        userRoleDetails.setFullname(user.getUserDetails().getFullname());
-
-
+        UserRoleDetails<Object> userRoleDetails =  userAppDetailService.getUserRoleDetails(user);;
         return ResponseEntity.ok(userRoleDetails);
     }
 
@@ -352,5 +277,26 @@ public class AdminController {
         List<AssignUser> allKitchen = userAppService.getAllAvailableKitchen();
         return ResponseEntity.ok(allKitchen);
     }
+
+    @GetMapping("/all-donations")
+    public ResponseEntity<List<Funds>> getAllFunds() {
+        List<Funds> fundsList = fundServices.getAllFunds();
+        return ResponseEntity.ok(fundsList);
+    }
+
+    @GetMapping("/total-donations")
+    public ResponseEntity<Double> getTotalFunds() {
+        Double totalFunds = fundServices.getTotalFunds();
+        return ResponseEntity.ok(totalFunds);
+    }
+
+
+
+    @GetMapping("/order/feedback/{orderId}")
+    public ResponseEntity<?> getOrderFeedback(@PathVariable(name = "orderId") Long orderId) {
+        Order order = orderServices.findOrderById(orderId);
+        return ResponseEntity.ok(order);
+    }
+
 
 }

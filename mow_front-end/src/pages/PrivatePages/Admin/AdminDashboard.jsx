@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/auth-context";
-import { countAllActiveUserRole, getAllActiveDrivers, getAllActiveMembers, getAllActivePartners, getAllActiveVolunteer } from "../../../api/admin";
+import { allDonations, countAllActiveUserRole, getAllActiveDrivers, getAllActiveMembers, getAllActivePartners, getAllActiveVolunteer, totalDonations } from "../../../api/admin";
 
 const AdminDashboard = () => {
   const userCtx = useContext(AuthContext);
@@ -22,6 +22,9 @@ const AdminDashboard = () => {
   const [listVolunteer, setListVolunteer] = useState(null);
   const [listDriver, setListDriver] = useState(null);
   const [countActiveUserRole, setCountActiveUserRole] = useState(null);
+
+  const [listDonations, setListDonations] = useState(null);
+  const [totalDonation, setTotalDonations] = useState(null);
 
   const handleShowMember = () => {
     getAllActiveMembers(userCtx.token).then((response) => {
@@ -60,6 +63,14 @@ const AdminDashboard = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    allDonations(userCtx.token).then((response) => {
+      setListDonations(response.data);
+    });
+
+    totalDonations(userCtx.token).then((response) => {
+      setTotalDonations(response.data);
+    });
   }, []);
 
   return (
@@ -173,12 +184,18 @@ const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Kencan Total</td>
-                      <td>$ 250,000</td>
-                      <td>12/June/2023</td>
-                    </tr>
+                    {listDonations !== null &&
+                      listDonations.length > 0 &&
+                      listDonations.map((value, index) => (
+                        <>
+                          <tr key={value.donorId}>
+                            <td>{index + 1}</td>
+                            <td>{value.userDetails.fullname}</td>
+                            <td>$ {value.donorAmount}</td>
+                            <td>{value.dateTime.slice(0, 10)}</td>
+                          </tr>
+                        </>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -187,11 +204,8 @@ const AdminDashboard = () => {
           <div className="col-md">
             <div className="box-content admin__donors_container">
               <FontAwesomeIcon icon={faPiggyBank} className="admin__donors_icon" />
-              <h1 className="text-light fw-bold">$ 234,000</h1>
-              <h2 className="text-light fs-5">Current Donation Amount</h2>
-              <a className="btn btn-light rounded mt-3" href="">
-                View Donation History
-              </a>
+              <h1 className="text-light fw-bold">$ {totalDonation !== null && totalDonation > 0 ? totalDonation : "0"}</h1>
+              <h2 className="text-light fs-5 fw-bold">Current Donation Amount</h2>
             </div>
           </div>
         </div>

@@ -20,10 +20,8 @@ import DetailsDelivery from "./pages/PrivatePages/Admin/DetailsDelivery";
 import DetailpakageMember from "./pages/PrivatePages/Member/detailspakage";
 import FeedbackMember from "./pages/PrivatePages/Member/feedback";
 import DonorForm from "./pages/PrivatePages/Donor/DonorForm";
-import DonationDetails from "./pages/PrivatePages/Donor/DonationDetails";
 import ManageMeals from "./pages/PrivatePages/Admin/ManageMeals";
 import ManageOrders from "./pages/PrivatePages/Admin/ManageOrders";
-import BankAddress from "./pages/PrivatePages/Donor/BankAddress";
 import { useContext } from "react";
 import ErrorPage from "./pages/GlobalPages/ErrorPage";
 import { AuthContext } from "./context/auth-context";
@@ -32,6 +30,8 @@ import ManageInactiveUsers from "./pages/PrivatePages/Admin/ManageInactiveUsers"
 import OrderHistory from "./pages/PrivatePages/Member/OrderHistory";
 import Profile from "./pages/PrivatePages/Profile";
 import VolunteerDashboard from "./pages/PrivatePages/Volunteer/VolunteerDashboard";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import DonorPage from "./pages/PrivatePages/Donor/DonorPage";
 function App() {
   const { isLoggedIn, currentUser } = useContext(AuthContext);
 
@@ -60,11 +60,14 @@ function App() {
 
         {isLoggedIn && (
           <>
-            {/* DONOR */}
-            <Route path="/donate" element={<DonorForm />} />
-            <Route path="/donationStatus" element={<DonationDetails />} />
-            <Route path="/thanks" element={<BankAddress />} />
             <Route path="/profile" element={<Profile />} />
+
+            {/* DONOR */}
+            {currentUser.userRole === "DONOR" && (
+              <>
+                <Route path="/donate" element={<DonorPage />} />
+              </>
+            )}
 
             {/* DRIVER */}
             {currentUser.userRole === "MEMBER" && (

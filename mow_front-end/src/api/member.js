@@ -28,3 +28,10 @@ export const getAllMemberOrder = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// GET Details MEals
+export const sendFeedback = async (token, data) => {
+  return await axios.post(`${MEMBER_URL}/order/feedback`, data, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

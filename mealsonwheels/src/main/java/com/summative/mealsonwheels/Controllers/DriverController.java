@@ -48,61 +48,16 @@ public class DriverController {
     public ResponseEntity<MessageResponse> proceedMeals(@RequestBody Delivery delivery) {
         Order order = orderServices.findOrderById(delivery.getOrderId());
         String requestStatus = delivery.getRequestStatus();
-
         UserApp driver = userAppService.getCurrentUser();
-        MessageResponse response = new MessageResponse();
+        MessageResponse messageResponse;
 
-
-        String mealStatus = order.getMealsStatus().name();
-        String currentDeliveryStatus = order.getDeliveryStatus().name();
-
-        if(requestStatus.equals("TAKE_MEALS") && currentDeliveryStatus.equals("PENDING")){
-
-            if(driver.getUserRole().name().equals("DRIVER")){
-                driver.getUserDetails().getDriver().setDriverStatus(DriverStatus.UNAVAILABLE);
-            } else if (driver.getUserRole().name().equals("VOLUNTEER")) {
-                driver.getUserDetails().getVolunteer().setVolunteerStatus(VolunteerStatus.UNAVAILABLE);
-            }
-
-            order.setDeliveryStatus(DeliveryStatus.TAKE_MEALS);
-
-        } else if (requestStatus.equals("ON_THE_WAY") && currentDeliveryStatus.equals("TAKE_MEALS")){
-
-            if(!mealStatus.equals("READY_TO_DELIVER")){
-                response.setMessage("MEALS STILL UNDER PREPARATION !");
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-            }
-
-            order.setStatus(OrderStatus.ON_THE_WAY);
-            order.setDeliveryStatus(DeliveryStatus.ON_THE_WAY);
-
-
-        } else if (requestStatus.equals("DELIVERED") && currentDeliveryStatus.equals("ON_THE_WAY")){
-
-            order.setStatus(OrderStatus.DELIVERED);
-            order.setDeliveryStatus(DeliveryStatus.DELIVERED);
-
-            if(driver.getUserRole().name().equals("DRIVER")){
-                driver.getUserDetails().getDriver().setDriverStatus(DriverStatus.AVAILABLE);
-            } else if (driver.getUserRole().name().equals("VOLUNTEER")){
-                driver.getUserDetails().getVolunteer().setVolunteerStatus(VolunteerStatus.AVAILABLE);
-            }
-
-        } else {
-            response.setMessage("NOT FOUND");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        try {
+            messageResponse = orderServices.updateDeliveryStatus(order, driver.getUserDetails().getDriver(), requestStatus);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse(e.getMessage()));
         }
 
-        orderServices.save(order);
-
-        if(driver.getUserRole().name().equals("DRIVER")){
-           driverServices.save(driver.getUserDetails().getDriver());
-        } else if (driver.getUserRole().name().equals("VOLUNTEER")){
-            volunteerRepository.save(driver.getUserDetails().getVolunteer());
-        }
-
-        response.setMessage("Meals took by driver with id " + order.getDriver().getFullname());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(messageResponse);
     }
 
 

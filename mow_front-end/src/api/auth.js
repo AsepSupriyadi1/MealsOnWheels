@@ -83,3 +83,13 @@ export const getUserLoginAPI = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// UPDATE PROFILE
+export const updateProfile = async (token, formData) => {
+  return await axios.post(`${BASE_URL}/main/updateProfile`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

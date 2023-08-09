@@ -20,6 +20,7 @@ function Header() {
 
   return (
     <>
+      {console.log(currentUser)}
       <header className="site-header">
         <div className="top-header d-none d-lg-block">
           <div className="container">
@@ -79,7 +80,12 @@ function Header() {
                         <h5 className="m-0 text-light">{currentUser.fullname}</h5>
                         <p className="fs-6 m-0 text-warning">{currentUser.userRole}</p>
                       </div>
-                      <FontAwesomeIcon icon={faUser} className="text-dark fs-3 ms-3 bg-light p-3 d-blok" />
+
+                      {currentUser.pictureData == null ? (
+                        <FontAwesomeIcon icon={faUser} className="text-dark fs-3 ms-3 bg-light p-3 d-blok" />
+                      ) : (
+                        <img src={`data:image/png;base64,${currentUser.pictureData}`} alt="profile" style={{ height: "60px", width: "75px", objectFit: "cover", marginLeft: "20px" }} />
+                      )}
                     </div>
                   </a>
                 )
@@ -173,11 +179,6 @@ function Header() {
                         {currentUser.userRole === "DONOR" && (
                           <>
                             <Nav.Item>
-                              <Nav.Link className="fs-6" href="/donor">
-                                Dashboard
-                              </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
                               <Nav.Link className="fs-6" href="/donate">
                                 Donate
                               </Nav.Link>
@@ -186,8 +187,6 @@ function Header() {
                         )}
                       </Nav>
                     </div>
-
-                    {console.log(currentUser.fullname)}
 
                     {currentUser.fullname ? (
                       currentUser.fullname && (

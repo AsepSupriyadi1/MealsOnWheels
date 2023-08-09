@@ -124,3 +124,23 @@ export const allKitchens = async (token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+// -=-=-=-=-= FUNDS -=-=-=-=-=
+export const allDonations = async (token) => {
+  return await axios.get(`${BASE_URL}/admin/all-donations`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const totalDonations = async (token) => {
+  return await axios.get(`${BASE_URL}/admin/total-donations`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+// -=-=-=-=-= ORDER -=-=-=-=-=
+export const getOrderDetails = async (token, orderId) => {
+  return await axios.get(`${BASE_URL}/admin/order/feedback/` + orderId, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};

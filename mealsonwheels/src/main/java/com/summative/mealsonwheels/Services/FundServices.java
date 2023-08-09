@@ -1,7 +1,10 @@
 package com.summative.mealsonwheels.Services;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.summative.mealsonwheels.Dto.EntityResponse.AssignUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +19,22 @@ public class FundServices {
 
 
     public Funds saveFunds(Funds funds){
+      return fundsRepository.save(funds);
+    }
 
-       return fundsRepository.save(funds);
+    public List<Funds> getAllFunds() {
+        List<Funds> fundsList = fundsRepository.findAll();
+
+        fundsList.stream()
+                .sorted(Comparator.comparingLong(Funds::getDonorId))
+                .collect(Collectors.toList());
+
+        return fundsList;
 
     }
 
-        public List<Funds> getAllFunds() {
-        return fundsRepository.findAll();
+    public double getTotalFunds() {
+        return fundsRepository.countTotalFunds();
     }
 
 

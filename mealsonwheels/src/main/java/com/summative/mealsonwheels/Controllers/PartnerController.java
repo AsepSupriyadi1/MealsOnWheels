@@ -3,6 +3,7 @@ import java.util.List;
 
 import com.summative.mealsonwheels.Dto.MealsProcess;
 import com.summative.mealsonwheels.Entity.Partner;
+import com.summative.mealsonwheels.Services.PartnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,26 +40,24 @@ public class PartnerController {
     @Autowired
     private MealsRepository mealsRepository;
 
+    @Autowired
+    private PartnerService partnerService;
+
 
     @PostMapping("/order/update")
     public ResponseEntity<MessageResponse> proceedMeals(@RequestBody MealsProcess mealsProcess) {
 
         Order order = orderServices.findOrderById(mealsProcess.getOrderId());
-        Long orderId = order.getOrderId();
         String mealStatus = mealsProcess.getMealStatus();
+        MessageResponse messageResponse;
 
-        if(order.getMealsStatus().name().equals("PENDING") && mealStatus.equals("PROCESS")){
-            order.setStatus(OrderStatus.PROCESS);
-            order.setMealsStatus(MealsStatus.PROCESS);
-            orderServices.save(order);
-            return ResponseEntity.ok(new MessageResponse("preparing order_id: " + orderId));
-        } else if (mealStatus.equals("READY_TO_DELIVER") && order.getMealsStatus().name().equals("PROCESS")){
-            order.setMealsStatus(MealsStatus.READY_TO_DELIVER);
-            orderServices.save(order);
-            return ResponseEntity.ok(new MessageResponse("preparing order_id: " + orderId));
+        try {
+            messageResponse = partnerService.proceedMeals(order, mealStatus);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(e.getMessage()));
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Not Found"));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(messageResponse);
         
     }
 

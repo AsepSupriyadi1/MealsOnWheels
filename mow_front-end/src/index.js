@@ -5,6 +5,7 @@ import { AuthContextProvider } from "./context/auth-context";
 import { BrowserRouter } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 delete L.Icon.Default.prototype._getIconUrl;
 

@@ -4,6 +4,8 @@ export const user_type = {
   fullname: "",
   address: "",
   userRole: "",
+  pictureData: null,
+  phoneNumber: "",
   lan: 0,
   lng: 0,
 };

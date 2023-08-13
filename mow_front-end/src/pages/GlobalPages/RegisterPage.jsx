@@ -182,7 +182,7 @@ const RegisterPage = () => {
                     
 
                     <Form.Group className="mb-3">
-                      <Form.Label className="m-0">Join as :</Form.Label>
+                      <Form.Label>Join as :</Form.Label>
                       <Form.Select value={userRole} onChange={(e) => setUserRole(e.target.value)} required>
                         <option value="DONOR">Donor</option>
                         <option value="DRIVER">Rider</option>
@@ -193,31 +193,31 @@ const RegisterPage = () => {
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <Form.Label className="m-0">Address :</Form.Label>
+                      <Form.Label>Address :</Form.Label>
                       <div onClick={handleShow}>
                         <Form.Control type="text" placeholder="Enter address......" value={address === null ? "" : address.display_name} disabled required />
                       </div>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <Form.Label className="m-0">Password :</Form.Label>
+                      <Form.Label>Password :</Form.Label>
                       <Form.Control type="password" placeholder="Enter password......" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <Form.Label className="m-0">Confirmed Password :</Form.Label>
+                      <Form.Label>Confirmed Password :</Form.Label>
                       <Form.Control type="password" placeholder="Enter Confirmed Password......" value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)} required />
                     </Form.Group>
 
                     {partnerForm && (
                       <>
                         <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Company Name :</Form.Label>
+                          <Form.Label>Company Name :</Form.Label>
                           <Form.Control type="text" placeholder="Enter company name......" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
                         </Form.Group>
 
                         <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Company address :</Form.Label>
+                          <Form.Label>Company address :</Form.Label>
                           <Form.Control type="text" placeholder="Enter company address......" value={companyAddress} onChange={(e) => setCompanyAddress(e.target.value)} />
                         </Form.Group>
                       </>
@@ -226,7 +226,7 @@ const RegisterPage = () => {
                     {driverForm && (
                       <>
                         <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Car Name :</Form.Label>
+                          <Form.Label>Car Name :</Form.Label>
                           <Form.Control type="text" placeholder="Enter your car name......" value={carName} onChange={(e) => setCarName(e.target.value)} />
                         </Form.Group>
                       </>
@@ -235,11 +235,11 @@ const RegisterPage = () => {
                     {memberForm && (
                       <>
                         <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Reason :</Form.Label>
+                          <Form.Label>Reason :</Form.Label>
                           <Form.Control type="text" placeholder="Enter your Reason for membership......" value={memberReason} onChange={(e) => setMemberReason(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Age :</Form.Label>
+                          <Form.Label>Age :</Form.Label>
                           <Form.Control type="number" placeholder="Enter your age......" value={age} onChange={(e) => setAge(e.target.value)} />
                         </Form.Group>
                       </>
@@ -248,11 +248,11 @@ const RegisterPage = () => {
                     {volunteerForm && (
                       <>
                         <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Reason :</Form.Label>
+                          <Form.Label>Reason :</Form.Label>
                           <Form.Control type="text" placeholder="Enter your Reason for being a volunteer......" value={volunteerReason} onChange={(e) => setVolunteerReason(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3">
-                          <Form.Label className="m-0">Status :</Form.Label>
+                          <Form.Label>Status :</Form.Label>
                           <Form.Select value={volunteerStatus} onChange={(e) => setVolunteerStatus(e.target.value)} required>
                             <option value="Student">Student</option>
                             <option value="Freelancer">Freelancer</option>

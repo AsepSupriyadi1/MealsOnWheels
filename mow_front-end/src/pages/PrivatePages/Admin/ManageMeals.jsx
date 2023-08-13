@@ -158,7 +158,7 @@ const ManageMeals = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="file">
-              <Form.Label>Meals Name</Form.Label>
+              <Form.Label>Meals Photo</Form.Label>
               <Form.Control type="file" name="picture" onChange={(e) => setPicture(e.target.files[0])} />
             </Form.Group>
           </Modal.Body>

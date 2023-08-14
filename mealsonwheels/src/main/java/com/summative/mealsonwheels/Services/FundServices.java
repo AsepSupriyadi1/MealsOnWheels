@@ -33,8 +33,8 @@ public class FundServices {
 
     }
 
-    public double getTotalFunds() {
-        return fundsRepository.countTotalFunds();
+    public Double getTotalFunds() {
+        return fundsRepository.countTotalFunds().orElseThrow(() -> new RuntimeException("Not Found"));
     }
 
 

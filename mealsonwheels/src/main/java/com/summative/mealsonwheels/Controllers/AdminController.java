@@ -287,12 +287,15 @@ public class AdminController {
     }
 
     @GetMapping("/total-donations")
-    public ResponseEntity<Double> getTotalFunds() {
-        Double totalFunds = fundServices.getTotalFunds();
-        return ResponseEntity.ok(totalFunds);
+    public ResponseEntity<String> getTotalFunds() {
+        Double totalFunds;
+        try {
+            totalFunds =  fundServices.getTotalFunds();
+        } catch (Exception e){
+            return ResponseEntity.ok(e.getMessage());
+        }
+        return ResponseEntity.ok(Double.toString(totalFunds));
     }
-
-
 
     @GetMapping("/order/feedback/{orderId}")
     public ResponseEntity<?> getOrderFeedback(@PathVariable(name = "orderId") Long orderId) {
